@@ -1,11 +1,12 @@
+# Sets up a PostgreSQL database and auto creates tables
+# You can run it with the docker build and run commands below
 FROM postgres:16
 
-# Set PostgreSQL environment variables
+# ENV variables to shorter commands
 ENV POSTGRES_USER=admin
 ENV POSTGRES_PASSWORD=admin123
 ENV POSTGRES_DB=kiyoshi_db
 
-# Optional: copy SQL init scripts
 COPY init.sql /docker-entrypoint-initdb.d/
 
 
