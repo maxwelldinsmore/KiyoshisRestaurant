@@ -61,7 +61,7 @@ CREATE TABLE inventory_menu_item (
     PRIMARY KEY (menu_item_id, inventory_item_id)
 );
 
-CREATE TABLE "order" (
+CREATE TABLE orders (
     order_id SERIAL PRIMARY KEY,
     customer_id INTEGER REFERENCES registered_customer(customer_id),
     employee_id INTEGER REFERENCES employee(employee_id),
@@ -76,14 +76,14 @@ CREATE TABLE "order" (
 
 CREATE TABLE order_item (
     order_item_id SERIAL PRIMARY KEY,
-    order_id INTEGER REFERENCES "order"(order_id),
+    order_id INTEGER REFERENCES orders(order_id),
     menu_item_id INTEGER REFERENCES menu_item(menu_item_id),
     order_item_quantity INTEGER NOT NULL
 );
 
 CREATE TABLE order_payment (
     payment_id SERIAL PRIMARY KEY,
-    order_id INTEGER REFERENCES "order"(order_id),
+    order_id INTEGER REFERENCES orders(order_id),
     payment_method VARCHAR(6) NOT NULL,
     payment_note VARCHAR(140)
 );
@@ -98,7 +98,7 @@ CREATE TABLE rewards_redemption (
     redemption_id SERIAL PRIMARY KEY,
     customer_id INTEGER REFERENCES registered_customer(customer_id),
     reward_id INTEGER REFERENCES rewards(reward_id),
-    order_id INTEGER REFERENCES "order"(order_id)
+    order_id INTEGER REFERENCES orders(order_id)
 );
 
 CREATE TABLE customer_promotion (
