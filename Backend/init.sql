@@ -40,10 +40,10 @@ CREATE TABLE menu_item (
     menu_item_id SERIAL PRIMARY KEY,
     category_id INTEGER REFERENCES category(category_id),
     menu_item_name VARCHAR(100) NOT NULL,
-    menu_item_price DECIMAL(5, 2) NOT NULL,
+    menu_item_price DECIMAL(7, 2) NOT NULL,
     menu_item_description VARCHAR(140),
     is_item_available BOOLEAN DEFAULT TRUE,
-    menu_item_discount_percent DECIMAL(3, 2) DEFAULT 0.00
+    menu_item_discount_percent DECIMAL(5, 2) DEFAULT 0.00
 );
 
 CREATE TABLE inventory_item (
@@ -51,13 +51,13 @@ CREATE TABLE inventory_item (
     supplier_id INTEGER REFERENCES supplier(supplier_id),
     purchase_date TIMESTAMP,
     quantity_available SMALLINT DEFAULT 0,
-    unit_weight_available DECIMAL(4, 4)
+    unit_weight_available DECIMAL(8, 4)
 );
 
 CREATE TABLE inventory_menu_item (
     menu_item_id INTEGER REFERENCES menu_item(menu_item_id),
     inventory_item_id INTEGER REFERENCES inventory_item(inventory_item_id),
-    quantity_required DECIMAL(4, 4),
+    quantity_required DECIMAL(8, 4),
     PRIMARY KEY (menu_item_id, inventory_item_id)
 );
 
@@ -105,7 +105,7 @@ CREATE TABLE customer_promotion (
     customer_promotion_id SERIAL PRIMARY KEY,
     customer_id INTEGER REFERENCES registered_customer(customer_id),
     promotion_name VARCHAR(30),
-    discount_value DECIMAL(3, 2),
+    discount_value DECIMAL(5, 2),
     start_date TIMESTAMP,
     end_date TIMESTAMP,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -123,14 +123,14 @@ CREATE TABLE inventory_transaction (
     purchase_date TIMESTAMP,
     expiry_date TIMESTAMP,
     quantity_purchased SMALLINT,
-    unit_weight DECIMAL(3, 4)
+    unit_weight DECIMAL(7, 4)
 );
 
 CREATE TABLE waste_log (
     waste_log_id SERIAL PRIMARY KEY,
     inventory_item_id INTEGER REFERENCES inventory_item(inventory_item_id),
     waste_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    estimated_value_loss DECIMAL(5, 2),
-    quantity_wasted DECIMAL(3, 4),
+    estimated_value_loss DECIMAL(7, 2),
+    quantity_wasted DECIMAL(7, 4),
     unit_type VARCHAR(30)
 );
