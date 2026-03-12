@@ -13,11 +13,11 @@ Upcoming tasks
 | Alyssa| Login / Register Pages | ---|
 | Alyssa| Privacy Policies | ---|
 | Alyssa| Accessibility | ---|
-| ----| Report generating | ---|
+| Thavisha | Report generating | ---|
 | Tahia| Menu page | ---|
 | Tahia | Menu item page | ---|
 | ----| Handling item cart| ---|
-| ----| Dynamic resizing for phones | ---|
+| Ben| Dynamic resizing for phones | ---|
 | ----| Checkout / order process | ---|
 | ----| Manage inventory pages | ---|
 | ----| Current incoming orders view | ---|
