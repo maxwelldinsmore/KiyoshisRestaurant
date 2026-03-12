@@ -20,5 +20,5 @@ Upcoming tasks
 | Ben| Dynamic resizing for phones | ---|
 | ----| Checkout / order process | ---|
 |Lithasha| Manage inventory pages | ---|
-| ----| Current incoming orders view | ---|
+| Thavisha| Current incoming orders view | ---|
 | ----| in person order menu | ---|
