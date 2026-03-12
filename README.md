@@ -9,7 +9,7 @@ Upcoming tasks
 | Max  | Creating fake data for site  | ------|
 | Max | Transaction creation | ---|
 | Max | API implementation | ---|
-| ----| General Page Content (Footer Nav Bar, Main Textblocks) | ---|
+| Lithasha| General Page Content (Footer Nav Bar, Main Textblocks) | ---|
 | Alyssa| Login / Register Pages | ---|
 | Alyssa| Privacy Policies | ---|
 | Alyssa| Accessibility | ---|
@@ -19,6 +19,6 @@ Upcoming tasks
 | ----| Handling item cart| ---|
 | Ben| Dynamic resizing for phones | ---|
 | ----| Checkout / order process | ---|
-| ----| Manage inventory pages | ---|
+|Lithasha| Manage inventory pages | ---|
 | ----| Current incoming orders view | ---|
 | ----| in person order menu | ---|
