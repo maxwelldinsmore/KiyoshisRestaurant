@@ -16,9 +16,9 @@ Upcoming tasks
 | Thavisha | Report generating | ---|
 | Tahia| Menu page | ---|
 | Tahia | Menu item page | ---|
-| ----| Handling item cart| ---|
+| Max| Handling item cart| ---|
 | Ben| Dynamic resizing for phones | ---|
-| ----| Checkout / order process | ---|
+| Ben| Checkout / order process | ---|
 |Lithasha| Manage inventory pages | ---|
 | Thavisha| Current incoming orders view | ---|
-| ----| in person order menu | ---|
+| TBD | in person order menu | ---|
