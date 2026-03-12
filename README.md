@@ -6,7 +6,7 @@ Upcoming tasks
 | Person  | Task | Completion
 | ------------- | ------------- | ------|
 | Alyssa| General design (use AI to generate based on mockups?)   | ------|
-| Max  | Creating fake data for site  | ------|
+| Max  | Creating fake data for site  | Partially Done |
 | Max | Transaction creation | ---|
 | Max | API implementation | ---|
 | Lithasha| General Page Content (Footer Nav Bar, Main Textblocks) | ---|
