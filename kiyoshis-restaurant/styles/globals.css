@@ -8,12 +8,19 @@
 
 html,
 body {
+  min-height: 100vh;
+  min-height: 100dvh;
   width: 100%;
   overflow-x: hidden;
   background: var(--page-background);
   color: var(--foreground);
   line-height: 1.5;
   text-rendering: optimizeLegibility;
+}
+
+#__next {
+  min-height: 100vh;
+  min-height: 100dvh;
 }
 
 *,
@@ -34,4 +41,30 @@ button,
 textarea,
 select {
   font: inherit;
+}
+
+/* Keep shared tones neutral to avoid cool/blue-looking grays. */
+.text-stone-700,
+.text-stone-600 {
+  color: #404040 !important;
+}
+
+.text-stone-500,
+.text-stone-400,
+.text-stone-300 {
+  color: #6b7280 !important;
+}
+
+.bg-stone-900 {
+  background-color: #0a0a0a !important;
+}
+
+.bg-stone-800 {
+  background-color: #1f1f1f !important;
+}
+
+.border-stone-200,
+.border-stone-300,
+.border-stone-400 {
+  border-color: #d4d4d4 !important;
 }

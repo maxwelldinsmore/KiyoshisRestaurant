@@ -34,14 +34,14 @@ function ImagePlaceholder({ className = "" }) {
 
 export default function MenuPage() {
   return (
-    <div className={inter.className}>
+    <div className={`${inter.className} min-h-dvh flex flex-col`}>
       <Head>
         <title>Menu | Sushi Bai Kiyoshi</title>
       </Head>
 
       <Header active="menu" />
 
-      <main className="bg-[#f6f6f1] min-h-screen">
+      <main className="flex-1 bg-[#f6f6f1]">
         <section className="border-b border-gray-300 bg-gray-200/60">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-wrap gap-x-8 gap-y-3 text-2xl md:text-3xl font-semibold">
             <span className="border-b-2 border-black pb-1">All</span>

@@ -21,14 +21,14 @@ function FormField({ label, placeholder = "", required = true }) {
 
 export default function RegisterPage() {
   return (
-    <div className={inter.className}>
+    <div className={`${inter.className} min-h-dvh flex flex-col`}>
       <Head>
         <title>Register | Sushi Bai Kiyoshi</title>
       </Head>
 
       <Header active="register" />
 
-      <main className="bg-[#f6f6f1] min-h-screen">
+      <main className="flex-1 bg-[#f6f6f1]">
         <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-14 md:py-16">
           <h1 className="text-5xl md:text-6xl font-bold text-center tracking-tight">Register</h1>
           <p className="text-center text-gray-500 tracking-[0.2em] uppercase mt-4 text-sm">

@@ -7,94 +7,49 @@ import Footer from "@/components/Footer";
 
 const inter = Inter({ subsets: ["latin"], weight: ["400", "600", "700"] });
 
-const heroSlides = [
-  {
-    title: "Fresh sushi, simple atmosphere",
-    text: "Add your hero image to public/hero.jpg and update this text with your real restaurant message.",
-  },
-  {
-    title: "Made daily with clean ingredients",
-    text: "Use this area for a short message about quality, freshness, and the restaurant experience.",
-  },
-  {
-    title: "A calm place for great food",
-    text: "Keep the message short here so the image stays as the focus under the main name section.",
-  },
-];
-
 const specials = [
-  {
-    title: "Salmon Roll",
-    text: "Fresh salmon, seasoned rice, and a simple soy glaze.",
-  },
-  {
-    title: "Tuna Nigiri",
-    text: "Hand-pressed rice topped with sliced tuna and light seasoning.",
-  },
-  {
-    title: "Dragon Roll",
-    text: "A bold roll with layered texture and a balanced finish.",
-  },
-  {
-    title: "Miso Soup",
-    text: "A warm starter with tofu, broth, and green onion.",
-  },
+  { title: "Lorem ipsum dolor 1", text: "Aenean consectetur odio in condimentum tristique. Nam hendrerit urnaex." },
+  { title: "Lorem ipsum dolor 1ss", text: "Aenean consectetur odio in condimentum tristique. Nam hendrerit urnaex." },
+  { title: "Lorem ipsum dolor 1sad", text: "Aenean consectetur odio in condimentum tristique. Nam hendrerit urnaex." },
+  { title: "Lorem ipsum dolor asd1", text: "Aenean consectetur odio in condimentum tristique. Nam hendrerit urnaex." },
 ];
 
 const favourites = [
+  { title: "Lorem ipsum dolor 1", text: "Aenean consectetur odio in condimentum tristique. Nam hendrerit urnaex." },
+  { title: "Lorem ipsum dolor 1", text: "Aenean consectetur odio in condimentum tristique. Nam hendrerit urnaex." },
+  { title: "Lorem ipsum dolor 1", text: "Aenean consectetur odio in condimentum tristique. Nam hendrerit urnaex." },
+  { title: "Lorem ipsum dolor 1", text: "Aenean consectetur odio in condimentum tristique. Nam hendrerit urnaex." },
+];
+
+const carouselSlides = [
   {
-    title: "California Roll",
-    text: "A house favorite with a clean, familiar flavor.",
+    title: "Lorem ipsum dolor sit amet",
+    text: "Aenean consectetur odio in condimentum tristique. Nam hendrerit urna exon.",
   },
   {
-    title: "Shrimp Tempura",
-    text: "Crisp texture with a light batter and dipping sauce.",
+    title: "Fresh ingredients. Bold flavor.",
+    text: "Use this slide for your second hero message once images are added.",
   },
   {
-    title: "Sashimi Plate",
-    text: "A simple plate focused on freshness and presentation.",
-  },
-  {
-    title: "House Bento",
-    text: "A complete meal with sushi, sides, and a warm main.",
+    title: "Crafted daily in our kitchen",
+    text: "Use this slide for promotions, daily specials, or chef highlights.",
   },
 ];
 
-function MenuSection({ title, items }) {
-  return (
-    <section className="py-14 md:py-16">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl md:text-4xl font-bold text-center tracking-tight">{title}</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-9">
-          {items.map((item) => (
-            <div key={item.title} className="border border-gray-200 rounded-md bg-white p-4 shadow-sm">
-              <div className="h-40 bg-gray-100 border border-gray-200 rounded flex items-center justify-center text-sm text-gray-400">
-                Image
-              </div>
-              <h3 className="text-base font-semibold mt-4">{item.title}</h3>
-              <p className="text-sm text-gray-500 leading-6 mt-2">{item.text}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 export default function Home() {
   const [slideIndex, setSlideIndex] = useState(0);
-  const currentSlide = heroSlides[slideIndex];
+  const currentSlide = carouselSlides[slideIndex];
 
-  const goToPrevious = () => {
-    setSlideIndex((slideIndex - 1 + heroSlides.length) % heroSlides.length);
+  const previousSlide = () => {
+    setSlideIndex((current) => (current === 0 ? carouselSlides.length - 1 : current - 1));
   };
 
-  const goToNext = () => {
-    setSlideIndex((slideIndex + 1) % heroSlides.length);
+  const nextSlide = () => {
+    setSlideIndex((current) => (current === carouselSlides.length - 1 ? 0 : current + 1));
   };
 
   return (
-    <div className={inter.className}>
+    <div className={`${inter.className} min-h-dvh flex flex-col`}>
       <Head>
         <title>Sushi Bai Kiyoshi</title>
         <meta name="description" content="Sushi Bai Kiyoshi restaurant homepage" />
@@ -102,62 +57,65 @@ export default function Home() {
 
       <Header />
 
-      <main className="space-y-2">
-        <section className="pt-8 pb-6 bg-white">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="relative h-[320px] sm:h-[360px] md:h-[430px] overflow-hidden rounded-md border border-gray-200 bg-gray-100 shadow-sm">
+      <main className="flex-1 w-full bg-[#f3f3f1] text-stone-950">
+        <section className="border-b border-stone-300 bg-[#f3f3f1]">
+          <div className="mx-auto max-w-[1800px] px-3 py-8 sm:px-5 lg:px-8">
+            <div className="relative h-[380px] overflow-hidden border border-stone-300 bg-white sm:h-[460px] md:h-[560px]">
               <Image
-                src="/sushiBaiKiyoshiLogo.png"
-                alt="Sushi Bai Kiyoshi hero artwork"
+                src="/SushiBaiKiyoshiBanner1.png"
+                alt="Sushi Bai Kiyoshi hero banner"
                 fill
                 priority
-                style={{ objectFit: "contain", objectPosition: "center" }}
+                sizes="100vw"
+                className="object-cover"
               />
             </div>
+            <p className="pt-6 pb-4 text-center text-sm uppercase tracking-[0.28em] text-stone-600">Where Freshness Meets Tradition.</p>
           </div>
         </section>
 
-        <section className="pb-14 md:pb-16">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="relative h-[460px] md:h-[520px] overflow-hidden rounded-md border border-gray-200 bg-gray-900 shadow-sm">
-              <Image
-                src="/hero.jpg"
-                alt="Restaurant hero image"
-                fill
-                priority
-                style={{ objectFit: "cover", objectPosition: "center" }}
-              />
-              <div className="absolute inset-0 bg-black/40" />
-              <div className="absolute bottom-0 left-0 w-full p-6 sm:p-8 md:p-10 text-white">
-                <h2 className="text-3xl md:text-4xl font-bold tracking-tight">{currentSlide.title}</h2>
-                <p className="text-base leading-7 mt-3 max-w-2xl text-gray-100">{currentSlide.text}</p>
+        <section className="py-10 sm:py-14">
+          <div className="mx-auto max-w-[1800px] px-3 sm:px-5 lg:px-8">
+            <div className="relative overflow-hidden border border-stone-300 bg-black text-white">
+              <div className="flex h-[450px] items-center justify-center bg-stone-800 text-sm text-stone-300 md:h-[560px]">
+                Add carousel hero image {slideIndex + 1} here
               </div>
+              <div className="absolute inset-0 bg-black/35" />
+
+              <div className="absolute bottom-0 left-0 w-full p-6 md:p-10">
+                <h2 className="text-4xl font-bold tracking-tight">{currentSlide.title}</h2>
+                <p className="mt-3 max-w-2xl text-base leading-7 text-stone-100">
+                  {currentSlide.text}
+                </p>
+              </div>
+
               <button
                 type="button"
-                onClick={goToPrevious}
-                className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-white/85 text-black text-xl"
+                onClick={previousSlide}
                 aria-label="Previous slide"
+                className="absolute left-4 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/70 bg-black/40 text-2xl transition-colors hover:bg-black/65"
               >
                 ‹
               </button>
               <button
                 type="button"
-                onClick={goToNext}
-                className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-white/85 text-black text-xl"
+                onClick={nextSlide}
                 aria-label="Next slide"
+                className="absolute right-4 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/70 bg-black/40 text-2xl transition-colors hover:bg-black/65"
               >
                 ›
               </button>
-              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-                {heroSlides.map((slide, index) => (
+
+              <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-2">
+                {carouselSlides.map((slide, index) => (
                   <button
                     key={slide.title}
                     type="button"
                     onClick={() => setSlideIndex(index)}
-                    className={`h-2.5 w-2.5 rounded-full ${
-                      index === slideIndex ? "bg-white" : "bg-white/50"
-                    }`}
                     aria-label={`Go to slide ${index + 1}`}
+                    className={`h-2.5 w-2.5 rounded-full transition-colors ${
+                      index === slideIndex ? "bg-white" : "bg-white/45"
+                    }`}
                   />
                 ))}
               </div>
@@ -165,57 +123,81 @@ export default function Home() {
           </div>
         </section>
 
-        <MenuSection title="Today's Specials" items={specials} />
-        <MenuSection title="Fan Favourites" items={favourites} />
-
-        <section className="py-16 md:py-20 bg-black text-white">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <p className="text-lg font-semibold border border-white/30 px-8 py-4 inline-block leading-7">
-              Become a part of our loyalty program and earn points.
-            </p>
-            <div className="mt-8 md:mt-10 h-64 md:h-72 bg-gray-800 rounded-md border border-white/10 flex items-center justify-center text-gray-400">
-              Loyalty Image
+        <section className="py-14 sm:py-16">
+          <div className="mx-auto max-w-[1800px] px-3 sm:px-5 lg:px-8">
+            <h2 className="text-center text-5xl font-bold tracking-tight">Today's Specials</h2>
+            <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+              {specials.map((item, index) => (
+                <article key={`special-${index}`} className="rounded-2xl border border-stone-300 bg-white p-4">
+                  <div className="flex h-32 items-center justify-center rounded-lg border border-stone-300 bg-stone-100 text-sm text-stone-400">
+                    Add image
+                  </div>
+                  <h3 className="mt-4 text-base font-semibold">{item.title}</h3>
+                  <p className="mt-2 text-sm leading-6 text-stone-500">{item.text}</p>
+                </article>
+              ))}
             </div>
-            <button className="mt-8 md:mt-10 bg-white text-black px-12 py-3 text-sm font-semibold rounded-sm hover:bg-gray-200 transition-colors">
-              Sign Up
-            </button>
           </div>
         </section>
 
-        <section id="find-us" className="py-16 md:py-20 bg-white">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-14">
-            <div>
-              <h2 className="text-4xl md:text-5xl font-bold leading-tight tracking-tight">Sushi Bai Kiyoshi</h2>
-              <p className="text-sm uppercase tracking-[0.18em] text-gray-500 mt-6">
-                Monday - Friday: Time - Time
-              </p>
+        <section className="py-12 sm:py-14">
+          <div className="mx-auto max-w-[1800px] px-3 sm:px-5 lg:px-8">
+            <h2 className="text-center text-5xl font-bold tracking-tight">Fan Favourites</h2>
+            <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+              {favourites.map((item, index) => (
+                <article key={`fav-${index}`} className="rounded-2xl border border-stone-300 bg-white p-4">
+                  <div className="flex h-32 items-center justify-center rounded-lg border border-stone-300 bg-stone-100 text-sm text-stone-400">
+                    Add image
+                  </div>
+                  <h3 className="mt-4 text-base font-semibold">{item.title}</h3>
+                  <p className="mt-2 text-sm leading-6 text-stone-500">{item.text}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
 
-              <h3 className="text-sm uppercase tracking-[0.18em] font-bold mt-12">Sign Up Today</h3>
-              <p className="text-sm text-gray-500 mt-2 leading-6">
-                Add your email signup text here.
-              </p>
+        <section className="pt-16 pb-20">
+          <div className="mx-auto max-w-[1800px] px-3 sm:px-5 lg:px-8">
+            <div className="border border-stone-300 bg-white p-6 text-center">
+              <p className="text-2xl font-semibold tracking-tight md:text-3xl">Become Apart of our loyalty program and earn points!</p>
+            </div>
+            <div className="mt-6 border border-stone-300 bg-stone-900 p-6">
+              <div className="flex h-64 items-center justify-center bg-stone-700 text-sm text-stone-300 md:h-72">
+                Add loyalty image here
+              </div>
+              <div className="mt-6 text-center">
+                <button className="bg-white px-10 py-3 text-base font-semibold text-stone-950">Sign Up</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="find-us" className="pb-20">
+          <div className="mx-auto grid max-w-[1800px] grid-cols-1 gap-10 px-3 sm:px-5 md:grid-cols-2 lg:px-8">
+            <div>
+              <h2 className="text-5xl font-bold leading-tight tracking-tight md:text-6xl">Sushi Bai Kiyoshi</h2>
+              <p className="mt-7 text-base uppercase tracking-[0.14em] text-stone-700 md:text-lg">Monday - Friday: Time - Time</p>
+
+              <h3 className="mt-12 text-3xl font-bold uppercase tracking-tight md:text-4xl">Sign Up Today</h3>
+              <p className="mt-3 text-base text-stone-500">Lorem ipsum dolor sit amet</p>
               <input
                 type="text"
                 placeholder="Enter your text here"
-                className="w-full mt-4 border border-gray-300 px-4 py-3 text-sm rounded-sm outline-none focus:border-black"
+                className="mt-4 w-full border border-stone-400 bg-white px-4 py-3 text-lg text-stone-500 outline-none"
               />
-              <button className="w-full mt-4 bg-black text-white py-3 text-sm font-semibold rounded-sm hover:bg-gray-800 transition-colors">
-                Click here!
-              </button>
+              <button className="mt-4 bg-black px-8 py-3 text-lg font-semibold text-white">Click here!</button>
             </div>
 
             <div>
-              <p className="text-center text-sm font-bold uppercase tracking-[0.18em] leading-7 mb-6">
+              <p className="mb-5 text-center text-xl font-semibold uppercase leading-tight tracking-[0.1em] text-stone-700 md:text-2xl">
                 Agaj Street, 245 - SDJS City
                 <br />
                 Happy Place
               </p>
-              <iframe
-                src="https://www.openstreetmap.org/export/embed.html?bbox=-74.010%2C40.710%2C-73.990%2C40.720&layer=mapnik"
-                title="Restaurant location"
-                loading="lazy"
-                className="w-full min-h-[320px] border border-gray-200 rounded-md"
-              />
+              <div className="flex min-h-[320px] items-center justify-center border border-stone-300 bg-white text-sm text-stone-400">
+                Map goes here
+              </div>
             </div>
           </div>
         </section>

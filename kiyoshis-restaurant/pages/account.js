@@ -37,14 +37,14 @@ function AccountField({ label, value }) {
 
 export default function AccountPage() {
   return (
-    <div className={inter.className}>
+    <div className={`${inter.className} min-h-dvh flex flex-col`}>
       <Head>
         <title>Account | Sushi Bai Kiyoshi</title>
       </Head>
 
       <Header active="account" userName="Ben" />
 
-      <main className="bg-[#f6f6f1] min-h-screen">
+      <main className="flex-1 bg-[#f6f6f1]">
         <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
           <h1 className="text-5xl md:text-6xl font-bold tracking-tight">Account</h1>
           <p className="text-gray-500 tracking-[0.2em] uppercase text-sm mt-2">Click to update fields</p>
