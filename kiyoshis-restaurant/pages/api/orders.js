@@ -44,7 +44,6 @@ export async function getAllOrders(res) {
             success: false,
         });
     }
-
 }
 // 3 statuses are Ready, Being Made, Completed
 export async function getOrdersByStatus(res, orderStatus) {

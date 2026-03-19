@@ -1,0 +1,34 @@
+- specific functions / db interactions needed
+
+Users
+    Create Users
+    Fetch user(s)
+    fetch user order
+    fetch users favorites
+    delete user
+    edit user
+
+menuitems
+    CRUD
+    auto update on availbility if food runs out
+    manual availibility updates
+
+inventory
+    fetch total inventory
+    nightly inventory errors
+    CRUD on invididual inventory items
+    Adding types of inventory
+
+employees
+    CRUD
+
+Orders
+    CRUD
+    Add reward
+    Update reward count
+
+Rewards 
+    update rewards options
+
+Suppliers
+    CRUD
