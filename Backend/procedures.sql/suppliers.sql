@@ -6,10 +6,8 @@
 
 -- Create supplier
 CREATE OR REPLACE FUNCTION create_supplier(
-  p_supplier_name VARCHAR(50),
-  p_supplier_email VARCHAR(80),
-  p_supplier_phonenumber VARCHAR(10),
-  p_supplier_notes TEXT
+  p_supplier_name VARCHAR(50), p_supplier_email VARCHAR(80),
+  p_supplier_phonenumber VARCHAR(10), p_supplier_notes TEXT
 )
 RETURNS INTEGER
 LANGUAGE plpgsql
@@ -18,16 +16,12 @@ DECLARE
   v_supplier_id INTEGER;
 BEGIN
   INSERT INTO supplier (
-    supplier_name,
-    supplier_email,
-    supplier_phonenumber,
-    supplier_notes
+    supplier_name, supplier_email,
+    supplier_phonenumber, supplier_notes
   )
   VALUES (
-    p_supplier_name,
-    p_supplier_email,
-    p_supplier_phonenumber,
-    p_supplier_notes
+    p_supplier_name, p_supplier_email,
+    p_supplier_phonenumber, p_supplier_notes
   )
   RETURNING supplier_id INTO v_supplier_id;
 
@@ -38,10 +32,8 @@ $$;
 -- Fetch one supplier
 CREATE OR REPLACE FUNCTION get_supplier_by_id(p_supplier_id INTEGER)
 RETURNS TABLE (
-  supplier_id INTEGER,
-  supplier_name VARCHAR(50),
-  supplier_email VARCHAR(80),
-  supplier_phonenumber VARCHAR(10),
+  supplier_id INTEGER, supplier_name VARCHAR(50),
+  supplier_email VARCHAR(80), supplier_phonenumber VARCHAR(10),
   supplier_notes TEXT
 )
 LANGUAGE plpgsql
@@ -49,11 +41,8 @@ AS $$
 BEGIN
   RETURN QUERY
   SELECT
-    s.supplier_id,
-    s.supplier_name,
-    s.supplier_email,
-    s.supplier_phonenumber,
-    s.supplier_notes
+    s.supplier_id, s.supplier_name, s.supplier_email,
+    s.supplier_phonenumber, s.supplier_notes
   FROM supplier s
   WHERE s.supplier_id = p_supplier_id;
 END;
@@ -62,10 +51,8 @@ $$;
 -- Fetch all suppliers
 CREATE OR REPLACE FUNCTION get_all_suppliers()
 RETURNS TABLE (
-  supplier_id INTEGER,
-  supplier_name VARCHAR(50),
-  supplier_email VARCHAR(80),
-  supplier_phonenumber VARCHAR(10),
+  supplier_id INTEGER, supplier_name VARCHAR(50),
+  supplier_email VARCHAR(80), supplier_phonenumber VARCHAR(10),
   supplier_notes TEXT
 )
 LANGUAGE plpgsql
@@ -73,10 +60,8 @@ AS $$
 BEGIN
   RETURN QUERY
   SELECT
-    s.supplier_id,
-    s.supplier_name,
-    s.supplier_email,
-    s.supplier_phonenumber,
+    s.supplier_id, s.supplier_name,
+    s.supplier_email, s.supplier_phonenumber,
     s.supplier_notes
   FROM supplier s
   ORDER BY s.supplier_id;
@@ -85,10 +70,8 @@ $$;
 
 -- Update supplier
 CREATE OR REPLACE FUNCTION update_supplier(
-  p_supplier_id INTEGER,
-  p_supplier_name VARCHAR(50) DEFAULT NULL,
-  p_supplier_email VARCHAR(80) DEFAULT NULL,
-  p_supplier_phonenumber VARCHAR(10) DEFAULT NULL,
+  p_supplier_id INTEGER, p_supplier_name VARCHAR(50) DEFAULT NULL,
+  p_supplier_email VARCHAR(80) DEFAULT NULL, p_supplier_phonenumber VARCHAR(10) DEFAULT NULL,
   p_supplier_notes TEXT DEFAULT NULL
 )
 RETURNS BOOLEAN

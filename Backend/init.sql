@@ -44,7 +44,7 @@ CREATE TABLE menu_item (
     menu_item_description VARCHAR(140),
     is_item_available BOOLEAN DEFAULT TRUE,
     menu_item_discount_percent DECIMAL(5, 2) DEFAULT 0.00,
-    menu_item_asset_path VARCHAR(140),
+    menu_item_asset_path VARCHAR(140)
 );
 
 CREATE TABLE inventory_item (
