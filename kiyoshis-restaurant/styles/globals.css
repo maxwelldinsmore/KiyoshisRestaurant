@@ -1,9 +1,17 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'SushiFont';
+  src: url('/fonts/SawarabiMincho-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
-  --page-background: #f6f6f1;
+  --page-background: #edf1f7;
 }
 
 html,
@@ -14,6 +22,7 @@ body {
   overflow-x: hidden;
   background: var(--page-background);
   color: var(--foreground);
+  font-family: 'SushiFont', serif;
   line-height: 1.5;
   text-rendering: optimizeLegibility;
 }

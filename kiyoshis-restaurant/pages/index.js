@@ -1,11 +1,10 @@
 import { useState, useEffect, useRef } from "react";
 import Head from "next/head";
 import Image from "next/image";
-import { Inter } from "next/font/google";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
-const inter = Inter({ subsets: ["latin"], weight: ["400", "600", "700"] });
+const inter = { className: "" };
 
 const specials = [
   { title: "Lorem ipsum dolor 1", text: "Aenean consectetur odio in condimentum tristique. Nam hendrerit urnaex." },
@@ -105,7 +104,7 @@ export default function Home() {
   };
 
   return (
-    <div className={`${inter.className} min-h-dvh flex flex-col`}>
+    <div className="min-h-dvh flex flex-col">
       <Head>
         <title>Sushi Bai Kiyoshi</title>
         <meta name="description" content="Sushi Bai Kiyoshi restaurant homepage" />
@@ -113,11 +112,11 @@ export default function Home() {
 
       <Header />
 
-      <main className="flex-1 bg-[#f3f3f1] text-stone-950">
+      <main className="flex-1 bg-[#edf1f7] text-stone-950">
         <div className="w-full">
 
           {/* Hero Banner */}
-          <section className="border-b border-stone-300 bg-[#f3f3f1]">
+          <section className="border-b border-stone-300 bg-[#edf1f7]">
             <div className="pb-8 px-8">
               <div className="relative h-[500px] overflow-hidden border border-stone-300 bg-white sm:h-[600px] md:h-[850px]">
                 <Image
@@ -259,7 +258,7 @@ export default function Home() {
               <div className="relative mt-6 h-96 md:h-[480px] overflow-hidden">
                 <img src="/Website/17.jpg" alt="Loyalty program" className="w-full h-full object-cover" style={{ objectPosition: "center 85%" }} />
                 <div className="absolute top-0 left-0 w-full text-center pt-6">
-                  <button className="bg-white px-10 py-3 text-base font-semibold text-stone-950">Sign Up</button>
+                  <button className="bg-[#152d4b] px-10 py-3 text-base font-semibold text-white">Sign Up</button>
                 </div>
               </div>
             </div>
@@ -270,27 +269,29 @@ export default function Home() {
             <div className="max-w-[92rem] mx-auto px-8">
               <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
                 <div>
-                  <h2 className="text-5xl font-bold leading-tight tracking-tight md:text-6xl">Sushi Bai Kiyoshi</h2>
-                  <p className="mt-7 text-base uppercase tracking-[0.14em] text-stone-700 md:text-lg">Monday - Friday: Time - Time</p>
+                  <h2 className="text-6xl font-bold leading-tight tracking-tight md:text-5xl">Sushi Bai Kiyoshi</h2>
+                  <p className="mt-14 text-base uppercase tracking-widest text-stone-500">Come by!</p>
+                  <p className="mt-1 text-lg uppercase tracking-[0.14em] text-stone-700 md:text-xl">Monday - Friday: Time - Time</p>
 
-                  <h3 className="mt-12 text-3xl font-bold uppercase tracking-tight md:text-4xl">Sign Up Today</h3>
-                  <p className="mt-3 text-base text-stone-500">Lorem ipsum dolor sit amet</p>
+                  <h3 className="mt-20 text-4xl font-bold uppercase tracking-tight md:text-3xl">Sign Up Today</h3>
+                  <p className="mt-3 text-lg text-stone-500">Be the first to discover new rolls, chef's specials, and members‑only promotions crafted just for you.</p>
                   <input
                     type="text"
                     placeholder="Enter your text here"
-                    className="mt-4 w-full border border-stone-400 bg-white px-4 py-3 text-lg text-stone-500 outline-none"
+                    className="mt-4 w-full border border-stone-400 bg-white px-4 py-3 text-xl text-stone-500 outline-none"
                   />
-                  <button className="mt-4 bg-black px-8 py-3 text-lg font-semibold text-white">Click here!</button>
+                  <button className="mt-4 bg-[#152d4b] px-8 py-3 text-xl font-semibold text-white">Click here!</button>
                 </div>
 
                 <div>
-                  <p className="mb-5 text-center text-xl font-semibold uppercase leading-tight tracking-[0.1em] text-stone-700 md:text-2xl">
-                    Agaj Street, 245 - SDJS City
-                    <br />
-                    Happy Place
-                  </p>
-                  <div className="flex min-h-[320px] items-center justify-center border border-stone-300 bg-white text-sm text-stone-400">
-                    Map goes here
+                  <h3 className="text-center text-2xl font-bold tracking-tight md:text-4xl">Find Us</h3>
+                  <div className="mt-4 space-y-1 text-base text-stone-600 text-right">
+                    <p className="font-bold">128 Simcoe Street</p>
+                    <p className="font-bold">Toronto, ON M5H 3G5</p>
+                    <p>Located at the north end of Simcoe Street in Toronto’s Financial District</p>
+                  </div>
+                  <div className="mt-4 overflow-hidden border border-stone-300">
+                    <img src="/Website/map.png" alt="Map to Sushi Bai Kiyoshi" className="w-full h-auto object-cover" />
                   </div>
                 </div>
               </div>

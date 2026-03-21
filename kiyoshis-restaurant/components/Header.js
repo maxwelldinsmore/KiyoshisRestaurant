@@ -41,7 +41,7 @@ export default function Header({ active = "", userName = "", title = "" }) {
 
             <Link
               href="/menu"
-              className="rounded-full border border-neutral-950 px-5 py-2 text-base sm:text-lg font-semibold text-neutral-950 transition-colors hover:bg-neutral-950 hover:text-white"
+              className="rounded-full border border-[#152d4b] px-5 py-2 text-base sm:text-lg font-semibold text-[#152d4b] transition-colors hover:bg-[#152d4b] hover:text-white"
             >
               Order Now
             </Link>
