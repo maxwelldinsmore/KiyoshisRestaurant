@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Head from "next/head";
 import Image from "next/image";
 import { Inter } from "next/font/google";
@@ -9,16 +9,24 @@ const inter = Inter({ subsets: ["latin"], weight: ["400", "600", "700"] });
 
 const specials = [
   { title: "Lorem ipsum dolor 1", text: "Aenean consectetur odio in condimentum tristique. Nam hendrerit urnaex." },
-  { title: "Lorem ipsum dolor 1ss", text: "Aenean consectetur odio in condimentum tristique. Nam hendrerit urnaex." },
-  { title: "Lorem ipsum dolor 1sad", text: "Aenean consectetur odio in condimentum tristique. Nam hendrerit urnaex." },
-  { title: "Lorem ipsum dolor asd1", text: "Aenean consectetur odio in condimentum tristique. Nam hendrerit urnaex." },
+  { title: "Lorem ipsum dolor 2", text: "Aenean consectetur odio in condimentum tristique. Nam hendrerit urnaex." },
+  { title: "Lorem ipsum dolor 3", text: "Aenean consectetur odio in condimentum tristique. Nam hendrerit urnaex." },
+  { title: "Lorem ipsum dolor 4", text: "Aenean consectetur odio in condimentum tristique. Nam hendrerit urnaex." },
+  { title: "Lorem ipsum dolor 5", text: "Aenean consectetur odio in condimentum tristique. Nam hendrerit urnaex." },
+  { title: "Lorem ipsum dolor 6", text: "Aenean consectetur odio in condimentum tristique. Nam hendrerit urnaex." },
+  { title: "Lorem ipsum dolor 7", text: "Aenean consectetur odio in condimentum tristique. Nam hendrerit urnaex." },
+  { title: "Lorem ipsum dolor 8", text: "Aenean consectetur odio in condimentum tristique. Nam hendrerit urnaex." },
 ];
 
 const favourites = [
   { title: "Lorem ipsum dolor 1", text: "Aenean consectetur odio in condimentum tristique. Nam hendrerit urnaex." },
-  { title: "Lorem ipsum dolor 1", text: "Aenean consectetur odio in condimentum tristique. Nam hendrerit urnaex." },
-  { title: "Lorem ipsum dolor 1", text: "Aenean consectetur odio in condimentum tristique. Nam hendrerit urnaex." },
-  { title: "Lorem ipsum dolor 1", text: "Aenean consectetur odio in condimentum tristique. Nam hendrerit urnaex." },
+  { title: "Lorem ipsum dolor 2", text: "Aenean consectetur odio in condimentum tristique. Nam hendrerit urnaex." },
+  { title: "Lorem ipsum dolor 3", text: "Aenean consectetur odio in condimentum tristique. Nam hendrerit urnaex." },
+  { title: "Lorem ipsum dolor 4", text: "Aenean consectetur odio in condimentum tristique. Nam hendrerit urnaex." },
+  { title: "Lorem ipsum dolor 5", text: "Aenean consectetur odio in condimentum tristique. Nam hendrerit urnaex." },
+  { title: "Lorem ipsum dolor 6", text: "Aenean consectetur odio in condimentum tristique. Nam hendrerit urnaex." },
+  { title: "Lorem ipsum dolor 7", text: "Aenean consectetur odio in condimentum tristique. Nam hendrerit urnaex." },
+  { title: "Lorem ipsum dolor 8", text: "Aenean consectetur odio in condimentum tristique. Nam hendrerit urnaex." },
 ];
 
 const carouselSlides = [
@@ -72,6 +80,20 @@ function CarouselImage({ src, alt, fallback, style, ...props }) {
 
 export default function Home() {
   const [slideIndex, setSlideIndex] = useState(0);
+  const specialsRef = useRef(null);
+  const favouritesRef = useRef(null);
+  const scrollCards = (ref, dir) => {
+    const el = ref.current;
+    if (!el) return;
+    const maxScroll = el.scrollWidth - el.clientWidth;
+    if (dir === 1 && el.scrollLeft >= maxScroll - 1) {
+      el.scrollTo({ left: 0, behavior: "smooth" });
+    } else if (dir === -1 && el.scrollLeft <= 1) {
+      el.scrollTo({ left: maxScroll, behavior: "smooth" });
+    } else {
+      el.scrollBy({ left: dir * el.clientWidth, behavior: "smooth" });
+    }
+  };
   const currentSlide = carouselSlides[slideIndex];
 
   const previousSlide = () => {
@@ -161,52 +183,82 @@ export default function Home() {
           </section>
 
           {/* Today's Specials */}
-          <section className="py-14 sm:py-16">
+          <section className="pt-3 pb-14 sm:pt-1 sm:pb-16">
             <div className="max-w-[92rem] mx-auto px-8">
               <h2 className="text-center text-5xl font-bold tracking-tight">Today&apos;s Specials</h2>
-              <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-                {specials.map((item, index) => (
-                  <article key={`special-${index}`} className="border border-stone-300 bg-white p-4">
-                    <div className="flex h-32 items-center justify-center border border-stone-300 bg-stone-100 text-sm text-stone-400">
-                      Add image
-                    </div>
-                    <h3 className="mt-4 text-base font-semibold">{item.title}</h3>
-                    <p className="mt-2 text-sm leading-6 text-stone-500">{item.text}</p>
-                  </article>
-                ))}
+              <div className="relative mt-10 px-12">
+                <button
+                  onClick={() => scrollCards(specialsRef, -1)}
+                  aria-label="Scroll left"
+                  className="absolute left-1 top-1/2 -translate-y-1/2 z-10 flex h-10 w-10 items-center justify-center border border-stone-300 bg-white text-2xl shadow-sm hover:bg-stone-100"
+                >‹</button>
+                <div
+                  ref={specialsRef}
+                  className="flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory"
+                  style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+                >
+                  {specials.map((item, index) => (
+                    <article key={`special-${index}`} className="snap-start shrink-0 w-[calc(25%-1.125rem)] border border-stone-300 bg-white p-4">
+                      <div className="flex h-32 items-center justify-center border border-stone-300 bg-stone-100 text-sm text-stone-400">
+                        Add image
+                      </div>
+                      <h3 className="mt-4 text-base font-semibold">{item.title}</h3>
+                      <p className="mt-2 text-sm leading-6 text-stone-500">{item.text}</p>
+                    </article>
+                  ))}
+                </div>
+                <button
+                  onClick={() => scrollCards(specialsRef, 1)}
+                  aria-label="Scroll right"
+                  className="absolute right-1 top-1/2 -translate-y-1/2 z-10 flex h-10 w-10 items-center justify-center border border-stone-300 bg-white text-2xl shadow-sm hover:bg-stone-100"
+                >›</button>
               </div>
             </div>
           </section>
 
           {/* Fan Favourites */}
-          <section className="py-12 sm:py-14">
+          <section className="pt-3 pb-12 sm:pt-1 sm:pb-16">
             <div className="max-w-[92rem] mx-auto px-8">
               <h2 className="text-center text-5xl font-bold tracking-tight">Fan Favourites</h2>
-              <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-                {favourites.map((item, index) => (
-                  <article key={`fav-${index}`} className="border border-stone-300 bg-white p-4">
-                    <div className="flex h-32 items-center justify-center border border-stone-300 bg-stone-100 text-sm text-stone-400">
-                      Add image
-                    </div>
-                    <h3 className="mt-4 text-base font-semibold">{item.title}</h3>
-                    <p className="mt-2 text-sm leading-6 text-stone-500">{item.text}</p>
-                  </article>
-                ))}
+              <div className="relative mt-10 px-12">
+                <button
+                  onClick={() => scrollCards(favouritesRef, -1)}
+                  aria-label="Scroll left"
+                  className="absolute left-1 top-1/2 -translate-y-1/2 z-10 flex h-10 w-10 items-center justify-center border border-stone-300 bg-white text-2xl shadow-sm hover:bg-stone-100"
+                >‹</button>
+                <div
+                  ref={favouritesRef}
+                  className="flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory"
+                  style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+                >
+                  {favourites.map((item, index) => (
+                    <article key={`fav-${index}`} className="snap-start shrink-0 w-[calc(25%-1.125rem)] border border-stone-300 bg-white p-4">
+                      <div className="flex h-32 items-center justify-center border border-stone-300 bg-stone-100 text-sm text-stone-400">
+                        Add image
+                      </div>
+                      <h3 className="mt-4 text-base font-semibold">{item.title}</h3>
+                      <p className="mt-2 text-sm leading-6 text-stone-500">{item.text}</p>
+                    </article>
+                  ))}
+                </div>
+                <button
+                  onClick={() => scrollCards(favouritesRef, 1)}
+                  aria-label="Scroll right"
+                  className="absolute right-1 top-1/2 -translate-y-1/2 z-10 flex h-10 w-10 items-center justify-center border border-stone-300 bg-white text-2xl shadow-sm hover:bg-stone-100"
+                >›</button>
               </div>
             </div>
           </section>
 
           {/* Loyalty */}
-          <section className="pt-16 pb-20">
+          <section className="pt-3 pb-12 sm:pt-1 sm:pb-16">
             <div className="max-w-[92rem] mx-auto px-8">
               <div className="border border-stone-300 bg-white p-6 text-center">
                 <p className="text-2xl font-semibold tracking-tight md:text-3xl">Become Apart of our loyalty program and earn points!</p>
               </div>
-              <div className="mt-6 border border-stone-300 bg-stone-900 p-6">
-                <div className="flex h-64 items-center justify-center bg-stone-700 text-sm text-stone-300 md:h-72">
-                  Add loyalty image here
-                </div>
-                <div className="mt-6 text-center">
+              <div className="relative mt-6 h-96 md:h-[480px] overflow-hidden">
+                <img src="/Website/17.jpg" alt="Loyalty program" className="w-full h-full object-cover" style={{ objectPosition: "center 85%" }} />
+                <div className="absolute top-0 left-0 w-full text-center pt-6">
                   <button className="bg-white px-10 py-3 text-base font-semibold text-stone-950">Sign Up</button>
                 </div>
               </div>
