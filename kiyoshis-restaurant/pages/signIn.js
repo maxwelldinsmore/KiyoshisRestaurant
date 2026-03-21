@@ -64,7 +64,9 @@ export default function SignInPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
-      const data = await res.json();
+
+      let data = {};
+      try { data = await res.json(); } catch { /* non-JSON response */ }
 
       if (res.ok) {
         showToast(true, `Welcome back, ${data.user.firstName}!`);

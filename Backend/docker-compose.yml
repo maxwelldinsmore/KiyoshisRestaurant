@@ -18,6 +18,13 @@ services:
       - ./init.sql:/docker-entrypoint-initdb.d/01-init.sql
       - ./seed_data.sql:/docker-entrypoint-initdb.d/02-seed_data.sql
       - ./orders.sql:/docker-entrypoint-initdb.d/03-orders.sql
+      - ./procedures.sql/users.sql:/docker-entrypoint-initdb.d/04-proc-users.sql
+      - ./procedures.sql/menu_items.sql:/docker-entrypoint-initdb.d/05-proc-menu.sql
+      - ./procedures.sql/orders.sql:/docker-entrypoint-initdb.d/06-proc-orders.sql
+      - ./procedures.sql/inventory.sql:/docker-entrypoint-initdb.d/07-proc-inventory.sql
+      - ./procedures.sql/employees.sql:/docker-entrypoint-initdb.d/08-proc-employees.sql
+      - ./procedures.sql/suppliers.sql:/docker-entrypoint-initdb.d/09-proc-suppliers.sql
+      - ./procedures.sql/rewards.sql:/docker-entrypoint-initdb.d/10-proc-rewards.sql
       # - pgdata:/var/lib/postgresql/data
 
 # volumes:

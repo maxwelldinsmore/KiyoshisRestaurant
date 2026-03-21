@@ -78,7 +78,9 @@ export default function RegisterPage() {
           password: form.password,
         }),
       });
-      const data = await res.json();
+
+      let data = {};
+      try { data = await res.json(); } catch { /* non-JSON response */ }
 
       if (res.ok) {
         showToast(true, 'Account created! Redirecting to sign in...');

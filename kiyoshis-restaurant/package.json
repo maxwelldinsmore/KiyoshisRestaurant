@@ -10,11 +10,13 @@
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
+    "chart.js": "^4.5.1",
     "cookie": "^1.1.1",
     "jsonwebtoken": "^9.0.3",
     "next": "16.1.6",
     "postgres": "^3.4.8",
     "react": "19.2.3",
+    "react-chartkick": "^0.5.4",
     "react-dom": "19.2.3"
   },
   "devDependencies": {

@@ -52,9 +52,9 @@ INSERT INTO menu_item (category_id, menu_item_name, menu_item_price, menu_item_d
 (4, 'Miso Soup', 3.49, 'Traditional soybean soup', TRUE, 0.00, "15.png"),
 (4, 'Seaweed Salad', 5.49, 'Marinated wakame seaweed', TRUE, 0.00, "16.png"),
 -- Beverages
-(5, 'Green Tea', 2.99, 'Hot or iced Japanese green tea', TRUE, 0.00, "17.png"),
-(5, 'Ramune', 3.99, 'Japanese soda, original flavor', TRUE, 0.00, "18.png"),
-(5, 'Sake (Small)', 8.99, 'Premium sake, 180ml', TRUE, 0.00, "19.png"),
+(5, 'Green Tea', 2.99, 'Hot or iced Japanese green tea', TRUE, 0.00, '17.png'),
+(5, 'Ramune', 3.99, 'Japanese soda, original flavor', TRUE, 0.00, '18.png'),
+(5, 'Sake (Small)', 8.99, 'Premium sake, 180ml', TRUE, 0.00, '19.png'),
 -- Desserts
 (6, 'Mochi Ice Cream', 5.99, 'Three pieces, assorted flavors', TRUE, 0.00, "20.png"),
 (6, 'Green Tea Cheesecake', 6.99, 'Matcha-flavored cheesecake', TRUE, 0.00, "21.png");
