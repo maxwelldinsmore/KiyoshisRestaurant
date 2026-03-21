@@ -33,7 +33,7 @@ export default function Header({ active = "", userName = "", title = "" }) {
               </Link>
             ) : (
               <>
-                <Link href="/sign-in" className={getNavClass("sign-in") + " text-base sm:text-lg"}>
+                <Link href="/signIn" className={getNavClass("signIn") + " text-base sm:text-lg"}>
                   Sign In
                 </Link>
               </>

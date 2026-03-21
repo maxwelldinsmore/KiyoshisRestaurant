@@ -23,6 +23,7 @@ CREATE TABLE registered_customer (
     customer_last_name VARCHAR(30) NOT NULL,
     customer_phonenumber VARCHAR(10),
     customer_email VARCHAR(80),
+    customer_password_hash VARCHAR(255),
     contact_method VARCHAR(50),
     number_of_visits SMALLINT DEFAULT 0,
     promo_opt_in BOOLEAN DEFAULT FALSE

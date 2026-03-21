@@ -14,7 +14,7 @@ export default function LicensesPage() {
 
       <Header title="Licences" />
 
-      <main className="flex-1 bg-[#f6f6f1]" aria-label="Licences page">
+      <main className="flex-1 bg-[#edf1f7]" aria-label="Licences page">
         <section className="mx-auto max-w-4xl px-4 py-14 sm:px-6 lg:px-8">
           <h1 className="text-4xl font-bold tracking-tight md:text-5xl">Licences</h1>
           <p className="mt-4 text-base text-stone-600">This is a basic Licences page. Content coming soon.</p>

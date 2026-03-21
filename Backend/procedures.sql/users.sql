@@ -11,7 +11,8 @@ CREATE OR REPLACE FUNCTION create_user(
   p_customer_phonenumber VARCHAR(10),
   p_customer_email VARCHAR(80),
   p_contact_method VARCHAR(50),
-  p_promo_opt_in BOOLEAN DEFAULT FALSE
+  p_promo_opt_in BOOLEAN DEFAULT FALSE,
+  p_password_hash VARCHAR(255) DEFAULT NULL
 )
 RETURNS INTEGER
 LANGUAGE plpgsql
@@ -25,7 +26,8 @@ BEGIN
     customer_phonenumber,
     customer_email,
     contact_method,
-    promo_opt_in
+    promo_opt_in,
+    customer_password_hash
   )
   VALUES (
     p_customer_first_name,
@@ -33,11 +35,37 @@ BEGIN
     p_customer_phonenumber,
     p_customer_email,
     p_contact_method,
-    p_promo_opt_in
+    p_promo_opt_in,
+    p_password_hash
   )
   RETURNING customer_id INTO v_customer_id;
 
   RETURN v_customer_id;
+END;
+$$;
+
+-- Fetch user by email (for authentication)
+CREATE OR REPLACE FUNCTION get_user_by_email(p_email VARCHAR(80))
+RETURNS TABLE (
+  customer_id INTEGER,
+  customer_first_name VARCHAR(30),
+  customer_last_name VARCHAR(30),
+  customer_email VARCHAR(80),
+  customer_password_hash VARCHAR(255)
+)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN QUERY
+  SELECT
+    rc.customer_id,
+    rc.customer_first_name,
+    rc.customer_last_name,
+    rc.customer_email,
+    rc.customer_password_hash
+  FROM registered_customer rc
+  WHERE rc.customer_email = p_email
+  LIMIT 1;
 END;
 $$;
 

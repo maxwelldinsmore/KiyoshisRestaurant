@@ -44,7 +44,7 @@ export default function AccountPage() {
 
       <Header active="account" userName="Ben" />
 
-      <main className="flex-1 bg-[#f6f6f1]">
+      <main className="flex-1 bg-[#edf1f7]">
         <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
           <h1 className="text-5xl md:text-6xl font-bold tracking-tight">Account</h1>
           <p className="text-gray-500 tracking-[0.2em] uppercase text-sm mt-2">Click to update fields</p>

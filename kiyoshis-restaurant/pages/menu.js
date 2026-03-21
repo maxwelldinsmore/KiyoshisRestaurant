@@ -48,7 +48,7 @@ export default function MenuPage() {
 
       <Header active="menu" />
 
-      <main className="flex-1 bg-[#f6f6f1]">
+      <main className="flex-1 bg-[#edf1f7]">
         <section className="border-b border-gray-300 bg-gray-200/60">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-wrap gap-x-8 gap-y-3 text-2xl md:text-3xl font-semibold">
             {categories.map((cat) => (

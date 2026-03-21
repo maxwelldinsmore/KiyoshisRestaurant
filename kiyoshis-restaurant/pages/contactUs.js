@@ -14,7 +14,7 @@ export default function ContactUsPage() {
 
       <Header active="find-us" title="Contact Us" />
 
-      <main className="flex-1 bg-[#f6f6f1]" aria-label="Contact Us page">
+      <main className="flex-1 bg-[#edf1f7]" aria-label="Contact Us page">
         <section className="mx-auto max-w-4xl px-4 py-14 sm:px-6 lg:px-8">
           <h1 className="text-4xl font-bold tracking-tight md:text-5xl">Contact Us</h1>
           <p className="mt-4 text-base text-stone-600">This is a basic Contact Us page. Content coming soon.</p>
