@@ -32,7 +32,14 @@ function ImagePlaceholder({ className = "" }) {
   );
 }
 
+
+import { useState } from "react";
+
+const categories = ["All", "Sushi", "Platters", "Drinks", "Desserts"];
+
 export default function MenuPage() {
+  const [activeCategory, setActiveCategory] = useState("All");
+
   return (
     <div className={`${inter.className} min-h-dvh flex flex-col`}>
       <Head>
@@ -44,11 +51,22 @@ export default function MenuPage() {
       <main className="flex-1 bg-[#f6f6f1]">
         <section className="border-b border-gray-300 bg-gray-200/60">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-wrap gap-x-8 gap-y-3 text-2xl md:text-3xl font-semibold">
-            <span className="border-b-2 border-black pb-1">All</span>
-            <span className="text-gray-500">Sushi</span>
-            <span className="text-gray-500">Platters</span>
-            <span className="text-gray-500">Drinks</span>
-            <span className="text-gray-500">Desserts</span>
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                className={
+                  (activeCategory === cat
+                    ? "border-b-2 border-black text-black pb-1"
+                    : "text-gray-500 hover:text-black hover:border-black/40 border-b-2 border-transparent pb-1") +
+                  " bg-transparent focus:outline-none transition-colors duration-150"
+                }
+                onClick={() => setActiveCategory(cat)}
+                type="button"
+                aria-pressed={activeCategory === cat}
+              >
+                {cat}
+              </button>
+            ))}
           </div>
         </section>
 

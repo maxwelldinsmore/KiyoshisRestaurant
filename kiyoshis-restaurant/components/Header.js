@@ -16,24 +16,24 @@ export default function Header({ active = "", userName = "", title = "" }) {
 
   return (
     <header className="border-b border-neutral-300 bg-white/95">
-      <div className="flex items-center justify-between px-4 py-5">
-        <Link href="/" className="flex items-center gap-3">
-          <Image src="/KiyoshiLogo6.png" alt="Kiyoshi logo" width={130} height={64} className="object-contain" priority />
+      <div className="flex items-center justify-between px-6 py-3">
+        <Link href="/" className="flex items-center gap-5">
+          <Image src="/KiyoshiLogo6.png" alt="Kiyoshi logo" width={145} height={54} className="object-contain" priority />
         </Link>
 
-        <div className="flex flex-wrap items-center gap-4 sm:gap-6">
-          <nav className="flex flex-wrap items-center gap-4 sm:gap-7 md:gap-10">
-            <Link href="/find-us" className={getNavClass("find-us")}>
+        <div className="flex flex-wrap items-center gap-6 sm:gap-8">
+          <nav className="flex flex-wrap items-center gap-6 sm:gap-10 md:gap-14">
+            <Link href="/find-us" className={getNavClass("find-us") + " text-base sm:text-lg"}>
               Find Us
             </Link>
 
             {userName ? (
-              <Link href="/account" className={getNavClass("account")}>
+              <Link href="/account" className={getNavClass("account") + " text-base sm:text-lg"}>
                 Hello, {userName}
               </Link>
             ) : (
               <>
-                <Link href="/sign-in" className={getNavClass("sign-in")}>
+                <Link href="/sign-in" className={getNavClass("sign-in") + " text-base sm:text-lg"}>
                   Sign In
                 </Link>
               </>
@@ -41,7 +41,7 @@ export default function Header({ active = "", userName = "", title = "" }) {
 
             <Link
               href="/menu"
-              className="rounded-full border border-neutral-950 px-4 py-2 text-sm font-semibold text-neutral-950 transition-colors hover:bg-neutral-950 hover:text-white"
+              className="rounded-full border border-neutral-950 px-5 py-2 text-base sm:text-lg font-semibold text-neutral-950 transition-colors hover:bg-neutral-950 hover:text-white"
             >
               Order Now
             </Link>
