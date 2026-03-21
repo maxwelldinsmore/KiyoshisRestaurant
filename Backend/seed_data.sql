@@ -32,32 +32,32 @@ INSERT INTO supplier (supplier_name, supplier_email, supplier_phonenumber, suppl
 -- Insert Menu Items
 INSERT INTO menu_item (category_id, menu_item_name, menu_item_price, menu_item_description, is_item_available, menu_item_discount_percent, menu_item_asset_path) VALUES
 -- Sushi Rolls
-(1, 'California Roll', 8.99, 'Crab, avocado, cucumber', TRUE, 0.00, "1.png"),
-(1, 'Spicy Tuna Roll', 10.99, 'Spicy tuna, cucumber, sesame seeds', TRUE, 0.00, "2.png"),
-(1, 'Dragon Roll', 14.99, 'Eel, cucumber topped with avocado', TRUE, 0.00, "3.png"),
-(1, 'Rainbow Roll', 13.99, 'California roll topped with assorted fish', TRUE, 0.00, "4.png"),
-(1, 'Philadelphia Roll', 9.99, 'Salmon, cream cheese, cucumber', TRUE, 0.00, "5.png"),
+(1, 'California Roll', 8.99, 'Crab, avocado, cucumber', TRUE, 0.00, '1.png'),
+(1, 'Spicy Tuna Roll', 10.99, 'Spicy tuna, cucumber, sesame seeds', TRUE, 0.00, '2.png'),
+(1, 'Dragon Roll', 14.99, 'Eel, cucumber topped with avocado', TRUE, 0.00, '3.png'),
+(1, 'Rainbow Roll', 13.99, 'California roll topped with assorted fish', TRUE, 0.00, '4.png'),
+(1, 'Philadelphia Roll', 9.99, 'Salmon, cream cheese, cucumber', TRUE, 0.00, '5.png'),
 -- Nigiri
-(2, 'Salmon Nigiri', 5.99, 'Two pieces of fresh salmon', TRUE, 0.00, "6.png"),
-(2, 'Tuna Nigiri', 6.99, 'Two pieces of premium tuna', TRUE, 0.00, "7.png"),
-(2, 'Eel Nigiri', 6.99, 'Two pieces of grilled eel', TRUE, 0.00, "8.png"),
-(2, 'Shrimp Nigiri', 5.49, 'Two pieces of cooked shrimp', TRUE, 0.00, "9.png"),
+(2, 'Salmon Nigiri', 5.99, 'Two pieces of fresh salmon', TRUE, 0.00, '6.png'),
+(2, 'Tuna Nigiri', 6.99, 'Two pieces of premium tuna', TRUE, 0.00, '7.png'),
+(2, 'Eel Nigiri', 6.99, 'Two pieces of grilled eel', TRUE, 0.00, '8.png'),
+(2, 'Shrimp Nigiri', 5.49, 'Two pieces of cooked shrimp', TRUE, 0.00, '9.png'),
 -- Sashimi
-(3, 'Salmon Sashimi', 12.99, 'Six pieces of fresh salmon', TRUE, 0.00, "10.png"),
-(3, 'Tuna Sashimi', 14.99, 'Six pieces of premium tuna', TRUE, 0.00, "11.png"),
-(3, 'Mixed Sashimi Platter', 24.99, 'Assorted fresh fish, 12 pieces', TRUE, 0.00, "12.png"),
+(3, 'Salmon Sashimi', 12.99, 'Six pieces of fresh salmon', TRUE, 0.00, '10.png'),
+(3, 'Tuna Sashimi', 14.99, 'Six pieces of premium tuna', TRUE, 0.00, '11.png'),
+(3, 'Mixed Sashimi Platter', 24.99, 'Assorted fresh fish, 12 pieces', TRUE, 0.00, '12.png'),
 -- Appetizers
-(4, 'Edamame', 4.99, 'Steamed soybeans with sea salt', TRUE, 0.00, "13.png"),
-(4, 'Gyoza', 6.99, 'Pan-fried pork dumplings, 6 pieces', TRUE, 0.00, "14.png"),
-(4, 'Miso Soup', 3.49, 'Traditional soybean soup', TRUE, 0.00, "15.png"),
-(4, 'Seaweed Salad', 5.49, 'Marinated wakame seaweed', TRUE, 0.00, "16.png"),
+(4, 'Edamame', 4.99, 'Steamed soybeans with sea salt', TRUE, 0.00, '13.png'),
+(4, 'Gyoza', 6.99, 'Pan-fried pork dumplings, 6 pieces', TRUE, 0.00, '14.png'),
+(4, 'Miso Soup', 3.49, 'Traditional soybean soup', TRUE, 0.00, '15.png'),
+(4, 'Seaweed Salad', 5.49, 'Marinated wakame seaweed', TRUE, 0.00, '16.png'),
 -- Beverages
 (5, 'Green Tea', 2.99, 'Hot or iced Japanese green tea', TRUE, 0.00, '17.png'),
 (5, 'Ramune', 3.99, 'Japanese soda, original flavor', TRUE, 0.00, '18.png'),
 (5, 'Sake (Small)', 8.99, 'Premium sake, 180ml', TRUE, 0.00, '19.png'),
 -- Desserts
-(6, 'Mochi Ice Cream', 5.99, 'Three pieces, assorted flavors', TRUE, 0.00, "20.png"),
-(6, 'Green Tea Cheesecake', 6.99, 'Matcha-flavored cheesecake', TRUE, 0.00, "21.png");
+(6, 'Mochi Ice Cream', 5.99, 'Three pieces, assorted flavors', TRUE, 0.00, '20.png'),
+(6, 'Green Tea Cheesecake', 6.99, 'Matcha-flavored cheesecake', TRUE, 0.00, '21.png');
 
 -- Insert Inventory Items
 INSERT INTO inventory_item (supplier_id, purchase_date, quantity_available, unit_weight_available) VALUES

@@ -32,20 +32,16 @@ $$;
 -- Fetch one reward option
 CREATE OR REPLACE FUNCTION get_reward_by_id(p_reward_id INTEGER)
 RETURNS TABLE (
-  reward_id INTEGER,
-  menu_item_id INTEGER,
-  menu_item_name VARCHAR(100),
-  required_visits SMALLINT
+  reward_id INTEGER, menu_item_id INTEGER,
+  menu_item_name VARCHAR(100), required_visits SMALLINT
 )
 LANGUAGE plpgsql
 AS $$
 BEGIN
   RETURN QUERY
   SELECT
-    r.reward_id,
-    r.menu_item_id,
-    mi.menu_item_name,
-    r.required_visits
+    r.reward_id, r.menu_item_id,
+    mi.menu_item_name, r.required_visits
   FROM rewards r
   LEFT JOIN menu_item mi ON mi.menu_item_id = r.menu_item_id
   WHERE r.reward_id = p_reward_id;
@@ -55,20 +51,16 @@ $$;
 -- Fetch all reward options
 CREATE OR REPLACE FUNCTION get_all_rewards()
 RETURNS TABLE (
-  reward_id INTEGER,
-  menu_item_id INTEGER,
-  menu_item_name VARCHAR(100),
-  required_visits SMALLINT
+  reward_id INTEGER, menu_item_id INTEGER,
+  menu_item_name VARCHAR(100), required_visits SMALLINT
 )
 LANGUAGE plpgsql
 AS $$
 BEGIN
   RETURN QUERY
   SELECT
-    r.reward_id,
-    r.menu_item_id,
-    mi.menu_item_name,
-    r.required_visits
+    r.reward_id, r.menu_item_id,
+    mi.menu_item_name, r.required_visits
   FROM rewards r
   LEFT JOIN menu_item mi ON mi.menu_item_id = r.menu_item_id
   ORDER BY r.reward_id;
@@ -77,8 +69,7 @@ $$;
 
 -- Update reward option
 CREATE OR REPLACE FUNCTION update_reward_option(
-  p_reward_id INTEGER,
-  p_menu_item_id INTEGER DEFAULT NULL,
+  p_reward_id INTEGER, p_menu_item_id INTEGER DEFAULT NULL,
   p_required_visits SMALLINT DEFAULT NULL
 )
 RETURNS BOOLEAN

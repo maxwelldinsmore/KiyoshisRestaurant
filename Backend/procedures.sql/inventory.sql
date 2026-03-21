@@ -18,16 +18,12 @@ DECLARE
   v_inventory_item_id INTEGER;
 BEGIN
   INSERT INTO inventory_item (
-    supplier_id,
-    purchase_date,
-    quantity_available,
-    unit_weight_available
+    supplier_id, purchase_date,
+    quantity_available, unit_weight_available
   )
   VALUES (
-    p_supplier_id,
-    p_purchase_date,
-    p_quantity_available,
-    p_unit_weight_available
+    p_supplier_id, p_purchase_date,
+    p_quantity_available, p_unit_weight_available
   )
   RETURNING inventory_item_id INTO v_inventory_item_id;
 
@@ -38,24 +34,18 @@ $$;
 -- Fetch one inventory item
 CREATE OR REPLACE FUNCTION get_inventory_item_by_id(p_inventory_item_id INTEGER)
 RETURNS TABLE (
-  inventory_item_id INTEGER,
-  supplier_id INTEGER,
-  supplier_name VARCHAR(50),
-  purchase_date TIMESTAMP,
-  quantity_available SMALLINT,
-  unit_weight_available DECIMAL(8, 4)
+  inventory_item_id INTEGER, supplier_id INTEGER,
+  supplier_name VARCHAR(50), purchase_date TIMESTAMP,
+  quantity_available SMALLINT, unit_weight_available DECIMAL(8, 4)
 )
 LANGUAGE plpgsql
 AS $$
 BEGIN
   RETURN QUERY
   SELECT
-    ii.inventory_item_id,
-    ii.supplier_id,
-    s.supplier_name,
-    ii.purchase_date,
-    ii.quantity_available,
-    ii.unit_weight_available
+    ii.inventory_item_id, ii.supplier_id,
+    s.supplier_name, ii.purchase_date,
+    ii.quantity_available, ii.unit_weight_available
   FROM inventory_item ii
   LEFT JOIN supplier s ON s.supplier_id = ii.supplier_id
   WHERE ii.inventory_item_id = p_inventory_item_id;
@@ -65,24 +55,18 @@ $$;
 -- Fetch all inventory items
 CREATE OR REPLACE FUNCTION get_all_inventory_items()
 RETURNS TABLE (
-  inventory_item_id INTEGER,
-  supplier_id INTEGER,
-  supplier_name VARCHAR(50),
-  purchase_date TIMESTAMP,
-  quantity_available SMALLINT,
-  unit_weight_available DECIMAL(8, 4)
+  inventory_item_id INTEGER, supplier_id INTEGER,
+  supplier_name VARCHAR(50), purchase_date TIMESTAMP,
+  quantity_available SMALLINT, unit_weight_available DECIMAL(8, 4)
 )
 LANGUAGE plpgsql
 AS $$
 BEGIN
   RETURN QUERY
   SELECT
-    ii.inventory_item_id,
-    ii.supplier_id,
-    s.supplier_name,
-    ii.purchase_date,
-    ii.quantity_available,
-    ii.unit_weight_available
+    ii.inventory_item_id, ii.supplier_id,
+    s.supplier_name, ii.purchase_date,
+    ii.quantity_available, ii.unit_weight_available
   FROM inventory_item ii
   LEFT JOIN supplier s ON s.supplier_id = ii.supplier_id
   ORDER BY ii.inventory_item_id;
@@ -91,10 +75,8 @@ $$;
 
 -- Update inventory item
 CREATE OR REPLACE FUNCTION update_inventory_item(
-  p_inventory_item_id INTEGER,
-  p_supplier_id INTEGER DEFAULT NULL,
-  p_purchase_date TIMESTAMP DEFAULT NULL,
-  p_quantity_available SMALLINT DEFAULT NULL,
+  p_inventory_item_id INTEGER, p_supplier_id INTEGER DEFAULT NULL,
+  p_purchase_date TIMESTAMP DEFAULT NULL, p_quantity_available SMALLINT DEFAULT NULL,
   p_unit_weight_available DECIMAL(8, 4) DEFAULT NULL
 )
 RETURNS BOOLEAN

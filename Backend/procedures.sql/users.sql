@@ -132,32 +132,21 @@ $$;
 -- Fetch all orders for one user
 CREATE OR REPLACE FUNCTION get_user_orders(p_customer_id INTEGER)
 RETURNS TABLE (
-  order_id INTEGER,
-  customer_id INTEGER,
-  employee_id INTEGER,
-  guest_phone_num VARCHAR(20),
-  guest_email VARCHAR(100),
-  order_total DECIMAL(10, 2),
-  order_date TIMESTAMP,
-  pick_up_time TIMESTAMP,
-  order_status VARCHAR(50),
-  order_type VARCHAR(50)
+  order_id INTEGER, customer_id INTEGER,
+  employee_id INTEGER, guest_phone_num VARCHAR(20),
+  guest_email VARCHAR(100), order_total DECIMAL(10, 2),
+  order_date TIMESTAMP, pick_up_time TIMESTAMP,
+  order_status VARCHAR(50), order_type VARCHAR(50)
 )
 LANGUAGE plpgsql
 AS $$
 BEGIN
   RETURN QUERY
   SELECT
-    o.order_id,
-    o.customer_id,
-    o.employee_id,
-    o.guest_phone_num,
-    o.guest_email,
-    o.order_total,
-    o.order_date,
-    o.pick_up_time,
-    o.order_status,
-    o.order_type
+    o.order_id, o.customer_id, o.employee_id,
+    o.guest_phone_num, o.guest_email, o.order_total,
+    o.order_date, o.pick_up_time,
+    o.order_status, o.order_type
   FROM orders o
   WHERE o.customer_id = p_customer_id
   ORDER BY o.order_date DESC, o.order_id DESC;
@@ -167,24 +156,18 @@ $$;
 -- Fetch user favorites
 CREATE OR REPLACE FUNCTION get_user_favorites(p_customer_id INTEGER)
 RETURNS TABLE (
-  preference_id INTEGER,
-  menu_item_id INTEGER,
-  menu_item_name VARCHAR(100),
-  menu_item_price DECIMAL(7, 2),
-  menu_item_description VARCHAR(140),
-  is_item_available BOOLEAN
+  preference_id INTEGER, menu_item_id INTEGER,
+  menu_item_name VARCHAR(100), menu_item_price DECIMAL(7, 2),
+  menu_item_description VARCHAR(140), is_item_available BOOLEAN
 )
 LANGUAGE plpgsql
 AS $$
 BEGIN
   RETURN QUERY
   SELECT
-    cp.preference_id,
-    mi.menu_item_id,
-    mi.menu_item_name,
-    mi.menu_item_price,
-    mi.menu_item_description,
-    mi.is_item_available
+    cp.preference_id, mi.menu_item_id,
+    mi.menu_item_name, mi.menu_item_price,
+    mi.menu_item_description, mi.is_item_available
   FROM customer_preference cp
   JOIN menu_item mi ON mi.menu_item_id = cp.menu_item_id
   WHERE cp.customer_id = p_customer_id
@@ -194,12 +177,9 @@ $$;
 
 -- Edit user
 CREATE OR REPLACE FUNCTION update_user(
-  p_customer_id INTEGER,
-  p_customer_first_name VARCHAR(30) DEFAULT NULL,
-  p_customer_last_name VARCHAR(30) DEFAULT NULL,
-  p_customer_phonenumber VARCHAR(10) DEFAULT NULL,
-  p_customer_email VARCHAR(80) DEFAULT NULL,
-  p_contact_method VARCHAR(50) DEFAULT NULL,
+  p_customer_id INTEGER, p_customer_first_name VARCHAR(30) DEFAULT NULL,
+  p_customer_last_name VARCHAR(30) DEFAULT NULL, p_customer_phonenumber VARCHAR(10) DEFAULT NULL,
+  p_customer_email VARCHAR(80) DEFAULT NULL, p_contact_method VARCHAR(50) DEFAULT NULL,
   p_promo_opt_in BOOLEAN DEFAULT NULL
 )
 RETURNS BOOLEAN
