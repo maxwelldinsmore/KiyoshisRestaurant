@@ -9,7 +9,7 @@ Upcoming tasks
 | Max  | Creating fake data for site  | Partially Done |
 | Max | Transaction creation | ---|
 | Max | API implementation | ---|
-| Lithasha| General Page Content (Footer Nav Bar, Main Textblocks) | ---|
+| Alyssa| General Page Content (Footer Nav Bar, Main Textblocks) | ---|
 | Alyssa| Login / Register Pages | ---|
 | Alyssa| Privacy Policies | ---|
 | Alyssa| Accessibility | ---|
