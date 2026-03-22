@@ -59,6 +59,9 @@ export default async function handler(req, res) {
 
   } catch (err) {
     console.error('Register API error:', err);
-    return res.status(500).json({ message: 'Server error. Please try again.' });
+    return res.status(500).json({
+      message: 'Server error. Please try again.',
+      ...(process.env.NODE_ENV === 'development' && { detail: err.message }),
+    });
   }
 }

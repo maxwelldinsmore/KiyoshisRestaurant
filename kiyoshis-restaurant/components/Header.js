@@ -18,12 +18,12 @@ export default function Header({ active = "", userName = "", title = "" }) {
     <header className="border-b border-neutral-300 bg-white/95">
       <div className="flex items-center justify-between px-6 py-3">
         <Link href="/" className="flex items-center gap-5">
-          <Image src="/KiyoshiLogo6.png" alt="Kiyoshi logo" width={145} height={54} className="object-contain" priority />
+          <Image src="/KiyoshiLogo6.png" alt="Kiyoshi logo" width={145} height={54} style={{ width: '145px', height: 'auto' }} className="object-contain" priority />
         </Link>
 
         <div className="flex flex-wrap items-center gap-6 sm:gap-8">
           <nav className="flex flex-wrap items-center gap-6 sm:gap-10 md:gap-14">
-            <Link href="/find-us" className={getNavClass("find-us") + " text-base sm:text-lg"}>
+            <Link href="/findUs" className={getNavClass("findUs") + " text-base sm:text-lg"}>
               Find Us
             </Link>
 

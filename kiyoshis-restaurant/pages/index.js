@@ -1,304 +1,267 @@
-import { useState, useEffect, useRef } from "react";
 import Head from "next/head";
 import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import MenuHighlightCard from "@/components/layout/menuCards";
+import {
+  fanFavorites,
+  homeQuickActions,
+  restaurantContactDetails,
+  restaurantHours,
+  todaysSpecials,
+} from "@/data/homePageContent";
 
-const inter = { className: "" };
+function LoopingMenuRow({ title, items = [], rowKey }) {
+  const [startIndex, setStartIndex] = useState(0);
 
-const specials = [
-  { title: "Lorem ipsum dolor 1", text: "Aenean consectetur odio in condimentum tristique. Nam hendrerit urnaex." },
-  { title: "Lorem ipsum dolor 2", text: "Aenean consectetur odio in condimentum tristique. Nam hendrerit urnaex." },
-  { title: "Lorem ipsum dolor 3", text: "Aenean consectetur odio in condimentum tristique. Nam hendrerit urnaex." },
-  { title: "Lorem ipsum dolor 4", text: "Aenean consectetur odio in condimentum tristique. Nam hendrerit urnaex." },
-  { title: "Lorem ipsum dolor 5", text: "Aenean consectetur odio in condimentum tristique. Nam hendrerit urnaex." },
-  { title: "Lorem ipsum dolor 6", text: "Aenean consectetur odio in condimentum tristique. Nam hendrerit urnaex." },
-  { title: "Lorem ipsum dolor 7", text: "Aenean consectetur odio in condimentum tristique. Nam hendrerit urnaex." },
-  { title: "Lorem ipsum dolor 8", text: "Aenean consectetur odio in condimentum tristique. Nam hendrerit urnaex." },
-];
+  if (!items.length) {
+    return null;
+  }
 
-const favourites = [
-  { title: "Lorem ipsum dolor 1", text: "Aenean consectetur odio in condimentum tristique. Nam hendrerit urnaex." },
-  { title: "Lorem ipsum dolor 2", text: "Aenean consectetur odio in condimentum tristique. Nam hendrerit urnaex." },
-  { title: "Lorem ipsum dolor 3", text: "Aenean consectetur odio in condimentum tristique. Nam hendrerit urnaex." },
-  { title: "Lorem ipsum dolor 4", text: "Aenean consectetur odio in condimentum tristique. Nam hendrerit urnaex." },
-  { title: "Lorem ipsum dolor 5", text: "Aenean consectetur odio in condimentum tristique. Nam hendrerit urnaex." },
-  { title: "Lorem ipsum dolor 6", text: "Aenean consectetur odio in condimentum tristique. Nam hendrerit urnaex." },
-  { title: "Lorem ipsum dolor 7", text: "Aenean consectetur odio in condimentum tristique. Nam hendrerit urnaex." },
-  { title: "Lorem ipsum dolor 8", text: "Aenean consectetur odio in condimentum tristique. Nam hendrerit urnaex." },
-];
+  const visibleCount = Math.min(3, items.length);
+  const visibleItems = Array.from({ length: visibleCount }, (_, offset) => items[(startIndex + offset) % items.length]);
+  const canRotate = items.length > 1;
 
-const carouselSlides = [
-  {
-    title: "Lorem ipsum dolor sit amet",
-    text: "Aenean consectetur odio in condimentum tristique. Nam hendrerit urna exon.",
-    image: "/Website/9.jpg",
-  },
-  {
-    title: "Fresh ingredients. Bold flavor.",
-    text: "Use this slide for your second hero message once images are added.",
-    image: "/Website/10.jpg",
-  },
-  {
-    title: "Crafted daily in our kitchen",
-    text: "Use this slide for promotions, daily specials, or chef highlights.",
-    image: "/Website/11.jpg",
-  },
-  {
-    title: "Crafted daily in our kitchen",
-    text: "Use this slide for promotions, daily specials, or chef highlights.",
-    image: "/Website/13.jpg",
-  },
-];
+  const showPrevious = () => {
+    if (!canRotate) {
+      return;
+    }
+    setStartIndex((current) => (current - 1 + items.length) % items.length);
+  };
 
-// Simple fallback image component for carousel
-function CarouselImage({ src, alt, fallback, style, ...props }) {
-  const [imgSrc, setImgSrc] = useState(src);
-  useEffect(() => {
-    setImgSrc(src);
-  }, [src]);
+  const showNext = () => {
+    if (!canRotate) {
+      return;
+    }
+    setStartIndex((current) => (current + 1) % items.length);
+  };
+
   return (
-    <img
-      {...props}
-      src={imgSrc}
-      alt={alt}
-      onError={() => {
-        if (imgSrc !== fallback) setImgSrc(fallback);
-      }}
-      style={{
-        objectFit: "cover",
-        objectPosition: "center",
-        width: "100%",
-        height: "100%",
-        background: "#222",
-        ...style,
-      }}
-    />
+    <div className="mt-8 first:mt-0">
+      <div className="flex items-center justify-between gap-3">
+        <h3 className="text-xl font-semibold text-white sm:text-2xl">{title}</h3>
+      </div>
+
+      <div className="mt-4 grid gap-5 md:grid-cols-3">
+        {visibleItems.map((item, index) => (
+          <MenuHighlightCard key={`${rowKey}-${item.name}-${startIndex}-${index}`} item={item} />
+        ))}
+      </div>
+
+      <div className="mt-4 flex items-center justify-between">
+        <button
+          type="button"
+          onClick={showPrevious}
+          aria-label={`Show previous ${title.toLowerCase()}`}
+          className="flex h-10 w-10 items-center justify-center border border-[#8da5bf] bg-[#17324f] text-lg text-white transition hover:bg-[#21486f] disabled:cursor-not-allowed disabled:opacity-45"
+          disabled={!canRotate}
+        >
+          {"<"}
+        </button>
+        <button
+          type="button"
+          onClick={showNext}
+          aria-label={`Show next ${title.toLowerCase()}`}
+          className="flex h-10 w-10 items-center justify-center border border-[#8da5bf] bg-[#17324f] text-lg text-white transition hover:bg-[#21486f] disabled:cursor-not-allowed disabled:opacity-45"
+          disabled={!canRotate}
+        >
+          {">"}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function QuickActionIcon({ title }) {
+  if (title === "Order Pickup") {
+    return (
+      <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+        <path d="M5 7h14l-1.2 10.2a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8L5 7Z" />
+        <path d="M9 7a3 3 0 0 1 6 0" />
+      </svg>
+    );
+  }
+
+  if (title === "Contact Us") {
+    return (
+      <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+        <rect x="3.8" y="5.8" width="16.4" height="12.4" rx="2" />
+        <path d="m5.5 7.4 6.5 5.2 6.5-5.2" />
+      </svg>
+    );
+  }
+
+  if (title === "Find Us") {
+    return (
+      <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+        <path d="M12 21s7-5.7 7-11a7 7 0 1 0-14 0c0 5.3 7 11 7 11Z" />
+        <circle cx="12" cy="10" r="2.3" />
+      </svg>
+    );
+  }
+
+  return (
+    <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+      <path d="M12 21l-6.8-3.6V7.6L12 4l6.8 3.6v9.8L12 21Z" />
+      <path d="M8.8 11.8 11 14l4.2-4.2" />
+    </svg>
   );
 }
 
 export default function Home() {
-  const [slideIndex, setSlideIndex] = useState(0);
-  const specialsRef = useRef(null);
-  const favouritesRef = useRef(null);
-  const scrollCards = (ref, dir) => {
-    const el = ref.current;
-    if (!el) return;
-    const maxScroll = el.scrollWidth - el.clientWidth;
-    if (dir === 1 && el.scrollLeft >= maxScroll - 1) {
-      el.scrollTo({ left: 0, behavior: "smooth" });
-    } else if (dir === -1 && el.scrollLeft <= 1) {
-      el.scrollTo({ left: maxScroll, behavior: "smooth" });
-    } else {
-      el.scrollBy({ left: dir * el.clientWidth, behavior: "smooth" });
-    }
-  };
-  const currentSlide = carouselSlides[slideIndex];
-
-  const previousSlide = () => {
-    setSlideIndex((current) => (current === 0 ? carouselSlides.length - 1 : current - 1));
-  };
-
-  const nextSlide = () => {
-    setSlideIndex((current) => (current === carouselSlides.length - 1 ? 0 : current + 1));
-  };
+  const addressDetail = restaurantContactDetails.find((item) => item.label === "Address");
+  const sidebarContactDetails = restaurantContactDetails.filter((item) => item.label !== "Address");
 
   return (
-    <div className="min-h-dvh flex flex-col">
+    <div className="min-h-dvh flex flex-col bg-[#edf3f8] text-[#102841]">
       <Head>
         <title>Sushi Bai Kiyoshi</title>
-        <meta name="description" content="Sushi Bai Kiyoshi restaurant homepage" />
+        <meta
+          name="description"
+          content="Order sushi pickup from Sushi Bai Kiyoshi in downtown Toronto. View menu highlights, opening hours, and contact details in one place."
+        />
       </Head>
 
       <Header />
 
-      <main className="flex-1 bg-[#edf1f7] text-stone-950">
-        <div className="w-full">
+      <main className="flex-1">
+        <section className="border-b border-[#c7d3e0] bg-[#edf3f8]">
+          <div className="mx-auto max-w-[92rem] px-6 py-8 lg:px-8 lg:py-10">
+            <div className="relative min-h-[360px] overflow-hidden border border-[#c7d3e0] bg-white shadow-[0_30px_60px_rgba(18,38,63,0.14)] sm:min-h-[460px]">
+              <Image
+                src="/SushiBaiKiyoshiBanner4.png"
+                alt="Sushi Bai Kiyoshi banner"
+                fill
+                priority
+                sizes="100vw"
+                className="object-cover"
+              />
+              <div className="absolute inset-0 p-6">
+                <div className="relative h-full text-center">
+                  <div className="absolute left-1/2 top-1/2 w-full -translate-x-1/2 -translate-y-1/2">
+                    <h1 className="text-5xl font-semibold tracking-tight text-white [text-shadow:0_4px_16px_rgba(0,0,0,0.6)] sm:text-6xl lg:text-7xl">
+                      Sushi Bai
+                    </h1>
+                    <p className="mt-3 text-6xl font-semibold tracking-tight text-white [text-shadow:0_4px_16px_rgba(0,0,0,0.6)] sm:text-7xl lg:text-8xl">
+                      Kiyoshi | 清
+                    </p>
+                  </div>
 
-          {/* Hero Banner */}
-          <section className="border-b border-stone-300 bg-[#edf1f7]">
-            <div className="pb-8 px-8">
-              <div className="relative h-[500px] overflow-hidden border border-stone-300 bg-white sm:h-[600px] md:h-[850px]">
-                <Image
-                  src="/SushiBaiKiyoshiBanner3.png"
-                  alt="Sushi Bai Kiyoshi hero banner"
-                  fill
-                  priority
-                  sizes="100vw"
-                  className="object-cover"
-                />
-              </div>
-            </div>
-          </section>
-
-          {/* Carousel */}
-          <section className="pb-10 sm:pb-14">
-            <div className="max-w-[92rem] mx-auto px-8">
-              <div className="relative overflow-hidden border border-stone-300 bg-black text-white" style={{ height: "600px", minHeight: "400px" }}>
-                <CarouselImage
-                  src={currentSlide.image}
-                  alt={currentSlide.title}
-                  fallback="/fallback-carousel.jpg"
-                  style={{ position: "absolute", inset: 0, zIndex: 0 }}
-                />
-                <div className="absolute inset-0 bg-black/35 z-10" />
-                <div className="absolute bottom-0 left-0 w-full p-6 md:p-10 z-20">
-                  <h2 className="text-4xl font-bold tracking-tight">{currentSlide.title}</h2>
-                  <p className="mt-3 max-w-2xl text-base leading-7 text-stone-100">
-                    {currentSlide.text}
+                  <p className="absolute bottom-8 left-1/2 w-full max-w-3xl -translate-x-1/2 px-4 text-base font-medium tracking-[0.08em] text-white/95 [text-shadow:0_2px_12px_rgba(0,0,0,0.55)] sm:bottom-12 sm:text-lg">
+                    Your Neighbourhood Sushi, Made with Heart.
                   </p>
                 </div>
-                <button
-                  type="button"
-                  onClick={previousSlide}
-                  aria-label="Previous slide"
-                  className="absolute left-4 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/70 bg-black/40 text-2xl transition-colors hover:bg-black/65 z-20"
-                >
-                  ‹
-                </button>
-                <button
-                  type="button"
-                  onClick={nextSlide}
-                  aria-label="Next slide"
-                  className="absolute right-4 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/70 bg-black/40 text-2xl transition-colors hover:bg-black/65 z-20"
-                >
-                  ›
-                </button>
-                <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-2 z-20">
-                  {carouselSlides.map((slide, index) => (
-                    <button
-                      key={slide.title}
-                      type="button"
-                      onClick={() => setSlideIndex(index)}
-                      aria-label={`Go to slide ${index + 1}`}
-                      className={`h-2.5 w-2.5 rounded-full transition-colors ${
-                        index === slideIndex ? "bg-white" : "bg-white/45"
-                      }`}
-                    />
-                  ))}
-                </div>
               </div>
             </div>
-          </section>
+          </div>
+        </section>
 
-          {/* Today's Specials */}
-          <section className="pt-3 pb-14 sm:pt-1 sm:pb-16">
-            <div className="max-w-[92rem] mx-auto px-8">
-              <h2 className="text-center text-5xl font-bold tracking-tight">Today&apos;s Specials</h2>
-              <div className="relative mt-10 px-12">
-                <button
-                  onClick={() => scrollCards(specialsRef, -1)}
-                  aria-label="Scroll left"
-                  className="absolute left-1 top-1/2 -translate-y-1/2 z-10 flex h-10 w-10 items-center justify-center border border-stone-300 bg-white text-2xl shadow-sm hover:bg-stone-100"
-                >‹</button>
-                <div
-                  ref={specialsRef}
-                  className="flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory"
-                  style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-                >
-                  {specials.map((item, index) => (
-                    <article key={`special-${index}`} className="snap-start shrink-0 w-[calc(25%-1.125rem)] border border-stone-300 bg-white p-4">
-                      <div className="flex h-32 items-center justify-center border border-stone-300 bg-stone-100 text-sm text-stone-400">
-                        Add image
-                      </div>
-                      <h3 className="mt-4 text-base font-semibold">{item.title}</h3>
-                      <p className="mt-2 text-sm leading-6 text-stone-500">{item.text}</p>
-                    </article>
-                  ))}
-                </div>
-                <button
-                  onClick={() => scrollCards(specialsRef, 1)}
-                  aria-label="Scroll right"
-                  className="absolute right-1 top-1/2 -translate-y-1/2 z-10 flex h-10 w-10 items-center justify-center border border-stone-300 bg-white text-2xl shadow-sm hover:bg-stone-100"
-                >›</button>
-              </div>
-            </div>
-          </section>
-
-          {/* Fan Favourites */}
-          <section className="pt-3 pb-12 sm:pt-1 sm:pb-16">
-            <div className="max-w-[92rem] mx-auto px-8">
-              <h2 className="text-center text-5xl font-bold tracking-tight">Fan Favourites</h2>
-              <div className="relative mt-10 px-12">
-                <button
-                  onClick={() => scrollCards(favouritesRef, -1)}
-                  aria-label="Scroll left"
-                  className="absolute left-1 top-1/2 -translate-y-1/2 z-10 flex h-10 w-10 items-center justify-center border border-stone-300 bg-white text-2xl shadow-sm hover:bg-stone-100"
-                >‹</button>
-                <div
-                  ref={favouritesRef}
-                  className="flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory"
-                  style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-                >
-                  {favourites.map((item, index) => (
-                    <article key={`fav-${index}`} className="snap-start shrink-0 w-[calc(25%-1.125rem)] border border-stone-300 bg-white p-4">
-                      <div className="flex h-32 items-center justify-center border border-stone-300 bg-stone-100 text-sm text-stone-400">
-                        Add image
-                      </div>
-                      <h3 className="mt-4 text-base font-semibold">{item.title}</h3>
-                      <p className="mt-2 text-sm leading-6 text-stone-500">{item.text}</p>
-                    </article>
-                  ))}
-                </div>
-                <button
-                  onClick={() => scrollCards(favouritesRef, 1)}
-                  aria-label="Scroll right"
-                  className="absolute right-1 top-1/2 -translate-y-1/2 z-10 flex h-10 w-10 items-center justify-center border border-stone-300 bg-white text-2xl shadow-sm hover:bg-stone-100"
-                >›</button>
-              </div>
-            </div>
-          </section>
-
-          {/* Loyalty */}
-          <section className="pt-3 pb-12 sm:pt-1 sm:pb-16">
-            <div className="max-w-[92rem] mx-auto px-8">
-              <div className="border border-stone-300 bg-white p-6 text-center">
-                <p className="text-2xl font-semibold tracking-tight md:text-3xl">Become Apart of our loyalty program and earn points!</p>
-              </div>
-              <div className="relative mt-6 h-96 md:h-[480px] overflow-hidden">
-                <img src="/Website/17.jpg" alt="Loyalty program" className="w-full h-full object-cover" style={{ objectPosition: "center 85%" }} />
-                <div className="absolute top-0 left-0 w-full text-center pt-6">
-                  <button className="bg-[#152d4b] px-10 py-3 text-base font-semibold text-white">Sign Up</button>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* Find Us */}
-          <section id="find-us" className="pb-20">
-            <div className="max-w-[92rem] mx-auto px-8">
-              <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
-                <div>
-                  <h2 className="text-6xl font-bold leading-tight tracking-tight md:text-5xl">Sushi Bai Kiyoshi</h2>
-                  <p className="mt-14 text-base uppercase tracking-widest text-stone-500">Come by!</p>
-                  <p className="mt-1 text-lg uppercase tracking-[0.14em] text-stone-700 md:text-xl">Monday - Friday: Time - Time</p>
-
-                  <h3 className="mt-20 text-4xl font-bold uppercase tracking-tight md:text-3xl">Sign Up Today</h3>
-                  <p className="mt-3 text-lg text-stone-500">Be the first to discover new rolls, chef's specials, and members‑only promotions crafted just for you.</p>
-                  <input
-                    type="text"
-                    placeholder="Enter your text here"
-                    className="mt-4 w-full border border-stone-400 bg-white px-4 py-3 text-xl text-stone-500 outline-none"
-                  />
-                  <button className="mt-4 bg-[#152d4b] px-8 py-3 text-xl font-semibold text-white">Click here!</button>
-                </div>
-
-                <div>
-                  <h3 className="text-center text-2xl font-bold tracking-tight md:text-4xl">Find Us</h3>
-                  <div className="mt-4 space-y-1 text-base text-stone-600 text-right">
-                    <p className="font-bold">128 Simcoe Street</p>
-                    <p className="font-bold">Toronto, ON M5H 3G5</p>
-                    <p>Located at the north end of Simcoe Street in Toronto’s Financial District</p>
+        <section className="border-b border-[#c7d3e0] bg-[#f5f9fd]">
+          <div className="mx-auto grid max-w-[92rem] gap-4 px-6 py-8 sm:grid-cols-2 lg:grid-cols-4 lg:px-8">
+            {homeQuickActions.map((action) => (
+              <Link
+                key={action.title}
+                href={action.href}
+                className="group border border-[#c7d3e0] bg-white p-5 transition hover:-translate-y-0.5 hover:shadow-[0_16px_24px_rgba(18,38,63,0.12)]"
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full border border-[#cfdae7] bg-[#f3f7fb] text-[#102841]">
+                    <QuickActionIcon title={action.title} />
                   </div>
-                  <div className="mt-4 overflow-hidden border border-stone-300">
-                    <img src="/Website/map.png" alt="Map to Sushi Bai Kiyoshi" className="w-full h-auto object-cover" />
-                  </div>
+                  <span className="text-sm text-[#6b8198] transition group-hover:text-[#102841]">&gt;</span>
                 </div>
+                <h2 className="mt-3 text-xl font-semibold text-[#102841]">{action.title}</h2>
+                <p className="mt-2 text-sm leading-6 text-[#4f657d]">{action.text}</p>
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        <section className="border-y border-[#35516e] bg-[#102841]">
+          <div className="mx-auto max-w-[92rem] px-6 py-12 lg:px-8">
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[#a8bfd6]">Menu Highlights</p>
+              <h2 className="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl">Popular Picks Right Now</h2>
+            </div>
+            <Link href="/menu" className="border border-[#c7d3e0] bg-white px-5 py-2 text-sm font-semibold uppercase tracking-[0.08em] text-[#102841] hover:bg-[#f5f9fd]">
+              View Full Menu
+            </Link>
+          </div>
+
+          <div className="mt-8 space-y-10">
+            <LoopingMenuRow title="Today&apos;s Specials" items={todaysSpecials} rowKey="specials" />
+            <LoopingMenuRow title="Fan Favourites" items={fanFavorites} rowKey="favorites" />
+          </div>
+          </div>
+        </section>
+
+
+        <section className="mx-auto max-w-[92rem] px-6 py-12 lg:px-8">
+          <div className="relative overflow-hidden border border-[#c7d3e0] bg-white">
+            <div className="absolute inset-0">
+              <Image src="/Website/17.jpg" alt="Loyalty program" fill sizes="100vw" className="object-cover" />
+              <div className="absolute inset-0 bg-[#102841]/55" />
+            </div>
+            <div className="relative p-8 text-center sm:p-12">
+              <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[#d3dfeb]">Rewards Program</p>
+              <h2 className="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl">Earn Points Every Time You Order</h2>
+              <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-[#e2ebf4] sm:text-base">
+                Sign up once, collect points with each eligible order, and unlock special rewards designed for returning customers.
+              </p>
+              <Link href="/register" className="mt-6 inline-block bg-[#b21f2d] px-8 py-3 text-sm font-semibold uppercase tracking-[0.08em] text-white hover:bg-[#971926]">
+                Join Loyalty
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        <section className="mx-auto grid max-w-[92rem] gap-8 px-6 pb-16 lg:grid-cols-[1.05fr_0.95fr] lg:px-8">
+          <div className="border border-[#c7d3e0] bg-white p-6">
+            <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[#5a728c]">Visit Us</p>
+            <h2 className="mt-3 text-3xl font-semibold tracking-tight text-[#102841] sm:text-4xl">Find Our Downtown Location</h2>
+
+            <div className="mt-6 border-t border-[#d8e2ec] pt-4">
+              <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#5a728c]">Address</p>
+              <p className="mt-1 text-base text-[#102841]">{addressDetail?.value}</p>
+            </div>
+
+            <div className="mt-6 overflow-hidden border border-[#c7d3e0] bg-white">
+              <div className="relative h-[360px] w-full sm:h-[420px]">
+                <Image src="/Website/map.png" alt="Map to Sushi Bai Kiyoshi" fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
               </div>
             </div>
-          </section>
+          </div>
 
-        </div>
+          <div className="border border-[#c7d3e0] bg-white p-6">
+            <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[#5a728c]">Contact And Hours</p>
+            <h2 className="mt-3 text-3xl font-semibold tracking-tight text-[#102841] sm:text-4xl">Everything You Need In One Place</h2>
+
+            <div className="mt-6 border-t border-[#d8e2ec] pt-4">
+              {sidebarContactDetails.map((item) => (
+                <div key={item.label} className="border-b border-[#e2eaf2] py-3 last:border-b-0">
+                  <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#5a728c]">{item.label}</p>
+                  <p className="mt-1 text-base text-[#102841]">{item.value}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-6 border-t border-[#d8e2ec] pt-4">
+              <h3 className="text-lg font-semibold text-[#102841]">Restaurant Hours</h3>
+              <div className="mt-2 space-y-2">
+                {restaurantHours.map((entry) => (
+                  <div key={entry.label} className="flex flex-col gap-1 border-b border-[#e2eaf2] py-2 last:border-b-0 sm:flex-row sm:items-center sm:justify-between">
+                    <span className="text-sm font-medium text-[#4f657d]">{entry.label}</span>
+                    <span className="text-sm font-semibold text-[#102841]">{entry.value}</span>
+                  </div>
+                ))}
+              </div>
+              <p className="mt-3 text-sm text-[#5a728c]">Same-day online orders close 30 minutes before closing.</p>
+            </div>
+          </div>
+        </section>
       </main>
 
       <Footer />

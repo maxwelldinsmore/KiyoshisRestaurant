@@ -1,27 +1,52 @@
 import Head from "next/head";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import { Inter } from "next/font/google";
-
-const inter = Inter({ subsets: ["latin"], weight: ["400", "600", "700"] });
+import InfoPageLayout from "@/components/layout/InfoPageLayout";
 
 export default function ContactUsPage() {
   return (
-    <div className={`${inter.className} min-h-dvh flex flex-col`}>
+    <>
       <Head>
         <title>Contact Us | Sushi Bai Kiyoshi</title>
+        <meta
+          name="description"
+          content="Contact Sushi Bai Kiyoshi for online order support, pickup questions, loyalty help, and general restaurant enquiries."
+        />
       </Head>
 
-      <Header active="find-us" title="Contact Us" />
-
-      <main className="flex-1 bg-[#edf1f7]" aria-label="Contact Us page">
-        <section className="mx-auto max-w-4xl px-4 py-14 sm:px-6 lg:px-8">
-          <h1 className="text-4xl font-bold tracking-tight md:text-5xl">Contact Us</h1>
-          <p className="mt-4 text-base text-stone-600">This is a basic Contact Us page. Content coming soon.</p>
-        </section>
-      </main>
-
-      <Footer />
-    </div>
+      <InfoPageLayout
+        theme="cool"
+        title="Contact Us"
+        eyebrow="Order Support"
+        subtitle="This page is your central support hub for online orders, phone orders, and in-person questions before pickup."
+        heroQuote="Good service starts before pickup time arrives."
+        heroImage="/Website/15.jpg"
+        mainSections={[
+          {
+            title: " Contact Details",
+            paragraphs: [
+              "Use these details first when you need to reach Sushi Bai Kiyoshi.",
+              "For the fastest experience, place online orders through the website and call directly for urgent same-day help.",
+            ],
+            items: [
+              { label: "Address", value: "128 Simcoe Street, Toronto, ON M5H 3G5" },
+              { label: "Phone", value: "(416) 555-0148" },
+              { label: "Email", value: "hello@sushibaikiyoshi.com" },
+              { label: "Online Orders", value: "Browse the menu and choose a pickup time on the website" },
+            ],
+          },
+        ]}
+        sidebarSections={[
+          {
+            title: "Restaurant Hours",
+            image: "/Website/14.jpg",
+            items: [
+              { label: "Monday to Thursday", value: "11:30 AM to 9:30 PM" },
+              { label: "Friday and Saturday", value: "11:30 AM to 10:30 PM" },
+              { label: "Sunday", value: "12:00 PM to 8:30 PM" },
+            ],
+            note: "Same-day online orders close 30 minutes before closing.",
+          },
+        ]}
+      />
+    </>
   );
 }
