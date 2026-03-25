@@ -40,6 +40,16 @@ async function handleGet(req, res) {
     return res.status(200).json({ success: true, count: data.length, data });
   }
 
+  if (report === 'low_stock') {
+    const data = await sql`SELECT * FROM get_low_inventory_items()`;
+    return res.status(200).json({ success: true, count: data.length, data });
+  }
+
+  if (report === 'expiring') {
+    const data = await sql`SELECT * FROM get_expiring_inventory()`;
+    return res.status(200).json({ success: true, count: data.length, data });
+  }
+
   const data = await sql`SELECT * FROM get_all_orders()`;
   return res.status(200).json({ success: true, count: data.length, data });
 }
