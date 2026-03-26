@@ -133,6 +133,8 @@ export default function RegisterPage() {
                 <input
                   type="text"
                   name="firstName"
+                  aria-label="First Name"
+                  title="Enter your first name"
                   value={form.firstName}
                   onChange={handleChange}
                   placeholder="First name"
@@ -150,6 +152,8 @@ export default function RegisterPage() {
                 <input
                   type="text"
                   name="lastName"
+                  aria-label="Last Name"
+                  title="Enter your last name"
                   value={form.lastName}
                   onChange={handleChange}
                   placeholder="Last name"
@@ -167,6 +171,8 @@ export default function RegisterPage() {
                 <input
                   type="email"
                   name="email"
+                  aria-label="Email address"
+                  title="Enter your email address"
                   value={form.email}
                   onChange={handleChange}
                   placeholder="you@example.com"
@@ -183,6 +189,8 @@ export default function RegisterPage() {
                 <input
                   type="tel"
                   name="phone"
+                  aria-label="Phone number"
+                  title="Enter your phone number"
                   value={form.phone}
                   onChange={handleChange}
                   placeholder="10-digit number"
@@ -199,6 +207,8 @@ export default function RegisterPage() {
                 <input
                   type="password"
                   name="password"
+                  aria-label="Password"
+                  title="Enter your password"
                   value={form.password}
                   onChange={handleChange}
                   placeholder="Min. 8 characters"
@@ -218,6 +228,8 @@ export default function RegisterPage() {
                     <input
                       type="checkbox"
                       name="promoEmail"
+                      aria-label="Promotion Email"
+                      title="Receive promotion via email"
                       id="promoEmail"
                       checked={form.promoEmail}
                       onChange={handleChange}
@@ -229,6 +241,8 @@ export default function RegisterPage() {
                     <input
                       type="checkbox"
                       name="promoSMS"
+                      aria-label="Promotion SMS"
+                      title="Receive promotion via SMS"
                       id="promoSMS"
                       checked={form.promoSMS}
                       onChange={handleChange}
@@ -244,6 +258,7 @@ export default function RegisterPage() {
             <div className="text-center mt-6 space-y-3">
               <button
                 type="submit"
+                title="Sign Up"
                 disabled={loading}
                 className="bg-black text-white px-12 py-3 text-sm uppercase tracking-[0.25em] rounded-sm hover:bg-gray-800 transition-colors disabled:opacity-60"
               >

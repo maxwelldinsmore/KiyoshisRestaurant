@@ -52,6 +52,7 @@ export default function Reports() {
             <h2>Sales Over Time</h2>
             <LineChart
                 data={salesData}
+                aria-label="Sales revenue over time"
                 xtitle="Date"
                 ytitle="Revenue"
                 prefix="$"
@@ -63,11 +64,13 @@ export default function Reports() {
             <PieChart
                 data={bestItem}
                 donut={true}
+                aria-label="Best selling menu items"
             />
 
             <h2>Low Inventory</h2>
             <BarChart
                 data={inventoryData}
+                aria-label="Low inventory items"
             />
         </div>
     )

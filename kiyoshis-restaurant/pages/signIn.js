@@ -146,6 +146,16 @@ export default function SignInPage() {
                 <input
                   type={loginMethod === 'email' ? 'email' : 'tel'}
                   name="identifier"
+                  aria-label={
+                    loginMethod === 'email'
+                        ? 'Email address'
+                        : 'Phone number'
+                  }
+                  title={
+                    loginMethod === 'email'
+                        ? 'Enter your email address'
+                        : 'Enter your phone number'
+                  }
                   value={form.identifier}
                   onChange={handleChange}
                   placeholder={loginMethod === 'email' ? 'you@example.com' : '10-digit number'}
@@ -162,6 +172,8 @@ export default function SignInPage() {
                 <input
                   type="password"
                   name="password"
+                  aria-label="Password"
+                  title="Enter your password"
                   value={form.password}
                   onChange={handleChange}
                   placeholder="Your password"
@@ -175,6 +187,7 @@ export default function SignInPage() {
             <div className="text-center mt-6 space-y-3">
               <button
                 type="submit"
+                title="Sign In"
                 disabled={loading}
                 className="bg-black text-white px-12 py-3 text-sm uppercase tracking-[0.25em] rounded-sm hover:bg-gray-800 transition-colors disabled:opacity-60"
               >

@@ -12,9 +12,13 @@ const rewards = [
 
 function RewardCard({ title }) {
   return (
-    <div>
+    <div aria-label={`Reward: ${title}`}>
       <p className="mb-2 text-xl font-semibold">{title}</p>
-      <div className="flex h-32 items-center justify-center rounded-md border border-gray-300 bg-gray-200 text-sm text-gray-500">
+      <div
+          className="flex h-32 items-center justify-center rounded-md border border-gray-300 bg-gray-200 text-sm text-gray-500"
+          aria-label={`${title} reward preview`}
+          title={title}
+      >
         Reward Image
       </div>
     </div>
@@ -27,6 +31,8 @@ function AccountField({ label, placeholder }) {
       <label className="block text-lg font-semibold md:text-xl">{label}</label>
       <input
         placeholder={placeholder}
+        aria-label={label}
+        title={`Edit ${label}`}
         className="w-full rounded-sm border border-gray-300 bg-white px-4 py-3 text-base text-gray-700 outline-none focus:border-black"
       />
     </div>
@@ -79,7 +85,7 @@ export default function AccountPage() {
 
       <Header active="account" userName={user?.firstName || ""} />
 
-      <main className="flex-1 bg-[#edf1f7]">
+      <main className="flex-1 bg-[#edf1f7]" aria-label="User account page">
         <section className="mx-auto max-w-6xl px-4 py-14 sm:px-6 lg:px-8">
           <h1 className="text-5xl font-bold tracking-tight md:text-6xl">Account</h1>
           <p className="mt-2 text-sm uppercase tracking-[0.2em] text-gray-500">Hello, {displayName}. Click to update fields</p>

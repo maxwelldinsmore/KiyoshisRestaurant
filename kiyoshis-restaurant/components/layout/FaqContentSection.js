@@ -11,7 +11,7 @@ export default function InfoMainSection({ title, paragraphs = [], list = [], ite
       </div>
       {image ? (
         <div className={`mt-6 overflow-hidden rounded border ${theme.listBorder}`}>
-          <Image src={image} {`${title} illustration`} width={800} height={450} className="w-full object-cover" />
+          <Image src={image} width={800} height={450} className="w-full object-cover" />
         </div>
       ) : table?.columns?.length && table?.rows?.length ? (
         <div className={`mt-6 overflow-x-auto border-t pt-5 ${theme.listBorder}`}>

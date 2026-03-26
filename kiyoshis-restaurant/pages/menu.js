@@ -80,7 +80,7 @@ const menuData = {
 
 function MenuItemCard({ item }) {
   return (
-    <article className="border border-[#cad5e1] bg-white/90 p-5 shadow-[0_18px_40px_rgba(17,39,63,0.08)]">
+    <article className="border border-[#cad5e1] bg-white/90 p-5 shadow-[0_18px_40px_rgba(17,39,63,0.08)]" aria-label={`${item.name} - ${item.price}`}>
       <div className="flex items-start justify-between gap-4">
         <div>
           <h3 className="text-xl font-semibold tracking-tight text-[#15304f]">{item.name}</h3>
@@ -133,6 +133,8 @@ export default function MenuPage() {
                 onClick={() => setActiveCategory(cat)}
                 type="button"
                 aria-pressed={activeCategory === cat}
+                aria-label={`Filter menu by ${cat}`}
+                title={`Show ${cat} items`}
               >
                 {cat}
               </button>
