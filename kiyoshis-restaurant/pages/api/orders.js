@@ -28,7 +28,7 @@ export default async function handler(req, res) {
 }
 
 async function handleGet(req, res) {
-  const { order_status: orderStatus, order_id: orderId } = req.query;
+  const { order_status: orderStatus, order_id: orderId, report } = req.query;
 
   if (orderId) {
     const order = await sql`SELECT * FROM get_order_by_id(${Number(orderId)})`;
@@ -40,13 +40,25 @@ async function handleGet(req, res) {
     return res.status(200).json({ success: true, count: data.length, data });
   }
 
-  if (report === 'low_stock') {
-    const data = await sql`SELECT * FROM get_low_inventory_items()`;
+  if (report === 'sales_by_day') {
+    const data = await sql`
+      SELECT DATE(order_date) AS order_date, SUM(order_total) AS total_sales
+      FROM orders
+      GROUP BY DATE(order_date)
+      ORDER BY DATE(order_date)
+    `;
     return res.status(200).json({ success: true, count: data.length, data });
   }
 
-  if (report === 'expiring') {
-    const data = await sql`SELECT * FROM get_expiring_inventory()`;
+  if (report === 'best_selling') {
+    const data = await sql`
+      SELECT m.menu_item_name, SUM(oi.order_item_quantity) AS total_sold
+      FROM order_item oi
+      JOIN menu_item m ON m.menu_item_id = oi.menu_item_id
+      GROUP BY m.menu_item_name
+      ORDER BY total_sold DESC
+      LIMIT 10
+    `;
     return res.status(200).json({ success: true, count: data.length, data });
   }
 

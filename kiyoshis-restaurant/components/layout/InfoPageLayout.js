@@ -30,7 +30,7 @@ export default function InfoPageLayout({
 
   return (
     <div className="min-h-dvh flex flex-col bg-[#edf1f7] text-stone-950">
-      <Header active={active} title={title} />
+      <Header active={active} />
 
       <main className={`relative flex-1 overflow-hidden ${palette.pageBackground}`} aria-label={`${title} page`}>
         <div
