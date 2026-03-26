@@ -13,7 +13,7 @@ export default function Reports() {
             try {
 
                 // Sales in a Line Chart
-                const salesRes = await fetch('/api/auth/orders?report=sales_by_day')
+                const salesRes = await fetch('/api/orders?report=sales_by_day')
                 const salesJson = await salesRes.json()
 
                 const salesFormatted = {}
@@ -22,16 +22,16 @@ export default function Reports() {
                 })
                 setSalesData(salesFormatted)
 
-                const bestRes = await fetch('/api/auth/orders?report=best_selling')
+                const bestRes = await fetch('/api/orders?report=best_selling')
                 const bestJson = await bestRes.json()
 
                 const bestFormatted = bestJson.data.map(item => [
                     item.menu_item_name,
                     Number(item.total_sold)
                 ])
-                setBestItems(bestFormatted)
+                setBestItem(bestFormatted)
 
-                const inventoryRes = await fetch('/api/auth/inventory?report=low_stock')
+                const inventoryRes = await fetch('/api/inventory?report=low_stock')
                 const inventoryJson = await inventoryRes.json()
 
                 const inventoryFormatted = inventoryJson.data.map(item => [
@@ -52,6 +52,7 @@ export default function Reports() {
             <h2>Sales Over Time</h2>
             <LineChart
                 data={salesData}
+                aria-label="Sales revenue over time"
                 xtitle="Date"
                 ytitle="Revenue"
                 prefix="$"
@@ -63,11 +64,13 @@ export default function Reports() {
             <PieChart
                 data={bestItem}
                 donut={true}
+                aria-label="Best selling menu items"
             />
 
             <h2>Low Inventory</h2>
             <BarChart
                 data={inventoryData}
+                aria-label="Low inventory items"
             />
         </div>
     )

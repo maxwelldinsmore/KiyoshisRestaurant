@@ -30,7 +30,7 @@ export default function InfoPageLayout({
 
   return (
     <div className="min-h-dvh flex flex-col bg-[#edf1f7] text-stone-950">
-      <Header active={active} title={title} />
+      <Header active={active} />
 
       <main className={`relative flex-1 overflow-hidden ${palette.pageBackground}`} aria-label={`${title} page`}>
         <div
@@ -41,7 +41,7 @@ export default function InfoPageLayout({
           }}
         />
 
-        <section className={`relative border-b ${palette.panelBorder}`}>
+        <section className={`relative border-b ${palette.panelBorder}`} aria-label="Page introduction">
           <div className="mx-auto grid max-w-[92rem] gap-8 px-4 py-10 sm:px-6 lg:grid-cols-[1.15fr_0.85fr] lg:px-8 lg:py-14">
             <div className={`self-center ${heroImageLeft ? "lg:order-2" : ""}`}>
               <p className={`text-xs uppercase tracking-[0.36em] ${palette.eyebrow}`}>{eyebrow}</p>
@@ -51,7 +51,7 @@ export default function InfoPageLayout({
 
               <div className="mt-8 grid gap-4 md:grid-cols-3">
                 {featureCards.map((card) => (
-                  <article key={card.title} className={`border bg-white/80 p-4 shadow-[0_12px_30px_rgba(58,35,25,0.06)] backdrop-blur-sm ${palette.featureBorder}`}>
+                  <article key={card.title} className={`border bg-white/80 p-4 shadow-[0_12px_30px_rgba(58,35,25,0.06)] backdrop-blur-sm ${palette.featureBorder}`} aria-label={card.title}>
                     <p className={`text-xs uppercase tracking-[0.26em] ${palette.featureAccent}`}>{card.kicker}</p>
                     <h2 className={`mt-3 text-lg font-semibold ${palette.sectionHeading}`}>{card.title}</h2>
                     <p className="mt-2 text-sm leading-7 text-stone-700">{card.text}</p>
@@ -63,7 +63,7 @@ export default function InfoPageLayout({
             <div className={`relative min-h-[320px] overflow-hidden border shadow-[0_30px_80px_rgba(34,21,18,0.18)] sm:min-h-[420px] ${palette.heroFrame} ${heroImageLeft ? "lg:order-1" : ""}`}>
               <Image
                 src={heroImage}
-                alt={title}
+                alt={`${title} hero image`}
                 fill
                 priority
                 sizes="(max-width: 1024px) 100vw, 40vw"

@@ -11,7 +11,7 @@ export default async function handler(req, res) {
   const token = req.cookies?.token;
 
   if (!token) {
-    return res.status(401).json({ user: null });
+    return res.status(200).json({ user: null, authenticated: false });
   }
 
   try {
@@ -19,29 +19,31 @@ export default async function handler(req, res) {
 
     const rows = await sql`
       SELECT customer_id, customer_first_name, customer_last_name, customer_email,
-             contact_method, number_of_visits, promo_opt_in
+             customer_phonenumber, contact_method, number_of_visits, promo_opt_in
       FROM registered_customer
       WHERE customer_id = ${decoded.userId}
       LIMIT 1
     `;
 
     if (rows.length === 0) {
-      return res.status(401).json({ user: null });
+      return res.status(200).json({ user: null, authenticated: false });
     }
 
     const user = rows[0];
     return res.status(200).json({
+      authenticated: true,
       user: {
         id: user.customer_id,
         firstName: user.customer_first_name,
         lastName: user.customer_last_name,
         email: user.customer_email,
+        phoneNumber: user.customer_phonenumber,
         contactMethod: user.contact_method,
         numberOfVisits: user.number_of_visits,
         promoOptIn: user.promo_opt_in,
       },
     });
   } catch (err) {
-    return res.status(401).json({ user: null });
+    return res.status(200).json({ user: null, authenticated: false });
   }
 }

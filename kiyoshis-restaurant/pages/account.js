@@ -1,9 +1,7 @@
+import { useEffect, useMemo, useState } from "react";
 import Head from "next/head";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { Inter } from "next/font/google";
-
-const inter = Inter({ subsets: ["latin"], weight: ["400", "600", "700"] });
 
 const rewards = [
   "15% Discount",
@@ -14,68 +12,111 @@ const rewards = [
 
 function RewardCard({ title }) {
   return (
-    <div>
-      <p className="text-xl font-semibold mb-2">{title}</p>
-      <div className="h-32 bg-gray-200 border border-gray-300 rounded-md flex items-center justify-center text-gray-500 text-sm">
+    <div aria-label={`Reward: ${title}`}>
+      <p className="mb-2 text-xl font-semibold">{title}</p>
+      <div
+          className="flex h-32 items-center justify-center rounded-md border border-gray-300 bg-gray-200 text-sm text-gray-500"
+          aria-label={`${title} reward preview`}
+          title={title}
+      >
         Reward Image
       </div>
     </div>
   );
 }
 
-function AccountField({ label, value }) {
+function AccountField({ label, placeholder }) {
   return (
     <div className="space-y-2">
-      <label className="block text-lg md:text-xl font-semibold">{label}</label>
+      <label className="block text-lg font-semibold md:text-xl">{label}</label>
       <input
-        defaultValue={value}
-        className="w-full border border-gray-300 bg-white px-4 py-3 text-base text-gray-700 rounded-sm outline-none focus:border-black"
+        placeholder={placeholder}
+        aria-label={label}
+        title={`Edit ${label}`}
+        className="w-full rounded-sm border border-gray-300 bg-white px-4 py-3 text-base text-gray-700 outline-none focus:border-black"
       />
     </div>
   );
 }
 
 export default function AccountPage() {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    fetch("/api/auth/user", {
+      credentials: "include",
+      signal: controller.signal,
+    })
+      .then(async (res) => {
+        if (!res.ok) {
+          setUser(null);
+          return;
+        }
+
+        const data = await res.json().catch(() => ({}));
+        setUser(data?.user ?? null);
+      })
+      .catch((err) => {
+        if (err.name !== "AbortError") setUser(null);
+      });
+
+    return () => controller.abort();
+  }, []);
+
+  const displayName = useMemo(() => {
+    if (!user?.firstName) return "there";
+    return user.firstName;
+  }, [user]);
+
+  const placeholders = {
+    firstName: user?.firstName || "First name",
+    lastName: user?.lastName || "Last name",
+    email: user?.email || "Email",
+    phone: user?.phoneNumber || "Phone number",
+  };
+
   return (
-    <div className={`${inter.className} min-h-dvh flex flex-col`}>
+    <div className="flex min-h-dvh flex-col">
       <Head>
         <title>Account | Sushi Bai Kiyoshi</title>
       </Head>
 
-      <Header active="account" userName="Ben" />
+      <Header active="account" userName={user?.firstName || ""} />
 
-      <main className="flex-1 bg-[#edf1f7]">
-        <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
-          <h1 className="text-5xl md:text-6xl font-bold tracking-tight">Account</h1>
-          <p className="text-gray-500 tracking-[0.2em] uppercase text-sm mt-2">Click to update fields</p>
+      <main className="flex-1 bg-[#edf1f7]" aria-label="User account page">
+        <section className="mx-auto max-w-6xl px-4 py-14 sm:px-6 lg:px-8">
+          <h1 className="text-5xl font-bold tracking-tight md:text-6xl">Account</h1>
+          <p className="mt-2 text-sm uppercase tracking-[0.2em] text-gray-500">Hello, {displayName}. Click to update fields</p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mt-10 bg-white border border-gray-200 rounded-md p-6 shadow-sm">
-            <AccountField label="First Name" value="Ben" />
-            <AccountField label="Last Name" value="Example" />
-            <AccountField label="Email" value="fake@email.com" />
-            <AccountField label="Phone Number" value="234-145-6767" />
+          <div className="mt-10 grid grid-cols-1 gap-5 rounded-md border border-gray-200 bg-white p-6 shadow-sm md:grid-cols-2 lg:grid-cols-4">
+            <AccountField label="First Name" placeholder={placeholders.firstName} />
+            <AccountField label="Last Name" placeholder={placeholders.lastName} />
+            <AccountField label="Email" placeholder={placeholders.email} />
+            <AccountField label="Phone Number" placeholder={placeholders.phone} />
           </div>
 
-          <div className="text-center mt-14 md:mt-16">
-            <h2 className="text-5xl md:text-6xl font-bold tracking-tight">Loyalty</h2>
-            <p className="text-2xl md:text-3xl mt-3">Earn points after every purchase</p>
+          <div className="mt-14 text-center md:mt-16">
+            <h2 className="text-5xl font-bold tracking-tight md:text-6xl">Loyalty</h2>
+            <p className="mt-3 text-2xl md:text-3xl">Earn points after every purchase</p>
           </div>
 
           <div className="mt-8">
-            <div className="bg-gray-200 h-12 rounded-sm flex items-center justify-around text-gray-500 text-lg font-semibold">
+            <div className="flex h-12 items-center justify-around rounded-sm bg-gray-200 text-lg font-semibold text-gray-500">
               <span>0</span>
               <span>10</span>
               <span>20</span>
               <span>30</span>
               <span>40</span>
             </div>
-            <div className="h-2 bg-gray-300 mt-2 rounded-sm relative">
+            <div className="relative mt-2 h-2 rounded-sm bg-gray-300">
               <div className="absolute left-0 top-0 h-2 w-[8%] bg-black" />
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mt-10 items-start">
-            <p className="text-2xl md:text-3xl font-semibold leading-tight md:col-span-2 lg:col-span-1">
+          <div className="mt-10 grid grid-cols-1 items-start gap-4 md:grid-cols-5">
+            <p className="text-2xl font-semibold leading-tight md:col-span-2 md:text-3xl lg:col-span-1">
               Sign up &
               <br />
               become a

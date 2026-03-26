@@ -132,7 +132,7 @@ export default function Home() {
             <div className="relative min-h-[360px] overflow-hidden border border-[#c7d3e0] bg-white shadow-[0_30px_60px_rgba(18,38,63,0.14)] sm:min-h-[460px]">
               <Image
                 src="/SushiBaiKiyoshiBanner4.png"
-                alt="Sushi Bai Kiyoshi banner"
+                alt="Sushi Bai Kiyoshi restaurant banner showing sushi and branding"
                 fill
                 priority
                 sizes="100vw"
@@ -164,6 +164,8 @@ export default function Home() {
               <Link
                 key={action.title}
                 href={action.href}
+                aria-label={action.title}
+                title={action.title}
                 className="group border border-[#c7d3e0] bg-white p-5 transition hover:-translate-y-0.5 hover:shadow-[0_16px_24px_rgba(18,38,63,0.12)]"
               >
                 <div className="flex items-center justify-between">
@@ -202,7 +204,7 @@ export default function Home() {
         <section className="mx-auto max-w-[92rem] px-6 py-12 lg:px-8">
           <div className="relative overflow-hidden border border-[#c7d3e0] bg-white">
             <div className="absolute inset-0">
-              <Image src="/Website/17.jpg" alt="Loyalty program" fill sizes="100vw" className="object-cover" />
+              <Image src="/Website/17.jpg" alt="Loyalty program promotion background" fill sizes="100vw" className="object-cover" />
               <div className="absolute inset-0 bg-[#102841]/55" />
             </div>
             <div className="relative p-8 text-center sm:p-12">
@@ -230,7 +232,7 @@ export default function Home() {
 
             <div className="mt-6 overflow-hidden border border-[#c7d3e0] bg-white">
               <div className="relative h-[360px] w-full sm:h-[420px]">
-                <Image src="/Website/map.png" alt="Map to Sushi Bai Kiyoshi" fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
+                <Image src="/Website/map.png" alt="Map showing Sushi Bai Kiyoshi location in downtown Toronto" fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
               </div>
             </div>
           </div>
