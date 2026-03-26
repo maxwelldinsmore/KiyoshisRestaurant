@@ -19,11 +19,6 @@ export const homeQuickActions = [
     text: "Create an account to earn and track points.",
     href: "/register",
   },
-  {
-    title: "Reports",
-    text: "View sales, inventory, and analytics dashboards",
-    href: "/reports",
-  },
 ];
 
 export const todaysSpecials = [

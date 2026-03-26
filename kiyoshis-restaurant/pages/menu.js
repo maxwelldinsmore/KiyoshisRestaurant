@@ -2,6 +2,7 @@ import Head from "next/head";
 import { useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { useCart } from "@/contexts/CartContext";
 
 const categories = ["All", "Sushi", "Platters", "Drinks", "Desserts"];
 
@@ -79,16 +80,34 @@ const menuData = {
 };
 
 function MenuItemCard({ item }) {
+  const { addToCart, items } = useCart();
+  const inCart = items.find((i) => i.name === item.name);
+
   return (
     <article className="border border-[#cad5e1] bg-white/90 p-5 shadow-[0_18px_40px_rgba(17,39,63,0.08)]" aria-label={`${item.name} - ${item.price}`}>
       <div className="flex items-start justify-between gap-4">
-        <div>
+        <div className="flex-1 min-w-0">
           <h3 className="text-xl font-semibold tracking-tight text-[#15304f]">{item.name}</h3>
           <p className="mt-2 text-sm leading-7 text-stone-700">{item.description}</p>
         </div>
         <span className="shrink-0 rounded-full border border-[#b21f2d]/20 bg-[#fbeff1] px-3 py-1 text-sm font-semibold text-[#b21f2d]">
           {item.price}
         </span>
+      </div>
+      <div className="mt-4 flex items-center justify-between">
+        <button
+          onClick={() => addToCart(item)}
+          className="flex items-center gap-2 rounded-full border border-[#152d4b] px-4 py-1.5 text-sm font-semibold text-[#152d4b] transition-colors hover:bg-[#152d4b] hover:text-white"
+          aria-label={`Add ${item.name} to cart`}
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+          </svg>
+          Add to Cart
+        </button>
+        {inCart && (
+          <span className="text-xs text-neutral-500">{inCart.qty} in cart</span>
+        )}
       </div>
     </article>
   );
