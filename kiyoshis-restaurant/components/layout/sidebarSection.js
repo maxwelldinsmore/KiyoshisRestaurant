@@ -2,10 +2,10 @@ import Image from "next/image";
 
 export default function InfoSidebarSection({ title, items = [], note = "", image, theme }) {
   return (
-    <section className={`border shadow-[0_18px_50px_rgba(45,24,16,0.08)] backdrop-blur-sm overflow-hidden ${theme.sidebarPanel}`}>
+    <section className={`border shadow-[0_18px_50px_rgba(45,24,16,0.08)] backdrop-blur-sm overflow-hidden ${theme.sidebarPanel}`} aria-label={title}>
       {image ? (
         <div className="relative h-44 w-full">
-          <Image src={image} alt={title} fill className="object-cover" />
+          <Image src={image} alt={`${title} image`} fill className="object-cover" />
         </div>
       ) : null}
       <div className="p-5">

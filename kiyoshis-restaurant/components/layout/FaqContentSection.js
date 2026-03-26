@@ -11,11 +11,14 @@ export default function InfoMainSection({ title, paragraphs = [], list = [], ite
       </div>
       {image ? (
         <div className={`mt-6 overflow-hidden rounded border ${theme.listBorder}`}>
-          <Image src={image} alt={title} width={800} height={450} className="w-full object-cover" />
+          <Image src={image} {`${title} illustration`} width={800} height={450} className="w-full object-cover" />
         </div>
       ) : table?.columns?.length && table?.rows?.length ? (
         <div className={`mt-6 overflow-x-auto border-t pt-5 ${theme.listBorder}`}>
-          <table className="min-w-full border border-[#d4deea] bg-white text-sm sm:text-base">
+          <table
+              className="min-w-full border border-[#d4deea] bg-white text-sm sm:text-base"
+              aria-label={`${title} data table`}
+          >
             <thead className="bg-[#f2f7fd] text-left text-xs uppercase tracking-[0.12em] text-[#1f4266] sm:text-sm">
               <tr>
                 {table.columns.map((column) => (
@@ -50,7 +53,10 @@ export default function InfoMainSection({ title, paragraphs = [], list = [], ite
           </div>
         </div>
       ) : list.length ? (
-        <ul className={`mt-6 space-y-3 border-t pt-5 text-sm leading-7 text-stone-700 sm:text-base ${theme.listBorder}`}>
+        <ul
+            className={`mt-6 space-y-3 border-t pt-5 text-sm leading-7 text-stone-700 sm:text-base ${theme.listBorder}`}
+            aria-label={`${title} list`}
+        >
           {list.map((item, index) => (
             <li key={`${title}-list-${index}`} className="flex gap-3">
               <span className={`mt-2 h-2 w-2 shrink-0 rounded-full ${theme.listDot}`} />
