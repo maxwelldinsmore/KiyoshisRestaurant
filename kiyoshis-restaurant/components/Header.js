@@ -9,6 +9,7 @@ const AUTH_CACHE_KEY = "kiyoshi.authUser";
 export default function Header({ active = "", userName = "" }) {
   const router = useRouter();
   const [cachedUserName, setCachedUserName] = useState(userName || "");
+  const [isDarkMode, setIsDarkMode] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const [cartDropdownOpen, setCartDropdownOpen] = useState(false);
   const userDropdownRef = useRef(null);
@@ -76,6 +77,53 @@ export default function Header({ active = "", userName = "" }) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+
+    const root = document.documentElement;
+    const syncDarkMode = () => {
+      setIsDarkMode(root.classList.contains("a11y-dark"));
+    };
+
+    syncDarkMode();
+
+    const observer = new MutationObserver(syncDarkMode);
+    observer.observe(root, { attributes: true, attributeFilter: ["class"] });
+
+    return () => observer.disconnect();
+  }, []);
+
+  // Global keyboard hotkeys — keydown listener works identically in all browsers
+  useEffect(() => {
+    const handleHotkey = (e) => {
+      if (!e.altKey) return;
+      switch (e.key.toLowerCase()) {
+        case "f":
+          e.preventDefault();
+          router.push("/findUs");
+          break;
+        case "m":
+          e.preventDefault();
+          router.push("/menu");
+          break;
+        case "i":
+          e.preventDefault();
+          if (cachedUserName) {
+            setUserDropdownOpen((o) => !o);
+          } else {
+            router.push("/signIn");
+          }
+          break;
+        case "c":
+          e.preventDefault();
+          setCartDropdownOpen((o) => !o);
+          break;
+      }
+    };
+    document.addEventListener("keydown", handleHotkey);
+    return () => document.removeEventListener("keydown", handleHotkey);
+  }, [router, cachedUserName]);
+
   const handleLogout = async () => {
     await fetch("/api/auth/logout");
     if (typeof window !== "undefined") window.sessionStorage.removeItem(AUTH_CACHE_KEY);
@@ -95,11 +143,11 @@ export default function Header({ active = "", userName = "" }) {
 
   return (
     <header className="border-b border-neutral-300 bg-white/95" aria-label="Main header">
-      <div className="flex items-center justify-between px-6 py-3">
+      <div className="flex flex-col sm:flex-row items-center justify-between px-6 py-3">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-5" aria-label="Go to homepage" title="Home">
           <Image
-            src="/KiyoshiLogo6.png"
+            src={isDarkMode ? "/KiyoshiLogo7.png" : "/KiyoshiLogo6.png"}
             alt="Kiyoshi logo"
             width={145}
             height={54}
@@ -112,11 +160,11 @@ export default function Header({ active = "", userName = "" }) {
         <div className="flex items-center gap-4 sm:gap-6">
           {/* Main nav links */}
           <nav className="flex flex-wrap items-center gap-6 sm:gap-8 md:gap-12" aria-label="Main navigation">
-            <Link href="/findUs" className={getNavClass("findUs") + " text-base sm:text-lg"} aria-label="Find restaurant location" title="Find Us">
+            <Link href="/findUs" className={getNavClass("findUs") + " text-base sm:text-lg"} aria-label="Find restaurant location" title="Find Us (Alt+F)">
               Find Us
             </Link>
 
-            <Link href="/menu" className={getNavClass("menu") + " text-base sm:text-lg"} aria-label="Browse our menu" title="Menu">
+            <Link href="/menu" className={getNavClass("menu") + " text-base sm:text-lg"} aria-label="Browse our menu" title="Menu (Alt+M)">
               Menu
             </Link>
 
@@ -128,6 +176,7 @@ export default function Header({ active = "", userName = "" }) {
                   className={getNavClass("account") + " text-base sm:text-lg flex items-center gap-1"}
                   aria-label="Account menu"
                   aria-expanded={userDropdownOpen}
+                  title="Account menu (Alt+I)"
                 >
                   Hello, {cachedUserName}
                   <svg
@@ -165,7 +214,7 @@ export default function Header({ active = "", userName = "" }) {
                 )}
               </div>
             ) : (
-              <Link href="/signIn" className={getNavClass("signIn") + " text-base sm:text-lg"} aria-label="Go to sign in page" title="Sign In">
+              <Link href="/signIn" className={getNavClass("signIn") + " text-base sm:text-lg"} aria-label="Go to sign in page" title="Sign In (Alt+I)">
                 Sign In
               </Link>
             )}
@@ -177,7 +226,7 @@ export default function Header({ active = "", userName = "" }) {
               onClick={() => setCartDropdownOpen((o) => !o)}
               className="relative flex items-center gap-2 rounded-full border border-[#152d4b] px-4 py-2 text-sm sm:text-base font-semibold text-[#152d4b] transition-colors hover:bg-[#152d4b] hover:text-white"
               aria-label={`Cart, ${cartCount} item${cartCount !== 1 ? "s" : ""}`}
-              title="Cart"
+              title="Cart (Alt+C)"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
@@ -227,7 +276,7 @@ export default function Header({ active = "", userName = "" }) {
                       <Link
                         href="/checkout"
                         onClick={() => setCartDropdownOpen(false)}
-                        className="block w-full rounded-sm bg-[#152d4b] py-2.5 text-center text-sm font-semibold text-white transition-colors hover:bg-[#1a3a5e]"
+                        className="cart-checkout-btn block w-full rounded-sm bg-[#152d4b] py-2.5 text-center text-sm font-semibold text-white transition-colors hover:bg-[#1a3a5e]"
                       >
                         Proceed to Checkout
                       </Link>

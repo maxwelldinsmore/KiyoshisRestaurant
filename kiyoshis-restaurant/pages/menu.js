@@ -90,7 +90,7 @@ function MenuItemCard({ item }) {
           <h3 className="text-xl font-semibold tracking-tight text-[#15304f]">{item.name}</h3>
           <p className="mt-2 text-sm leading-7 text-stone-700">{item.description}</p>
         </div>
-        <span className="shrink-0 rounded-full border border-[#b21f2d]/20 bg-[#fbeff1] px-3 py-1 text-sm font-semibold text-[#b21f2d]">
+        <span className="menu-price-pill shrink-0 rounded-full border border-[#7d1020]/30 bg-[#f3dde3] px-3 py-1 text-sm font-semibold text-[#7d1020]">
           {item.price}
         </span>
       </div>
@@ -99,6 +99,8 @@ function MenuItemCard({ item }) {
           onClick={() => addToCart(item)}
           className="flex items-center gap-2 rounded-full border border-[#152d4b] px-4 py-1.5 text-sm font-semibold text-[#152d4b] transition-colors hover:bg-[#152d4b] hover:text-white"
           aria-label={`Add ${item.name} to cart`}
+          title={`Add ${item.name} to Cart (Alt+A)`}
+          data-add-to-cart="true"
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />

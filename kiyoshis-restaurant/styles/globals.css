@@ -1,3 +1,7 @@
+/* ============================================================================
+   IMPORTS & FONT FACES
+   ============================================================================ */
+
 @import "tailwindcss";
 
 @font-face {
@@ -8,11 +12,19 @@
   font-display: swap;
 }
 
+/* ============================================================================
+   GLOBAL VARIABLES 
+   ============================================================================ */
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
   --page-background: #edf1f7;
 }
+
+/* ============================================================================
+   BASE STYLING (html, body, common elements)
+   ============================================================================ */
 
 html,
 body {
@@ -54,7 +66,26 @@ select {
   font: inherit;
 }
 
-/* Keep shared tones neutral to avoid cool/blue-looking grays. */
+a,
+button,
+[role="button"],
+input[type="button"],
+input[type="submit"] {
+  transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease, filter 150ms ease;
+}
+
+a:hover,
+button:hover,
+[role="button"]:hover,
+input[type="button"]:hover,
+input[type="submit"]:hover {
+  filter: brightness(1.1);
+}
+
+/* ============================================================================
+    COLOR OVERRIDES FOR DARK MODE 
+   ============================================================================ */
+
 .text-stone-700,
 .text-stone-600 {
   color: #404040 !important;
@@ -78,4 +109,391 @@ select {
 .border-stone-300,
 .border-stone-400 {
   border-color: #d4d4d4 !important;
+}
+
+/* ============================================================================
+   ACCESSIBILITY WIDGET BUTTON
+   ============================================================================ */
+
+.a11y-fab {
+  position: fixed;
+  left: 1rem;
+  bottom: 2.2rem;
+  z-index: 9999;
+  opacity: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 54px;
+  height: 54px;
+  border: 2px solid #f4f8fc;
+  border-radius: 999px;
+  background: #b21f2d;
+  color: #fff;
+  box-shadow: 0 12px 34px rgba(128, 15, 29, 0.45);
+  transition: transform 120ms ease, box-shadow 120ms ease;
+}
+
+.a11y-fab:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 34px rgba(128, 15, 29, 0.5);
+}
+
+.a11y-fab:focus-visible,
+.a11y-option:focus-visible,
+.a11y-close:focus-visible,
+.a11y-reset:focus-visible {
+  outline: 3px solid #b21f2d;
+  outline-offset: 2px;
+}
+
+.a11y-fab-icon {
+  width: 36px;
+  height: 36px;
+}
+
+/* ============================================================================
+   ACCESSIBILITY WIDGET PANEL 
+   ============================================================================ */
+
+.a11y-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  background: rgba(16, 40, 65, 0.2);
+  backdrop-filter: blur(2px);
+  padding: 1rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+}
+
+.a11y-panel {
+  width: min(460px, 100%);
+  margin-left: 1in;
+  border: 1px solid #c7d3e0;
+  border-radius: 14px;
+  background: #f6f9fc;
+  color: #102841;
+  box-shadow: 0 22px 60px rgba(7, 22, 39, 0.32);
+  overflow: hidden;
+}
+.a11y-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.8rem;
+  padding: 1rem 1rem 0.65rem;
+}
+
+.a11y-kicker {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: #5a728c;
+}
+
+.a11y-panel-header h2 {
+  font-size: 1.15rem;
+  line-height: 1.3;
+}
+
+.a11y-subtitle {
+  padding: 0 1rem 0.9rem;
+  color: #35516e;
+  font-size: 0.86rem;
+  line-height: 1.4;
+}
+
+/* ============================================================================
+   ACCESSIBILITY WIDGET OVERAL SPACING AND STUFF
+   ============================================================================ */
+
+.a11y-actions {
+  list-style: none;
+  display: grid;
+  gap: 0.6rem;
+  padding: 0 1rem 1rem;
+}
+
+.a11y-option {
+  width: 100%;
+  border: 1px solid #c7d3e0;
+  background: #fff;
+  border-radius: 10px;
+  padding: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  text-align: left;
+  color: #102841;
+}
+
+.a11y-option-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.a11y-option-copy strong {
+  font-size: 0.96rem;
+}
+
+.a11y-option-copy small {
+  color: #5a728c;
+  font-size: 0.78rem;
+}
+
+.a11y-state {
+  min-width: 46px;
+  text-align: center;
+  border-radius: 999px;
+  border: 1px solid #d9e2ec;
+  padding: 0.18rem 0.55rem;
+  font-size: 0.74rem;
+  color: #35516e;
+}
+
+.a11y-option[aria-pressed="true"] {
+  border-color: #b21f2d;
+  background: #fff5f6;
+}
+
+.a11y-option[aria-pressed="true"] .a11y-state {
+  border-color: #b21f2d;
+  color: #b21f2d;
+}
+
+.a11y-panel-footer {
+  border-top: 1px solid #e2eaf2;
+  padding: 0.8rem 1rem 1rem;
+}
+
+.a11y-close,
+.a11y-reset {
+  border: 1px solid #102841;
+  border-radius: 8px;
+  background: #fff;
+  color: #102841;
+  padding: 0.35rem 0.7rem;
+  font-size: 0.82rem;
+}
+
+.a11y-reset {
+  border-color: #b21f2d;
+  color: #b21f2d;
+}
+
+/* ============================================================================
+   ACCESSIBILITY FEATURES (Applied when user toggles in widget)
+   ============================================================================ */
+
+/* LARGE TEXT - Makes all text 12% bigger */
+.a11y-large-text {
+  font-size: 112%;
+}
+
+/* COMFORTABLE LINE HEIGHT - Increases vertical spacing between lines */
+.a11y-line-height body,
+.a11y-line-height p,
+.a11y-line-height li,
+.a11y-line-height small {
+  line-height: 1.85;
+}
+
+/* EXTRA LETTER SPACING - Increases horizontal spacing between letters */
+.a11y-letter-spacing body,
+.a11y-letter-spacing p,
+.a11y-letter-spacing li,
+.a11y-letter-spacing a,
+.a11y-letter-spacing button {
+  letter-spacing: 0.045em;
+}
+
+/* DYSLEXIA-FRIENDLY FONT - Uses sans-serif for better readability */
+.a11y-dyslexia-font body {
+  font-family: Verdana, Arial, sans-serif !important;
+}
+
+/* CUSTOM CURSOR - Large high-visibility arrow (black fill, white border) */
+.a11y-cursor,
+.a11y-cursor * {
+  cursor: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='48' height='48'><path d='M 6,2 L 6,42 L 14,34 L 18,44 L 23,42 L 18,32 L 30,32 Z' fill='%23000000' stroke='%23ffffff' stroke-width='2.5' stroke-linejoin='round'/></svg>") 6 2, auto !important;
+}
+
+/* Dark mode cursor: invert to white fill, black border */
+.a11y-dark.a11y-cursor,
+.a11y-dark.a11y-cursor * {
+  cursor: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='48' height='48'><path d='M 6,2 L 6,42 L 14,34 L 18,44 L 23,42 L 18,32 L 30,32 Z' fill='%23ffffff' stroke='%23000000' stroke-width='2.5' stroke-linejoin='round'/></svg>") 6 2, auto !important;
+}
+
+/* ============================================================================
+   DARK MODE STYLES (Applied when user toggles dark mode in widget)
+   ============================================================================ */
+
+/* Main background & text colors */
+.a11y-dark body {
+  background: #fbfbfb !important;
+  color: #512b58 !important;
+}
+
+/* Border colors on containers */
+.a11y-dark header,
+.a11y-dark footer,
+.a11y-dark section,
+.a11y-dark main,
+.a11y-dark article,
+.a11y-dark nav,
+.a11y-dark form,
+.a11y-dark aside,
+.a11y-dark div {
+  border-color: #2b4158 !important;
+}
+
+/* Background colors for major sections */
+.a11y-dark #__next,
+.a11y-dark main,
+.a11y-dark section,
+.a11y-dark article,
+.a11y-dark aside,
+.a11y-dark form,
+.a11y-dark footer {
+  background-color: #122437 !important;
+}
+
+/* Header gets its own dark treatment */
+.a11y-dark header {
+  background-color: #122437 !important;
+}
+
+/* Nav inside the header must be transparent so it doesn't create a dark box */
+.a11y-dark header nav {
+  background-color: transparent !important;
+}
+
+/* Form inputs & buttons */
+.a11y-dark button,
+.a11y-dark input,
+.a11y-dark textarea,
+.a11y-dark select {
+  background-color: #1c3248 !important;
+  color: #edf3f8 !important;
+  border-color: #49617a !important;
+}
+
+/* Card/banner surfaces that are light in normal mode */
+.a11y-dark .bg-white,
+.a11y-dark [class*="bg-white"],
+.a11y-dark [class*="bg-[#f5f9fd]"],
+.a11y-dark [class*="bg-[#f3f7fb]"],
+.a11y-dark [class*="bg-[#edf3f8]"] {
+  background-color: #17324a !important;
+}
+
+/* Card/banner borders that are too light in dark mode */
+.a11y-dark [class*="border-[#c7d3e0]"],
+.a11y-dark [class*="border-[#cfdae7]"],
+.a11y-dark [class*="border-[#d8e2ec]"],
+.a11y-dark [class*="border-[#e2eaf2]"] {
+  border-color: #3f5f7a !important;
+}
+
+/* Homepage quick-action icon circles in dark mode */
+.a11y-dark .home-quick-icon {
+  background-color: #2b4962 !important;
+  border-color: #7f9fb9 !important;
+  color: #ffffff !important;
+}
+
+/* Menu and highlight card price pills in dark mode */
+.a11y-dark .menu-price-pill {
+  background-color: #3a1f2a !important;
+  border-color: #a24558 !important;
+  color: #ff9eaa !important;
+}
+
+/* Cart checkout button — always white text; white bg in dark mode for contrast */
+.cart-checkout-btn {
+  color: #ffffff !important;
+}
+
+.a11y-dark .cart-checkout-btn {
+  background-color: #ffffff !important;
+  color: #152d4b !important;
+}
+
+.a11y-dark .cart-checkout-btn:hover {
+  background-color: #e8eef5 !important;
+  filter: none !important;
+}
+
+.a11y-dark a:hover,
+.a11y-dark button:hover,
+.a11y-dark [role="button"]:hover,
+.a11y-dark input[type="button"]:hover,
+.a11y-dark input[type="submit"]:hover {
+  filter: brightness(1.18);
+}
+
+/* Links */
+.a11y-dark a {
+  color: #d7e8fa !important;
+}
+
+/* All text elements */
+.a11y-dark p,
+.a11y-dark h1,
+.a11y-dark h2,
+.a11y-dark h3,
+.a11y-dark h4,
+.a11y-dark h5,
+.a11y-dark h6,
+.a11y-dark label,
+.a11y-dark span,
+.a11y-dark li,
+.a11y-dark td,
+.a11y-dark th {
+  color: #edf3f8 !important;
+}
+
+/* Homepage banner text - keeps white for visibility */
+.a11y-dark .home-banner-text,
+.a11y-dark .home-banner-text * {
+  color: #ffffff !important;
+}
+
+/* Inherit color for specific elements */
+.a11y-dark a,
+.a11y-dark p,
+.a11y-dark h1,
+.a11y-dark h2,
+.a11y-dark h3,
+.a11y-dark h4,
+.a11y-dark h5,
+.a11y-dark h6,
+.a11y-dark label,
+.a11y-dark span,
+.a11y-dark li,
+.a11y-dark button {
+  color: inherit;
+}
+/* ============================================================================
+   RESPONSIVE DESIGN (Mobile styles - screens smaller than 640px)
+   ============================================================================ */
+
+@media (max-width: 640px) {
+  .a11y-overlay {
+    padding: 0.75rem;
+  }
+
+  .a11y-panel {
+    width: 100%;
+    margin-left: 0.75rem;
+  }
+
+  .a11y-fab {
+    left: 0.75rem;
+    bottom: 1.5rem;
+  }
 }
