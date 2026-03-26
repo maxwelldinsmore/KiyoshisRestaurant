@@ -126,6 +126,39 @@ export default function AccessibilityWidget() {
     };
   }, [open]);
 
+  // Alt+W hotkey: toggle widget open/closed — works in all browsers
+  useEffect(() => {
+    const handleHotkey = (e) => {
+      if (e.altKey && e.key.toLowerCase() === "w") {
+        e.preventDefault();
+        setOpen((prev) => !prev);
+      }
+    };
+    document.addEventListener("keydown", handleHotkey);
+    return () => document.removeEventListener("keydown", handleHotkey);
+  }, []);
+
+  // Alt+A hotkey: focus the first add-to-cart button; if one is already focused, click it
+  useEffect(() => {
+    const handleAddToCart = (e) => {
+      if (!e.altKey || e.key.toLowerCase() !== "a") return;
+      const focused = document.activeElement;
+      if (focused && focused.dataset.addToCart) {
+        e.preventDefault();
+        focused.click();
+      } else {
+        const first = document.querySelector("[data-add-to-cart]");
+        if (first) {
+          e.preventDefault();
+          first.focus();
+          first.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+      }
+    };
+    document.addEventListener("keydown", handleAddToCart);
+    return () => document.removeEventListener("keydown", handleAddToCart);
+  }, []);
+
   const togglePref = (name) => {
     setPrefs((prev) => ({ ...prev, [name]: !prev[name] }));
   };
@@ -144,7 +177,7 @@ export default function AccessibilityWidget() {
         aria-label="Open accessibility settings"
         aria-haspopup="dialog"
         aria-expanded={open}
-        title="Accessibility settings"
+        title="Accessibility settings (Alt+W)"
       >
         <svg
           className="a11y-fab-icon"
@@ -180,7 +213,7 @@ export default function AccessibilityWidget() {
                 className="a11y-close"
                 onClick={() => setOpen(false)}
                 aria-label="Close accessibility settings"
-                title="Close panel"
+                title="Close (Esc)"
               >
                 Close
               </button>

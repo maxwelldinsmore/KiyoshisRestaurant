@@ -316,18 +316,16 @@ input[type="submit"]:hover {
   font-family: Verdana, Arial, sans-serif !important;
 }
 
-/* CUSTOM CURSOR - Currently standard cursor/pointer */
+/* CUSTOM CURSOR - Large high-visibility arrow (black fill, white border) */
 .a11y-cursor,
 .a11y-cursor * {
-  cursor: auto !important;
+  cursor: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='48' height='48'><path d='M 6,2 L 6,42 L 14,34 L 18,44 L 23,42 L 18,32 L 30,32 Z' fill='%23000000' stroke='%23ffffff' stroke-width='2.5' stroke-linejoin='round'/></svg>") 6 2, auto !important;
 }
 
-.a11y-cursor a,
-.a11y-cursor button,
-.a11y-cursor [role="button"],
-.a11y-cursor input[type="button"],
-.a11y-cursor input[type="submit"] {
-  cursor: pointer !important;
+/* Dark mode cursor: invert to white fill, black border */
+.a11y-dark.a11y-cursor,
+.a11y-dark.a11y-cursor * {
+  cursor: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='48' height='48'><path d='M 6,2 L 6,42 L 14,34 L 18,44 L 23,42 L 18,32 L 30,32 Z' fill='%23ffffff' stroke='%23000000' stroke-width='2.5' stroke-linejoin='round'/></svg>") 6 2, auto !important;
 }
 
 /* ============================================================================
@@ -360,10 +358,18 @@ input[type="submit"]:hover {
 .a11y-dark article,
 .a11y-dark aside,
 .a11y-dark form,
-.a11y-dark nav,
-.a11y-dark header,
 .a11y-dark footer {
   background-color: #122437 !important;
+}
+
+/* Header gets its own dark treatment */
+.a11y-dark header {
+  background-color: #122437 !important;
+}
+
+/* Nav inside the header must be transparent so it doesn't create a dark box */
+.a11y-dark header nav {
+  background-color: transparent !important;
 }
 
 /* Form inputs & buttons */
@@ -405,6 +411,21 @@ input[type="submit"]:hover {
   background-color: #3a1f2a !important;
   border-color: #a24558 !important;
   color: #ff9eaa !important;
+}
+
+/* Cart checkout button — always white text; white bg in dark mode for contrast */
+.cart-checkout-btn {
+  color: #ffffff !important;
+}
+
+.a11y-dark .cart-checkout-btn {
+  background-color: #ffffff !important;
+  color: #152d4b !important;
+}
+
+.a11y-dark .cart-checkout-btn:hover {
+  background-color: #e8eef5 !important;
+  filter: none !important;
 }
 
 .a11y-dark a:hover,

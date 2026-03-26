@@ -16,6 +16,8 @@ export default function MenuHighlightCard({ item }) {
           <button
             type="button"
             aria-label={`Add ${item.name} to cart`}
+            title={`Add ${item.name} to Cart (Alt+A)`}
+            data-add-to-cart="true"
             className="border border-[#b21f2d] bg-[#b21f2d] px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.08em] text-white transition hover:bg-[#971926]">
             Add to Cart
           </button>
