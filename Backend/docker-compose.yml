@@ -25,6 +25,7 @@ services:
       - ./procedures.sql/menu_items.sql:/docker-entrypoint-initdb.d/07-menu_items.sql
       - ./procedures.sql/orders.sql:/docker-entrypoint-initdb.d/08-orders.sql
       - ./procedures.sql/rewards.sql:/docker-entrypoint-initdb.d/09-rewards.sql
+      - ./procedures.sql/reports.sql:/docker-entrypoint-initdb.d/10-reports.sql      
       - ./pg_hba.conf:/etc/postgresql/pg_hba.conf
       # - pgdata:/var/lib/postgresql/data
 
