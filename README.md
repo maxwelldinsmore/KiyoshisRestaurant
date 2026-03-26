@@ -22,4 +22,4 @@ Upcoming tasks
 |Lithasha| Manage inventory pages | ---|
 | Thavisha| Current incoming orders view | ---|
 | TBD | in person order menu | ---|
-| Lithasha | Screenreader| ---|
+| Lithasha | Screenreader (aria-labels, alt-text, tooltips)| ---|
