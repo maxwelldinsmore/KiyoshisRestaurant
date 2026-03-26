@@ -10,13 +10,18 @@ import Link from "next/link";
 export default function Footer() {
     return (
         <footer className="mt-auto border-t border-[#1b4578]/40 bg-[#0a1628] text-neutral-100" aria-label="Site footer">
-            <div className="mx-auto flex w-full max-w-[1800px] flex-col gap-1 px-4 py-2 sm:px-6 lg:px-8">
-                <div className="flex w-full flex-col items-start gap-2 sm:flex-row sm:items-center sm:justify-between">
+            <div className="mx-auto w-full max-w-[1800px] px-4 py-2 sm:px-6 lg:px-8">
+                
+                {/* Logo + Nav container */}
+                <div className="flex flex-col items-center gap-6 sm:flex-row sm:items-center sm:justify-between mb-4">
+                    
+                    {/* Logo - centered on mobile */}
                     <Link href="/" className="flex h-20 items-center sm:h-24" aria-label="Go to homepage" title="Home">
                         <img src="/KiyoshiLogo3.png" alt="Kiyoshi Restaurant Logo" className="h-full w-auto" />
                     </Link>
 
-                    <nav className="ml-auto flex flex-wrap items-center justify-end gap-x-6 gap-y-2 text-right text-sm text-neutral-300" aria-label="Footer navigation">
+                    {/* Nav - full width on mobile, right-aligned on desktop */}
+                    <nav className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 w-full sm:w-auto sm:justify-end text-sm text-neutral-300" aria-label="Footer navigation">
                         <Link href="/contactUs" className="transition-colors hover:text-white" aria-label="Go to Contact Us page" title="Contact Us">
                             Contact Us
                         </Link>
@@ -32,6 +37,7 @@ export default function Footer() {
                     </nav>
                 </div>
 
+                {/* Copyright */}
                 <p className="text-center text-xs tracking-wide text-neutral-400" aria-label="Copyright information">
                     Copyright 2026 Kiyoshi.
                 </p>

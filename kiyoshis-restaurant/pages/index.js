@@ -141,15 +141,15 @@ export default function Home() {
               <div className="absolute inset-0 p-6">
                 <div className="relative h-full text-center">
                   <div className="absolute left-1/2 top-1/2 w-full -translate-x-1/2 -translate-y-1/2">
-                    <h1 className="text-5xl font-semibold tracking-tight text-white [text-shadow:0_4px_16px_rgba(0,0,0,0.6)] sm:text-6xl lg:text-7xl">
+                    <h1 className="text-5xl font-semibold tracking-tight text-white [text-shadow:0_4px_16px_rgba(0,0,0,0.6)] sm:text-5xl lg:text-7xl">
                       Sushi Bai
                     </h1>
-                    <p className="mt-3 text-6xl font-semibold tracking-tight text-white [text-shadow:0_4px_16px_rgba(0,0,0,0.6)] sm:text-7xl lg:text-8xl">
+                    <p className="mt-3 text-5xl font-semibold tracking-tight text-white [text-shadow:0_4px_16px_rgba(0,0,0,0.6)] sm:text-7xl lg:text-8xl">
                       Kiyoshi | 清
                     </p>
                   </div>
 
-                  <p className="absolute bottom-8 left-1/2 w-full max-w-3xl -translate-x-1/2 px-4 text-base font-medium tracking-[0.08em] text-white/95 [text-shadow:0_2px_12px_rgba(0,0,0,0.55)] sm:bottom-12 sm:text-lg">
+                  <p className="absolute bottom-8 left-1/2 w-full max-w-3xl -translate-x-1/2 px-4 text-base font-medium tracking-[0.08em] text-white/95 [text-shadow:0_2px_12px_rgba(0,0,0,0.55)] sm:bottom-11 sm:text-lg">
                     Your Neighbourhood Sushi, Made with Heart.
                   </p>
                 </div>
