@@ -1,6 +1,6 @@
-import { LineChart, PieChart, ColumnChart, BarChart } from 'react-chartkick'
-import 'chart.js'
-import { useEffect, useState } from 'react'
+import {LineChart, PieChart, BarChart} from 'react-chartkick'
+import 'chartkick/chart.js'
+import {useEffect, useState} from 'react'
 
 export default function Reports() {
     const [salesData, setSalesData] = useState({})
@@ -8,10 +8,67 @@ export default function Reports() {
     const [inventoryData, setInventoryData] = useState({})
 
     useEffect(() => {
-        // What food expire
-        // Best selling item
-        // Items running out daily
-        // Sales trends over time
-        // Customer preferences
-        }, [])
+
+        const fetchReports = async () => {
+            try {
+
+                // Sales in a Line Chart
+                const salesRes = await fetch('/api/auth/orders?report=sales_by_day')
+                const salesJson = await salesRes.json()
+
+                const salesFormatted = {}
+                salesJson.data.forEach(row => {
+                    salesFormatted[row.order_date] = Number(row.total_sales)
+                })
+                setSalesData(salesFormatted)
+
+                const bestRes = await fetch('/api/auth/orders?report=best_selling')
+                const bestJson = await bestRes.json()
+
+                const bestFormatted = bestJson.data.map(item => [
+                    item.menu_item_name,
+                    Number(item.total_sold)
+                ])
+                setBestItems(bestFormatted)
+
+                const inventoryRes = await fetch('/api/auth/inventory?report=low_stock')
+                const inventoryJson = await inventoryRes.json()
+
+                const inventoryFormatted = inventoryJson.data.map(item => [
+                    `Item ${item.inventory_item_id}`,
+                    Number(item.quantity_available)
+                ])
+                setInventoryData(inventoryFormatted)
+
+            } catch (error) {
+                console.error('Error loading reports:', error)
+            }
+        }
+        fetchReports()
+    }, [])
+
+    return (
+        <div style={{padding: '20px'}}>
+            <h2>Sales Over Time</h2>
+            <LineChart
+                data={salesData}
+                xtitle="Date"
+                ytitle="Revenue"
+                prefix="$"
+                curve={false}
+                download={true}
+            />
+
+            <h2>Best Selling Items</h2>
+            <PieChart
+                data={bestItem}
+                donut={true}
+            />
+
+            <h2>Low Inventory</h2>
+            <BarChart
+                data={inventoryData}
+            />
+        </div>
+    )
 }   
