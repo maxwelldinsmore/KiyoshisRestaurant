@@ -112,7 +112,7 @@ export default function Header({ active = "", userName = "" }) {
 
   return (
     <header className="border-b border-neutral-300 bg-white/95" aria-label="Main header">
-      <div className="flex items-center justify-between px-6 py-3">
+      <div className="flex flex-col sm:flex-row items-center justify-between px-6 py-3">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-5" aria-label="Go to homepage" title="Home">
           <Image
