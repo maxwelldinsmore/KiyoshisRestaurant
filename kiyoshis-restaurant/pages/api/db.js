@@ -8,7 +8,14 @@
 
 import postgres from 'postgres';
 
-const DATABASE_URL = `postgres://${process.env.DBUSER}:${process.env.DBPASSWORD}@${process.env.DBURL}:${process.env.DBPORT}/${process.env.DBNAME}`;
+const requiredEnvVars = ['DBUSER', 'DBPASSWORD', 'DBURL', 'DBPORT', 'DBNAME'];
+const missingEnvVars = requiredEnvVars.filter((name) => !process.env[name]);
+
+if (missingEnvVars.length > 0) {
+  throw new Error(`Missing database environment variables: ${missingEnvVars.join(', ')}`);
+}
+
+const DATABASE_URL = `postgres://${encodeURIComponent(process.env.DBUSER)}:${encodeURIComponent(process.env.DBPASSWORD)}@${process.env.DBURL}:${process.env.DBPORT}/${process.env.DBNAME}`;
 
 const poolOptions = {
   max: 10,
@@ -21,8 +28,10 @@ let sql;
 
 if (process.env.NODE_ENV === 'development') {
   // In development, reuse the pool across HMR reloads via the global object
-  if (!global._pgPool) {
+  if (!global._pgPool || global._pgPoolUrl !== DATABASE_URL) {
+    global._pgPool?.end({ timeout: 5 }).catch(() => {});
     global._pgPool = postgres(DATABASE_URL, poolOptions);
+    global._pgPoolUrl = DATABASE_URL;
   }
   sql = global._pgPool;
 } else {
