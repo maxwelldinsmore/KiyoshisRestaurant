@@ -14,7 +14,7 @@ services:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin123
       POSTGRES_DB: kiyoshi_db
-      # POSTGRES_HOST_AUTH_METHOD: trust
+      POSTGRES_HOST_AUTH_METHOD: trust
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/01-init.sql
       - ./seed_data.sql:/docker-entrypoint-initdb.d/02-seed_data.sql
@@ -25,7 +25,7 @@ services:
       - ./procedures.sql/menu_items.sql:/docker-entrypoint-initdb.d/07-menu_items.sql
       - ./procedures.sql/orders.sql:/docker-entrypoint-initdb.d/08-orders.sql
       - ./procedures.sql/rewards.sql:/docker-entrypoint-initdb.d/09-rewards.sql
-      # - ./pg_hba.conf:/etc/postgresql/pg_hba.conf
+      - ./pg_hba.conf:/etc/postgresql/pg_hba.conf
       # - pgdata:/var/lib/postgresql/data
 
 # volumes:
