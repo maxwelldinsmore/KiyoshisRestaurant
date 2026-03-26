@@ -90,7 +90,7 @@ function MenuItemCard({ item }) {
           <h3 className="text-xl font-semibold tracking-tight text-[#15304f]">{item.name}</h3>
           <p className="mt-2 text-sm leading-7 text-stone-700">{item.description}</p>
         </div>
-        <span className="shrink-0 rounded-full border border-[#b21f2d]/20 bg-[#fbeff1] px-3 py-1 text-sm font-semibold text-[#b21f2d]">
+        <span className="menu-price-pill shrink-0 rounded-full border border-[#7d1020]/30 bg-[#f3dde3] px-3 py-1 text-sm font-semibold text-[#7d1020]">
           {item.price}
         </span>
       </div>

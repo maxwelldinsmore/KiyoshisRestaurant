@@ -9,6 +9,7 @@ const AUTH_CACHE_KEY = "kiyoshi.authUser";
 export default function Header({ active = "", userName = "" }) {
   const router = useRouter();
   const [cachedUserName, setCachedUserName] = useState(userName || "");
+  const [isDarkMode, setIsDarkMode] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const [cartDropdownOpen, setCartDropdownOpen] = useState(false);
   const userDropdownRef = useRef(null);
@@ -76,6 +77,22 @@ export default function Header({ active = "", userName = "" }) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+
+    const root = document.documentElement;
+    const syncDarkMode = () => {
+      setIsDarkMode(root.classList.contains("a11y-dark"));
+    };
+
+    syncDarkMode();
+
+    const observer = new MutationObserver(syncDarkMode);
+    observer.observe(root, { attributes: true, attributeFilter: ["class"] });
+
+    return () => observer.disconnect();
+  }, []);
+
   const handleLogout = async () => {
     await fetch("/api/auth/logout");
     if (typeof window !== "undefined") window.sessionStorage.removeItem(AUTH_CACHE_KEY);
@@ -99,7 +116,7 @@ export default function Header({ active = "", userName = "" }) {
         {/* Logo */}
         <Link href="/" className="flex items-center gap-5" aria-label="Go to homepage" title="Home">
           <Image
-            src="/KiyoshiLogo6.png"
+            src={isDarkMode ? "/KiyoshiLogo7.png" : "/KiyoshiLogo6.png"}
             alt="Kiyoshi logo"
             width={145}
             height={54}

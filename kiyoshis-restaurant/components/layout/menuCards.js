@@ -9,7 +9,7 @@ export default function MenuHighlightCard({ item }) {
       <div className="flex flex-1 flex-col p-5">
         <div className="flex items-start justify-between gap-3">
           <h3 className="text-lg font-semibold text-[#102841]">{item.name}</h3>
-          <span className="shrink-0 border border-[#c7d3e0] bg-[#edf3f8] px-3 py-1 text-sm font-semibold text-[#102841]">{item.price}</span>
+          <span className="menu-price-pill shrink-0 border border-[#7d1020]/25 bg-[#f3dde3] px-3 py-1 text-sm font-semibold text-[#7d1020]">{item.price}</span>
         </div>
         <p className="mt-2 text-sm leading-6 text-[#4f657d]">{item.description}</p>
         <div className="mt-auto flex justify-center pt-3">
