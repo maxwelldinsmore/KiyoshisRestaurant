@@ -22,7 +22,7 @@ export default async function handler(req, res) {
     console.error('Orders API error:', error);
     return res.status(500).json({
       success: false,
-      error: 'Internal server error',
+      error: error.message,
     });
   }
 }
@@ -60,6 +60,12 @@ async function handleGet(req, res) {
       LIMIT 10
     `;
     return res.status(200).json({ success: true, count: data.length, data });
+  }
+
+  if (report === 'top_customers') {
+    const data = await sql`SELECT * FROM get_top_customers()`;
+
+    return res.status(200).json({success: true, count: data.length, data});
   }
 
   const data = await sql`SELECT * FROM get_all_orders()`;

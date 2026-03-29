@@ -61,19 +61,19 @@ INSERT INTO menu_item (category_id, menu_item_name, menu_item_price, menu_item_d
 
 -- Insert Inventory Items
 INSERT INTO inventory_item (supplier_id, purchase_date, quantity_available, unit_weight_available) VALUES
-(1, '2026-03-10 08:00:00', 50, 0.0000), -- Fresh Salmon (lbs)
-(1, '2026-03-10 08:00:00', 30, 0.0000), -- Fresh Tuna (lbs)
-(1, '2026-03-10 08:00:00', 25, 0.0000), -- Eel (lbs)
-(1, '2026-03-10 08:00:00', 40, 0.0000), -- Crab (lbs)
-(1, '2026-03-10 08:00:00', 35, 0.0000), -- Shrimp (lbs)
-(2, '2026-03-09 10:00:00', 100, 0.0000), -- Sushi Rice (lbs)
-(2, '2026-03-09 10:00:00', 200, 0.0000), -- Nori Sheets (count)
-(3, '2026-03-10 07:00:00', 60, 0.0000), -- Avocado (count)
-(3, '2026-03-10 07:00:00', 40, 0.0000), -- Cucumber (count)
-(3, '2026-03-10 07:00:00', 10, 0.0000), -- Ginger Root (lbs)
-(4, '2026-03-05 09:00:00', 20, 0.0000), -- Soy Sauce (bottles)
-(4, '2026-03-05 09:00:00', 15, 0.0000), -- Wasabi Paste (tubes)
-(4, '2026-03-05 09:00:00', 25, 0.0000); -- Pickled Ginger (containers)
+(1, '2026-03-29 08:00:00', 9, 0.0000), -- Fresh Salmon (lbs)
+(1, '2026-03-29 08:00:00', 4, 0.0000), -- Fresh Tuna (lbs)
+(1, '2026-03-30 08:00:00', 2, 0.0000), -- Eel (lbs)
+(1, '2026-03-30 08:00:00', 40, 0.0000), -- Crab (lbs)
+(1, '2026-03-30 08:00:00', 35, 0.0000), -- Shrimp (lbs)
+(2, '2026-03-31 10:00:00', 100, 0.0000), -- Sushi Rice (lbs)
+(2, '2026-03-31 10:00:00', 200, 0.0000), -- Nori Sheets (count)
+(3, '2026-03-31 07:00:00', 60, 0.0000), -- Avocado (count)
+(3, '2026-04-01 07:00:00', 40, 0.0000), -- Cucumber (count)
+(3, '2026-04-01 07:00:00', 10, 0.0000), -- Ginger Root (lbs)
+(4, '2026-05-05 09:00:00', 20, 0.0000), -- Soy Sauce (bottles)
+(4, '2026-05-05 09:00:00', 15, 0.0000), -- Wasabi Paste (tubes)
+(4, '2026-05-05 09:00:00', 25, 0.0000); -- Pickled Ginger (containers)
 
 -- Insert Inventory Menu Item Relationships (recipe requirements)
 INSERT INTO inventory_menu_item (menu_item_id, inventory_item_id, quantity_required) VALUES
@@ -93,10 +93,27 @@ INSERT INTO inventory_menu_item (menu_item_id, inventory_item_id, quantity_requi
 
 -- Insert Orders
 INSERT INTO orders (customer_id, employee_id, guest_phone_num, guest_email, order_total, order_date, pick_up_time, order_status, order_type) VALUES
+(1, 1, NULL, NULL, 52.30, '2026-03-01 12:10:00', '2026-03-01 12:40:00', 'completed', 'pickup'),
+(2, 2, NULL, NULL, 18.75, '2026-03-01 18:20:00', '2026-03-01 18:50:00', 'completed', 'pickup'),
+(3, 1, NULL, NULL, 74.50, '2026-03-02 13:00:00', '2026-03-02 13:30:00', 'completed', 'pickup'),
+(NULL, 2, '5551112222', 'guest1@email.com', 33.90, '2026-03-02 19:15:00', '2026-03-02 19:45:00', 'completed', 'pickup'),
+
+(1, 1, NULL, NULL, 46.20, '2026-03-05 12:30:00', '2026-03-05 13:00:00', 'completed', 'pickup'),
+(2, 2, NULL, NULL, 61.80, '2026-03-06 17:45:00', '2026-03-06 18:15:00', 'completed', 'pickup'),
+(3, 1, NULL, NULL, 25.40, '2026-03-06 19:10:00', '2026-03-06 19:40:00', 'completed', 'pickup'),
+(NULL, 2, '5552223333', 'guest2@email.com', 89.99, '2026-03-07 14:00:00', '2026-03-07 14:30:00', 'completed', 'pickup'),
+
 (1, 1, NULL, NULL, 42.95, '2026-03-09 18:30:00', '2026-03-09 19:00:00', 'completed', 'pickup'),
 (2, 2, NULL, NULL, 67.43, '2026-03-10 12:15:00', '2026-03-10 12:45:00', 'completed', 'pickup'),
 (3, 1, NULL, NULL, 29.96, '2026-03-10 17:00:00', '2026-03-10 17:30:00', 'completed', 'pickup'),
-(NULL, 2, '5551239999', 'guest@email.com', 35.95, '2026-03-11 13:00:00', '2026-03-11 13:30:00', 'in_progress', 'pickup');
+(NULL, 2, '5551239999', 'guest@email.com', 35.95, '2026-03-11 13:00:00', '2026-03-11 13:30:00', 'completed', 'pickup'),
+
+(1, 1, NULL, NULL, 58.75, '2026-03-15 12:05:00', '2026-03-15 12:35:00', 'completed', 'pickup'),
+(2, 2, NULL, NULL, 77.20, '2026-03-16 18:40:00', '2026-03-16 19:10:00', 'completed', 'pickup'),
+(3, 1, NULL, NULL, 21.99, '2026-03-17 13:25:00', '2026-03-17 13:55:00', 'completed', 'pickup'),
+
+(NULL, 1, '5559998888', 'guest3@email.com', 49.60, '2026-03-26 12:10:00', '2026-03-26 12:40:00', 'completed', 'pickup'),
+(NULL, 2, '5557776666', 'guest4@email.com', 63.10, '2026-03-27 19:05:00', '2026-03-27 19:35:00', 'completed', 'pickup');
 
 -- Insert Order Items
 INSERT INTO order_item (order_id, menu_item_id, order_item_quantity) VALUES
@@ -121,7 +138,39 @@ INSERT INTO order_item (order_id, menu_item_id, order_item_quantity) VALUES
 -- Order 4 (in progress)
 (4, 5, 2), -- 2x Philadelphia Roll
 (4, 14, 1), -- 1x Gyoza
-(4, 17, 2); -- 2x Green Tea
+(4, 17, 2), -- 2x Green Tea
+
+(5, 1, 2), -- 2x California Roll
+(5, 6, 1), -- 1x Salmon Nigiri
+(5, 15, 2), -- 2x Miso Soup
+
+(6, 3, 1), -- 1x Dragon Roll
+(6, 4, 1), -- 1x Rainbow Rol
+(6, 18, 2), -- 2x Ramune
+
+(7, 2, 2), -- 2x Spicy Tuna Roll
+(7, 9, 1), -- 1x Shrimp Nigiri
+(7, 16, 1), -- 1x Seaweed Salad
+
+(8, 5, 2), -- 2x Philadelphia Roll
+(8, 14, 1), -- 1x Gyoza
+(8, 17, 3), -- 3x Green Tea
+
+(9, 1, 1), -- 1x California Roll
+(9, 7, 2), -- 2x Tuna Nigiri
+(9, 20, 1), -- 1x Mochi Ice Cream
+
+(10, 4, 2), -- 2x Rainbow Roll
+(10, 13, 1), -- 2x Edamame
+(10, 17, 2), -- 2x Green Tea
+
+(11, 2, 1), -- 2x Spicy Tuna Roll
+(11, 6, 2), -- 2x Salmon Nigiri
+(11, 15, 1), -- 2x Miso Soup
+
+(12, 3, 1), -- 1x Dragon Roll
+(12, 8, 2), -- 1x Eal Nigiri
+(12, 18, 2); -- 1x Ramune
 
 -- Insert Order Payments
 INSERT INTO order_payment (order_id, payment_method, payment_note) VALUES
@@ -160,16 +209,16 @@ INSERT INTO customer_preference (customer_id, menu_item_id) VALUES
 
 -- Insert Inventory Transactions
 INSERT INTO inventory_transaction (inventory_item_id, purchase_date, expiry_date, quantity_purchased, unit_weight) VALUES
-(1, '2026-03-10 08:00:00', '2026-03-13 23:59:59', 50, 0.0000), -- Salmon
-(2, '2026-03-10 08:00:00', '2026-03-13 23:59:59', 30, 0.0000), -- Tuna
-(3, '2026-03-10 08:00:00', '2026-03-15 23:59:59', 25, 0.0000), -- Eel
-(4, '2026-03-10 08:00:00', '2026-03-12 23:59:59', 40, 0.0000), -- Crab
-(5, '2026-03-10 08:00:00', '2026-03-12 23:59:59', 35, 0.0000), -- Shrimp
-(6, '2026-03-09 10:00:00', '2026-06-09 23:59:59', 100, 0.0000), -- Rice
-(7, '2026-03-09 10:00:00', '2026-09-09 23:59:59', 200, 0.0000), -- Nori
-(8, '2026-03-10 07:00:00', '2026-03-17 23:59:59', 60, 0.0000), -- Avocado
-(9, '2026-03-10 07:00:00', '2026-03-17 23:59:59', 40, 0.0000), -- Cucumber
-(10, '2026-03-10 07:00:00', '2026-04-10 23:59:59', 10, 0.0000); -- Ginger
+(1, '2026-03-29 08:00:00', '2026-03-30 23:59:59', 50, 0.0000), -- Salmon
+(2, '2026-03-29 08:00:00', '2026-03-30 23:59:59', 30, 0.0000), -- Tuna
+(3, '2026-03-30 08:00:00', '2026-03-31 23:59:59', 25, 0.0000), -- Eel
+(4, '2026-03-30 08:00:00', '2026-03-31 23:59:59', 40, 0.0000), -- Crab
+(5, '2026-03-30 08:00:00', '2026-04-06 23:59:59', 35, 0.0000), -- Shrimp
+(6, '2026-03-31 10:00:00', '2026-04-06 23:59:59', 100, 0.0000), -- Rice
+(7, '2026-03-31 10:00:00', '2026-04-15 23:59:59', 200, 0.0000), -- Nori
+(8, '2026-03-31 07:00:00', '2026-04-15 23:59:59', 60, 0.0000), -- Avocado
+(9, '2026-04-01 07:00:00', '2026-04-17 23:59:59', 40, 0.0000), -- Cucumber
+(10, '2026-04-01 07:00:00', '2026-04-20 23:59:59', 10, 0.0000); -- Ginger
 
 -- Insert Waste Log
 INSERT INTO waste_log (inventory_item_id, waste_date, estimated_value_loss, quantity_wasted, unit_type) VALUES
