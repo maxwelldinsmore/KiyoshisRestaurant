@@ -1,125 +1,245 @@
 import Head from "next/head";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useCart } from "@/contexts/CartContext";
 
-const categories = ["All", "Sushi", "Platters", "Drinks", "Desserts"];
-
-const menuData = {
-  All: {
-    heading: "Menu Overview",
-    description:
-      "Browse the full collection of sushi, platters, drinks, and desserts. Use the category bar to focus the list while keeping the same structured page layout.",
-    items: [
-      { name: "Salmon Nigiri Set", description: "Fresh salmon over seasoned rice with a clean soy-brushed finish.", price: "$18" },
-      { name: "Kiyoshi Deluxe Platter", description: "A mixed platter for sharing with nigiri, rolls, and sashimi highlights.", price: "$44" },
-      { name: "Yuzu Sparkling Soda", description: "Bright citrus and a light mineral finish for a crisp pairing.", price: "$6" },
-      { name: "Matcha Cheesecake", description: "Creamy cheesecake with a gentle matcha note and clean finish.", price: "$9" },
-      { name: "Spicy Tuna Roll", description: "Tuna, house seasoning, cucumber, and a sharper red accent of heat.", price: "$15" },
-      { name: "Lunch Bento Platter", description: "A practical midday option with variety and balanced portions.", price: "$22" },
-    ],
-    highlights: ["Good starting point for first-time guests", "Balanced spread of signature items", "Best category if you want a fast overview"],
-  },
-  Sushi: {
-    heading: "Sushi",
-    description:
-      "A tighter list of sushi staples and house favourites, built around clean presentation and dependable combinations.",
-    items: [
-      { name: "Salmon Nigiri Set", description: "Fresh salmon over seasoned rice with a soy-brushed finish.", price: "$18" },
-      { name: "Bluefin Trio", description: "Three cuts of tuna selected for contrast in texture and richness.", price: "$24" },
-      { name: "Spicy Tuna Roll", description: "Tuna, cucumber, house seasoning, and a restrained chili finish.", price: "$15" },
-      { name: "Dragon Roll", description: "Prawn tempura, avocado, and eel sauce layered for a richer bite.", price: "$17" },
-      { name: "Vegetable Maki", description: "Cucumber, avocado, pickled radish, and sesame for a lighter option.", price: "$12" },
-      { name: "Chef Selection Sashimi", description: "A rotating selection prepared for guests who want a cleaner, fish-forward option.", price: "$28" },
-    ],
-    highlights: ["Best for guests focused on classic sushi", "Mix of lighter and richer options", "Suitable for lunch or dinner orders"],
-  },
-  Platters: {
-    heading: "Platters",
-    description:
-      "Built for sharing, these combinations are designed to cover a wider range of tastes without making the order process complicated.",
-    items: [
-      { name: "Kiyoshi Deluxe Platter", description: "Mixed nigiri, sashimi, and signature rolls for two to three guests.", price: "$44" },
-      { name: "Family Sushi Board", description: "A larger spread arranged for the table with flexible flavour balance.", price: "$72" },
-      { name: "Lunch Bento Platter", description: "A compact weekday option with a more practical midday portion.", price: "$22" },
-      { name: "Vegetarian Share Plate", description: "A mixed platter with rolls, sides, and lighter vegetarian combinations.", price: "$31" },
-      { name: "Office Meeting Set", description: "Prepared for easy group sharing during workday pickup orders.", price: "$58" },
-      { name: "Celebration Board", description: "A more premium arrangement for events, occasions, or larger reservations.", price: "$88" },
-    ],
-    highlights: ["Designed for shared dining", "Useful for office lunches and group dinners", "Best ordered ahead during busier periods"],
-  },
-  Drinks: {
-    heading: "Drinks",
-    description:
-      "A compact drinks section focused on clean pairings rather than an oversized beverage list.",
-    items: [
-      { name: "Yuzu Sparkling Soda", description: "Citrus-led sparkling drink with a crisp finish.", price: "$6" },
-      { name: "Cold Green Tea", description: "Light, refreshing, and suited to most sushi combinations.", price: "$5" },
-      { name: "House Iced Matcha", description: "Smoother and more rounded with a slightly creamy texture.", price: "$7" },
-      { name: "Japanese Cola", description: "A familiar option with a sharper finish and smaller serving profile.", price: "$5" },
-      { name: "Still Water", description: "A simple table option for guests keeping the meal minimal.", price: "$3" },
-      { name: "Sparkling Water", description: "Mineral-forward and suited to richer rolls and platters.", price: "$4" },
-    ],
-    highlights: ["Shorter list by design", "Pairing-friendly options", "Suitable for dine-in and takeaway"],
-  },
-  Desserts: {
-    heading: "Desserts",
-    description:
-      "A short dessert finish with lighter options and a couple of richer close-out choices.",
-    items: [
-      { name: "Matcha Cheesecake", description: "Creamy cheesecake with a restrained matcha finish.", price: "$9" },
-      { name: "Mochi Trio", description: "Three rotating mochi flavours presented as a lighter dessert option.", price: "$8" },
-      { name: "Black Sesame Tart", description: "Nutty depth with a more structured, less sweet finish.", price: "$10" },
-      { name: "Yuzu Sorbet", description: "A bright and colder finish for heavier meals.", price: "$7" },
-      { name: "Caramel Miso Panna Cotta", description: "A softer dessert with a subtle savoury edge.", price: "$9" },
-      { name: "Strawberry Short Slice", description: "A familiar dessert profile with a cleaner presentation.", price: "$8" },
-    ],
-    highlights: ["Designed as a simple final course", "Mix of lighter and richer finishes", "Good pairing with tea or sparkling drinks"],
-  },
+/*
+  Local image mapping only.
+  Keep images inside /public/images/menu/
+  Example path: /public/images/menu/salmon-nigiri-set.jpg
+*/
+const localMenuImages = {
+  "Salmon Nigiri Set": "/images/menu/salmon-nigiri-set.jpg",
+  "Bluefin Trio": "/images/menu/bluefin-trio.jpg",
+  "Spicy Tuna Roll": "/images/menu/spicy-tuna-roll.jpg",
+  "Dragon Roll": "/images/menu/dragon-roll.jpg",
+  "Vegetable Maki": "/images/menu/vegetable-maki.jpg",
+  "Chef Selection Sashimi": "/images/menu/chef-selection-sashimi.jpg",
+  "Kiyoshi Deluxe Platter": "/images/menu/kiyoshi-deluxe-platter.jpg",
+  "Family Sushi Board": "/images/menu/family-sushi-board.jpg",
+  "Lunch Bento Platter": "/images/menu/lunch-bento-platter.jpg",
+  "Vegetarian Share Plate": "/images/menu/vegetarian-share-plate.jpg",
+  "Office Meeting Set": "/images/menu/office-meeting-set.jpg",
+  "Celebration Board": "/images/menu/celebration-board.jpg",
+  "Yuzu Sparkling Soda": "/images/menu/yuzu-sparkling-soda.jpg",
+  "Cold Green Tea": "/images/menu/cold-green-tea.jpg",
+  "House Iced Matcha": "/images/menu/house-iced-matcha.jpg",
+  "Japanese Cola": "/images/menu/japanese-cola.jpg",
+  "Still Water": "/images/menu/still-water.jpg",
+  "Sparkling Water": "/images/menu/sparkling-water.jpg",
+  "Matcha Cheesecake": "/images/menu/matcha-cheesecake.jpg",
+  "Mochi Trio": "/images/menu/mochi-trio.jpg",
+  "Black Sesame Tart": "/images/menu/black-sesame-tart.jpg",
+  "Yuzu Sorbet": "/images/menu/yuzu-sorbet.jpg",
+  "Caramel Miso Panna Cotta": "/images/menu/caramel-miso-panna-cotta.jpg",
+  "Strawberry Short Slice": "/images/menu/strawberry-short-slice.jpg",
 };
+
+const placeholderImage = "/images/menu/placeholder-menu-item.jpg";
+
+/*
+  Optional frontend-only spice mapping.
+  This is NOT from DB.
+  You can add/remove items here anytime.
+*/
+const spiceLevels = {
+  "Spicy Tuna Roll": 2,
+  "Dragon Roll": 1,
+};
+
+function formatPrice(price) {
+  const numeric = Number(price);
+  if (Number.isNaN(numeric)) return "$0";
+  return `$${numeric.toFixed(2).replace(/\.00$/, "")}`;
+}
+
+function getItemImage(itemName) {
+  return localMenuImages[itemName] || placeholderImage;
+}
+
+function getItemSpiceLevel(itemName) {
+  return spiceLevels[itemName] || 0;
+}
+
+function SpiceLevel({ level }) {
+  if (!level) return null;
+
+  return (
+    <div
+      className="mt-3 flex items-center gap-2"
+      aria-label={`Spice level: ${level} ${level === 1 ? "chilli" : "chillies"}`}
+    >
+      <span className="text-xs font-semibold uppercase tracking-wide text-[#7d1020]">
+        Spice:
+      </span>
+      <span className="text-base leading-none" aria-hidden="true">
+        {"🌶️".repeat(level)}
+      </span>
+    </div>
+  );
+}
 
 function MenuItemCard({ item }) {
   const { addToCart, items } = useCart();
-  const inCart = items.find((i) => i.name === item.name);
+  const inCart = items.find(
+    (i) =>
+      i.menu_item_id === item.menu_item_id ||
+      i.name === item.menu_item_name
+  );
+
+  const imageSrc = getItemImage(item.menu_item_name);
+  const spiceLevel = getItemSpiceLevel(item.menu_item_name);
 
   return (
-    <article className="border border-[#cad5e1] bg-white/90 p-5 shadow-[0_18px_40px_rgba(17,39,63,0.08)]" aria-label={`${item.name} - ${item.price}`}>
-      <div className="flex items-start justify-between gap-4">
-        <div className="flex-1 min-w-0">
-          <h3 className="text-xl font-semibold tracking-tight text-[#15304f]">{item.name}</h3>
-          <p className="mt-2 text-sm leading-7 text-stone-700">{item.description}</p>
-        </div>
-        <span className="menu-price-pill shrink-0 rounded-full border border-[#7d1020]/30 bg-[#f3dde3] px-3 py-1 text-sm font-semibold text-[#7d1020]">
-          {item.price}
-        </span>
+    <article
+      className="overflow-hidden rounded-xl border border-[#cad5e1] bg-white/95 shadow-[0_18px_40px_rgba(17,39,63,0.08)]"
+      aria-label={`${item.menu_item_name} - ${formatPrice(item.menu_item_price)}`}
+    >
+      <div className="aspect-square w-full border-b border-[#d9e2ec] bg-[#eef3f8]">
+        <img
+          src={imageSrc}
+          alt={item.menu_item_name}
+          className="h-full w-full object-cover"
+          onError={(e) => {
+            e.currentTarget.src = placeholderImage;
+          }}
+        />
       </div>
-      <div className="mt-4 flex items-center justify-between">
-        <button
-          onClick={() => addToCart(item)}
-          className="flex items-center gap-2 rounded-full border border-[#152d4b] px-4 py-1.5 text-sm font-semibold text-[#152d4b] transition-colors hover:bg-[#152d4b] hover:text-white"
-          aria-label={`Add ${item.name} to cart`}
-          title={`Add ${item.name} to Cart (Alt+A)`}
-          data-add-to-cart="true"
-        >
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-          </svg>
-          Add to Cart
-        </button>
-        {inCart && (
-          <span className="text-xs text-neutral-500">{inCart.qty} in cart</span>
-        )}
+
+      <div className="flex min-h-[220px] flex-col p-5">
+        <div className="flex items-start justify-between gap-4">
+          <div className="min-w-0 flex-1">
+            <h3 className="text-xl font-semibold tracking-tight text-[#15304f]">
+              {item.menu_item_name}
+            </h3>
+
+            <p className="mt-2 text-sm leading-7 text-stone-700">
+              {item.menu_item_description}
+            </p>
+
+            <SpiceLevel level={spiceLevel} />
+
+            {!item.is_item_available && (
+              <div className="mt-3 inline-flex rounded-full border border-red-200 bg-red-50 px-3 py-1 text-xs font-semibold text-red-700">
+                Currently unavailable
+              </div>
+            )}
+
+            {Number(item.menu_item_discount_percent) > 0 && (
+              <div className="mt-3 inline-flex rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700">
+                {Number(item.menu_item_discount_percent)}% off
+              </div>
+            )}
+          </div>
+
+          <span className="menu-price-pill shrink-0 rounded-full border border-[#7d1020]/30 bg-[#f3dde3] px-3 py-1 text-sm font-semibold text-[#7d1020]">
+            {formatPrice(item.menu_item_price)}
+          </span>
+        </div>
+
+        <div className="mt-auto pt-5 flex items-center justify-between">
+          <button
+            onClick={() =>
+              addToCart({
+                ...item,
+                name: item.menu_item_name,
+                price: formatPrice(item.menu_item_price),
+                image: imageSrc,
+              })
+            }
+            disabled={!item.is_item_available}
+            className={`flex items-center gap-2 rounded-full border px-4 py-1.5 text-sm font-semibold transition-colors ${
+              item.is_item_available
+                ? "border-[#152d4b] text-[#152d4b] hover:bg-[#152d4b] hover:text-white"
+                : "cursor-not-allowed border-gray-300 text-gray-400"
+            }`}
+            aria-label={`Add ${item.menu_item_name} to cart`}
+            title={`Add ${item.menu_item_name} to Cart`}
+            data-add-to-cart="true"
+          >
+            <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 4v16m8-8H4"
+              />
+            </svg>
+            Add to Cart
+          </button>
+
+          {inCart && (
+            <span className="text-xs text-neutral-500">
+              {inCart.qty} in cart
+            </span>
+          )}
+        </div>
       </div>
     </article>
   );
 }
 
 export default function MenuPage() {
+  const [menuItems, setMenuItems] = useState([]);
   const [activeCategory, setActiveCategory] = useState("All");
-  const baseCategories = categories.filter((category) => category !== "All");
-  const allMenuItems = baseCategories.flatMap((category) => menuData[category].items);
-  const filteredMenuItems = activeCategory === "All" ? allMenuItems : menuData[activeCategory].items;
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    let isMounted = true;
+
+    async function fetchMenuItems() {
+      try {
+        setLoading(true);
+        setError("");
+
+        const res = await fetch("/api/menu-items");
+        const result = await res.json();
+
+        if (!res.ok || !result.success) {
+          throw new Error(result.error || "Failed to load menu items.");
+        }
+
+        if (isMounted) {
+          const availableData = Array.isArray(result.data) ? result.data : [];
+          setMenuItems(availableData);
+        }
+      } catch (err) {
+        console.error("Menu fetch error:", err);
+        if (isMounted) {
+          setError("Could not load menu items right now.");
+        }
+      } finally {
+        if (isMounted) {
+          setLoading(false);
+        }
+      }
+    }
+
+    fetchMenuItems();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  const categories = useMemo(() => {
+    const dbCategories = [...new Set(
+      menuItems
+        .map((item) => item.category_definition)
+        .filter(Boolean)
+    )];
+
+    return ["All", ...dbCategories];
+  }, [menuItems]);
+
+  const filteredMenuItems = useMemo(() => {
+    if (activeCategory === "All") return menuItems;
+    return menuItems.filter(
+      (item) => item.category_definition === activeCategory
+    );
+  }, [activeCategory, menuItems]);
 
   return (
     <div className="min-h-dvh flex flex-col bg-[#edf1f7] text-stone-950">
@@ -127,7 +247,7 @@ export default function MenuPage() {
         <title>Menu | Sushi Bai Kiyoshi</title>
         <meta
           name="description"
-          content="Explore the Sushi Bai Kiyoshi menu, including sushi, platters, drinks, and desserts in a cleaner blue-toned layout."
+          content="Explore the Sushi Bai Kiyoshi menu by category."
         />
       </Head>
 
@@ -136,7 +256,9 @@ export default function MenuPage() {
       <main className="relative flex-1 overflow-hidden bg-[#edf3f8]" aria-label="Menu page">
         <section className="relative border-b border-[#c4d1df] bg-white/80">
           <div className="mx-auto max-w-[92rem] px-4 py-8 text-center sm:px-6 lg:px-8">
-            <h1 className="text-4xl font-semibold tracking-tight text-[#12263f] sm:text-5xl lg:text-6xl">Menu</h1>
+            <h1 className="text-4xl font-semibold tracking-tight text-[#12263f] sm:text-5xl lg:text-6xl">
+              Menu
+            </h1>
           </div>
         </section>
 
@@ -164,11 +286,28 @@ export default function MenuPage() {
         </section>
 
         <section className="relative mx-auto max-w-[92rem] px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
-          <div className="grid gap-4 md:grid-cols-2">
-            {filteredMenuItems.map((item, index) => (
-              <MenuItemCard key={`${activeCategory}-${item.name}-${index}`} item={item} />
-            ))}
-          </div>
+          {loading ? (
+            <div className="py-16 text-center text-base font-medium text-[#35516e]">
+              Loading menu...
+            </div>
+          ) : error ? (
+            <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-4 text-center text-sm font-medium text-red-700">
+              {error}
+            </div>
+          ) : filteredMenuItems.length === 0 ? (
+            <div className="rounded-lg border border-[#cad5e1] bg-white px-4 py-8 text-center text-sm text-stone-600">
+              No menu items found for this category.
+            </div>
+          ) : (
+            <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+              {filteredMenuItems.map((item) => (
+                <MenuItemCard
+                  key={item.menu_item_id}
+                  item={item}
+                />
+              ))}
+            </div>
+          )}
         </section>
       </main>
 
