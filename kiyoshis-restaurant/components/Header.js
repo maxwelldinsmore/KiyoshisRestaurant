@@ -217,6 +217,13 @@ export default function Header({ active = "", userName = "" }) {
                     >
                       Suppliers
                     </Link>
+                    <Link
+                        href="/incomingOrders"
+                        className="block px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50 hover:text-neutral-950"
+                        onClick={() => setUserDropdownOpen(false)}
+                    >
+                      Incoming Orders
+                    </Link>
                     <div className="my-1 border-t border-neutral-100" />
                     <button
                       onClick={handleLogout}

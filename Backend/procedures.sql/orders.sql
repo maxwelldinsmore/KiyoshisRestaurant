@@ -277,3 +277,22 @@ BEGIN
   RETURN v_rows_updated > 0;
 END;
 $$;
+
+-- Get order items for a specific order
+CREATE OR REPLACE FUNCTION get_order_items_by_order(p_order_id INTEGER)
+RETURNS TABLE (
+  menu_item_name VARCHAR,
+  order_item_quantity INTEGER
+)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+RETURN QUERY
+SELECT
+    m.menu_item_name,
+    oi.order_item_quantity
+FROM order_item oi
+         JOIN menu_item m ON m.menu_item_id = oi.menu_item_id
+WHERE oi.order_id = p_order_id;
+END;
+$$;

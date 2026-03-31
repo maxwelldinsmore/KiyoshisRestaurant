@@ -113,7 +113,15 @@ INSERT INTO orders (customer_id, employee_id, guest_phone_num, guest_email, orde
 (3, 1, NULL, NULL, 21.99, '2026-03-17 13:25:00', '2026-03-17 13:55:00', 'completed', 'pickup'),
 
 (NULL, 1, '5559998888', 'guest3@email.com', 49.60, '2026-03-26 12:10:00', '2026-03-26 12:40:00', 'completed', 'pickup'),
-(NULL, 2, '5557776666', 'guest4@email.com', 63.10, '2026-03-27 19:05:00', '2026-03-27 19:35:00', 'completed', 'pickup');
+(NULL, 2, '5557776666', 'guest4@email.com', 63.10, '2026-03-27 19:05:00', '2026-03-27 19:35:00', 'completed', 'pickup'),
+
+(1, 1, NULL, NULL, 100.75, '2026-04-02 12:05:00', '2026-04-02 12:35:00', 'pending', 'pickup'),
+(2, 2, NULL, NULL, 73.20, '2026-04-02 18:40:00', '2026-04-02 19:10:00', 'pending', 'pickup'),
+(3, 1, NULL, NULL, 25.99, '2026-04-03 13:25:00', '2026-04-03 13:55:00', 'pending', 'pickup'),
+
+(1, 1, NULL, NULL, 100.75, '2026-04-03 12:05:00', '2026-04-03 12:35:00', 'pending', 'pickup'),
+(2, 2, '6478892321', NULL, 73.20, '2026-04-04 18:40:00', '2026-04-04 19:10:00', 'pending', 'pickup'),
+(3, 1, NULL, NULL, 25.99, '2026-04-05 13:25:00', '2026-04-05 13:55:00', 'pending', 'pickup');
 
 -- Insert Order Items
 INSERT INTO order_item (order_id, menu_item_id, order_item_quantity) VALUES

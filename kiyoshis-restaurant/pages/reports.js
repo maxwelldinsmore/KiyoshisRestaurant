@@ -1,6 +1,8 @@
 import {LineChart, PieChart, BarChart} from 'react-chartkick'
 import 'chartkick/chart.js'
 import {useEffect, useState} from 'react'
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 export default function Reports() {
     const [salesData, setSalesData] = useState({})
@@ -112,83 +114,87 @@ export default function Reports() {
     }, [])
 
     return (
-        <div className="p-6 bg-gray-100 min-h-screen">
+        <div className="min-h-screen flex flex-col">
+            <Header/>
+            <div className="p-6 bg-gray-100 min-h-screen">
 
-            <h1 className="text-2xl font-bold mb-6">
-                Reports Dashboard
-            </h1>
+                <h1 className="text-2xl font-bold mb-6">
+                    Reports Dashboard
+                </h1>
 
-            {/* Charts Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                {/* Charts Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
 
-                <div className="bg-white p-4 rounded-2xl shadow">
-                    <h2 className="text-lg font-semibold mb-3">
-                        Sales Over Time
-                    </h2>
-                    {mounted && (
-                        <LineChart
-                            data={salesData}
-                            xtitle="Date"
-                            ytitle="Revenue"
-                            prefix="$"
-                            curve={false}
-                        />
-                    )}
+                    <div className="bg-white p-4 rounded-2xl shadow">
+                        <h2 className="text-lg font-semibold mb-3">
+                            Sales Over Time
+                        </h2>
+                        {mounted && (
+                            <LineChart
+                                data={salesData}
+                                xtitle="Date"
+                                ytitle="Revenue"
+                                prefix="$"
+                                curve={false}
+                            />
+                        )}
+                    </div>
+
+                    <div className="bg-white p-4 rounded-2xl shadow">
+                        <h2 className="text-lg font-semibold mb-3">
+                            Best Selling Items
+                        </h2>
+                        {mounted && (
+                            <BarChart data={bestItem}/>
+                        )}
+                    </div>
+
                 </div>
 
-                <div className="bg-white p-4 rounded-2xl shadow">
-                    <h2 className="text-lg font-semibold mb-3">
-                        Best Selling Items
-                    </h2>
-                    {mounted && (
-                        <BarChart data={bestItem} />
-                    )}
-                </div>
+                {/* Lists Section */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
+                    {/* Expiring Soon */}
+                    <div className="bg-white p-4 rounded-2xl shadow">
+                        <h2 className="text-lg font-semibold mb-3">
+                            Expiring Soon
+                        </h2>
+
+                        {expiringData.length === 0 ? (
+                            <p className="text-gray-500">No items expiring soon</p>
+                        ) : (
+                            <ul className="space-y-2">
+                                {expiringData.map((item, index) => (
+                                    <li key={index} className="border-b pb-1">
+                                        {item[0]} — expires on {item[1]}
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+                    </div>
+
+                    {/* Top Customers */}
+                    <div className="bg-white p-4 rounded-2xl shadow">
+                        <h2 className="text-lg font-semibold mb-3">
+                            Top Customers
+                        </h2>
+
+                        {topCustomers.length === 0 ? (
+                            <p className="text-gray-500">No data available</p>
+                        ) : (
+                            <ul className="space-y-2">
+                                {topCustomers.map((customer, index) => (
+                                    <li key={index} className="border-b pb-1">
+                                        {customer.customer_name} — {customer.total_visits} visits
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+                    </div>
+
+                </div>
             </div>
-
-            {/* Lists Section */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-                {/* Expiring Soon */}
-                <div className="bg-white p-4 rounded-2xl shadow">
-                    <h2 className="text-lg font-semibold mb-3">
-                        Expiring Soon
-                    </h2>
-
-                    {expiringData.length === 0 ? (
-                        <p className="text-gray-500">No items expiring soon</p>
-                    ) : (
-                        <ul className="space-y-2">
-                            {expiringData.map((item, index) => (
-                                <li key={index} className="border-b pb-1">
-                                    {item[0]} — expires on {item[1]}
-                                </li>
-                            ))}
-                        </ul>
-                    )}
-                </div>
-
-                {/* Top Customers */}
-                <div className="bg-white p-4 rounded-2xl shadow">
-                    <h2 className="text-lg font-semibold mb-3">
-                        Top Customers
-                    </h2>
-
-                    {topCustomers.length === 0 ? (
-                        <p className="text-gray-500">No data available</p>
-                    ) : (
-                        <ul className="space-y-2">
-                            {topCustomers.map((customer, index) => (
-                                <li key={index} className="border-b pb-1">
-                                    {customer.customer_name} — {customer.total_visits} visits
-                                </li>
-                            ))}
-                        </ul>
-                    )}
-                </div>
-
-            </div>
+            <Footer/>
         </div>
     )
 }

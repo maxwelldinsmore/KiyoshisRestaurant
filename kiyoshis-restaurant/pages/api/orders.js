@@ -32,7 +32,24 @@ async function handleGet(req, res) {
 
   if (orderId) {
     const order = await sql`SELECT * FROM get_order_by_id(${Number(orderId)})`;
-    return res.status(200).json({ success: true, count: order.length, data: order });
+
+    let items = [];
+
+    if (with_items === 'true') {
+      items = await sql`
+          SELECT *
+          FROM get_order_items_by_order(${Number(orderId)})
+      `;
+    }
+
+    return res.status(200).json({
+      success: true,
+      count: order.length,
+      data: {
+        ...order[0],
+        items,
+      },
+    });
   }
 
   if (orderStatus) {
