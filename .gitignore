@@ -85,3 +85,4 @@ pgdata/
 *.pem
 *.key
 .cache/
+Backend/notes.txt

@@ -21,7 +21,7 @@ const poolOptions = {
   max: 10,
   idle_timeout: 30,
   connect_timeout: 10,
-  ssl: false,
+  ssl: 'require',
 };
 
 let sql;

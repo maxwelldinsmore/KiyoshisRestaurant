@@ -39,4 +39,5 @@ $ docker build -t kiyoshicontainer .
 
 docker tag kiyoshicontainer:latest 701559402180.dkr.ecr.us-east-2.amazonaws.com/dbcontainer:latest
 
-aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 701559402180.dkr.ecr.us-east-2.amazonaws.com
+docker push 701559402180.dkr.ecr.us-east-2.amazonaws.com/dbcontainer:latest
+
