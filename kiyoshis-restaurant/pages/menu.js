@@ -4,11 +4,6 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useCart } from "@/contexts/CartContext";
 
-/*
-  Local image mapping only.
-  Keep images inside /public/images/menu/
-  Example path: /public/images/menu/salmon-nigiri-set.jpg
-*/
 const localMenuImages = {
   "Salmon Nigiri Set": "/images/menu/salmon-nigiri-set.jpg",
   "Bluefin Trio": "/images/menu/bluefin-trio.jpg",
@@ -36,7 +31,7 @@ const localMenuImages = {
   "Strawberry Short Slice": "/images/menu/strawberry-short-slice.jpg",
 };
 
-const placeholderImage = "/images/menu/placeholder-menu-item.jpg";
+const placeholderImage = "/Website/11.jpg";
 
 /*
   Optional frontend-only spice mapping.
@@ -88,7 +83,7 @@ function MenuItemCard({ item }) {
       i.name === item.menu_item_name
   );
 
-  const imageSrc = getItemImage(item.menu_item_name);
+  const imageSrc = item.menu_item_asset_path || getItemImage(item.menu_item_name);
   const spiceLevel = getItemSpiceLevel(item.menu_item_name);
 
   return (
