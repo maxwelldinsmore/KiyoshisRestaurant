@@ -4,6 +4,15 @@ import Footer from "@/components/Footer";
 
 export default function IncomingOrders() {
     const [orders, setOrders] = useState([]);
+    const [filterStatus, setFilterStatus] = useState(null);
+
+    async function sendNotif(email = "", phonenumber = "") {
+        await fetch('/api/send-notification', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, phonenumber })
+        });
+    }
 
     useEffect(() => {
         fetchOrders();
@@ -12,20 +21,23 @@ export default function IncomingOrders() {
     }, []);
 
     const fetchOrders = async () => {
-        const res = await fetch("/api/orders?order_status=pending");
+        const res = await fetch("/api/orders");
         const json = await res.json();
         setOrders(json.data || []);
     };
 
-    const updateStatus = async (orderId, status) => {
+    const updateStatus = async (order, status) => {
         await fetch("/api/orders", {
             method: "PUT",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({
-                order_id: orderId,
+                order_id: order.order_id,
                 order_status: status,
             }),
         });
+        if (status === "Ready") {
+            sendNotif(order.customer_email)
+        }
 
         fetchOrders();
     };
@@ -46,8 +58,38 @@ export default function IncomingOrders() {
             <div className="p-6">
                 <h1 className="text-2xl mb-5">Incoming Orders</h1>
 
+                <div className="flex gap-2 mb-6 flex-wrap">
+                    <button
+                        onClick={() => setFilterStatus("Pending")}
+                        className={`px-4 py-2 rounded-md text-sm font-medium transition ${
+                            filterStatus === null
+                                ? "bg-[#0a3e7a] text-white"
+                                : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                        }`}
+                    >
+                        All Orders
+                    </button>
+                    {["Pending", "Preparing", "Ready", "Completed"].map((status) => (
+                        <button
+                            key={status}
+                            onClick={() => setFilterStatus(status)}
+                            className={`px-4 py-2 rounded-md text-sm font-medium transition ${
+                                filterStatus === status
+                                    ? "bg-[#0a3e7a] text-white"
+                                    : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                            }`}
+                        >
+                            {status}
+                        </button>
+                    ))}
+                </div>
+
                 <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                    {orders.map((order) => (
+                    {orders
+                        .filter((order) =>
+                            filterStatus ? order.order_status.toLowerCase() === filterStatus.toLowerCase() : true
+                        )
+                        .map((order) => (
                         <div
                             key={order.order_id}
                             className="bg-white border border-[#d8e2ec] rounded-xl p-4 shadow-sm hover:shadow-md transition"
@@ -85,19 +127,29 @@ export default function IncomingOrders() {
 
                             <div className="flex gap-2 mt-3">
                                 <button
-                                    className="bg-[#0a3e7a] text-white px-3 py-1 rounded-md text-xs hover:brightness-110"
+                                    className="bg-[#0a3e7a] text-white px-3 py-1 rounded-md text-xs hover:brightness-110 active:bg-[#0a3e7a] active:brightness-150 focus:outline-2 focus:outline-offset-2 focus:outline-[#0a3e7a]"
+                                    onClick={() => updateStatus(order, "Preparing")}
                                 >
                                     Preparing
                                 </button>
 
                                 <button
-                                    className="bg-[#a13737] text-white px-3 py-1 rounded-md text-xs hover:brightness-110"
+                                    className="bg-[#a13737] text-white px-3 py-1 rounded-md text-xs hover:brightness-110 active:bg-[#a13737] active:brightness-150 focus:outline-2 focus:outline-offset-2 focus:outline-[#a13737]"
+                                    onClick={() => updateStatus(order, "Ready")}
                                 >
                                     Ready
                                 </button>
+
+                                <button
+                                    className="bg-[#a13737] text-white px-3 py-1 rounded-md text-xs hover:brightness-110 active:bg-[#a13737] active:brightness-150 focus:outline-2 focus:outline-offset-2 focus:outline-[#a13737]"
+                                    onClick={() => updateStatus(order, "Completed")}
+                                >
+                                    Completed
+                                </button>
+
                             </div>
                         </div>
-                    ))}
+                        ))}
                 </div>
             </div>
             <Footer/>

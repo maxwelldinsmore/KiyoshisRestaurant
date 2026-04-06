@@ -11,6 +11,9 @@ RETURNS TABLE (
   customer_id INTEGER,
   customer_first_name VARCHAR(30),
   customer_last_name VARCHAR(30),
+  customer_phonenumber VARCHAR(10),
+  customer_email VARCHAR(80),
+  contact_method VARCHAR(50),
   employee_id INTEGER,
   employee_first_name VARCHAR(30),
   employee_last_name VARCHAR(30),
@@ -31,6 +34,9 @@ BEGIN
     o.customer_id,
     c.customer_first_name,
     c.customer_last_name,
+    c.customer_phonenumber,
+    c.customer_email,
+    c.contact_method,
     o.employee_id,
     e.employee_first_name,
     e.employee_last_name,
@@ -56,6 +62,9 @@ RETURNS TABLE (
   customer_id INTEGER,
   customer_first_name VARCHAR(30),
   customer_last_name VARCHAR(30),
+  customer_phonenumber VARCHAR(10),
+  customer_email VARCHAR(80),
+  contact_method VARCHAR(50),
   employee_id INTEGER,
   employee_first_name VARCHAR(30),
   employee_last_name VARCHAR(30),
@@ -76,6 +85,9 @@ BEGIN
     o.customer_id,
     c.customer_first_name,
     c.customer_last_name,
+    c.customer_phonenumber,
+    c.customer_email,
+    c.contact_method,
     o.employee_id,
     e.employee_first_name,
     e.employee_last_name,
@@ -296,3 +308,6 @@ FROM order_item oi
 WHERE oi.order_id = p_order_id;
 END;
 $$;
+
+-- Reset all orders to Pending status
+UPDATE orders SET order_status = 'Pending';
