@@ -14,7 +14,9 @@ CREATE TABLE employee (
     employee_id SERIAL PRIMARY KEY,
     employee_first_name VARCHAR(30) NOT NULL,
     employee_last_name VARCHAR(30) NOT NULL,
-    employee_phone_number VARCHAR(10)
+    employee_email VARCHAR(80),
+    employee_phone_number VARCHAR(10),
+    employee_password_hash VARCHAR(255),
 );
 
 CREATE TABLE registered_customer (

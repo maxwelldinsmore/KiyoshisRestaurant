@@ -1,4 +1,5 @@
 import sql from './db';
+import bcrypt from 'bcryptjs';
 
 export default async function handler(req, res) {
   try {
@@ -36,14 +37,27 @@ async function handlePost(req, res) {
   const {
     employee_first_name: firstName,
     employee_last_name: lastName,
+    employee_email: email,
     employee_phone_number: phoneNumber,
+    employee_password: password,
   } = req.body;
+
+  if (!firstName || !lastName) {
+    return res.status(400).json({ success: false, error: 'employee_first_name and employee_last_name are required' });
+  }
+
+  let passwordHash = null;
+  if (password) {
+    passwordHash = await bcrypt.hash(password, 10);
+  }
 
   const data = await sql`
     SELECT create_employee(
-      ${firstName ?? null},
-      ${lastName ?? null},
-      ${phoneNumber ?? null}
+      ${firstName},
+      ${lastName},
+      ${email ?? null},
+      ${phoneNumber ?? null},
+      ${passwordHash ?? null}
     ) AS employee_id
   `;
 
@@ -55,7 +69,9 @@ async function handlePut(req, res) {
     employee_id: employeeId,
     employee_first_name: firstName,
     employee_last_name: lastName,
+    employee_email: email,
     employee_phone_number: phoneNumber,
+    employee_password_hash: passwordHash,
   } = req.body;
 
   if (!employeeId) {
@@ -67,7 +83,9 @@ async function handlePut(req, res) {
       ${Number(employeeId)},
       ${firstName ?? null},
       ${lastName ?? null},
-      ${phoneNumber ?? null}
+      ${email ?? null},
+      ${phoneNumber ?? null},
+      ${passwordHash ?? null}
     ) AS updated
   `;
 
@@ -75,12 +93,13 @@ async function handlePut(req, res) {
 }
 
 async function handleDelete(req, res) {
-  const { employee_id: employeeId } = req.body;
+  const { employee_id: employeeId, id } = req.query;
+  const idToDelete = employeeId || id;
 
-  if (!employeeId) {
+  if (!idToDelete) {
     return res.status(400).json({ success: false, error: 'employee_id is required' });
   }
 
-  const data = await sql`SELECT delete_employee(${Number(employeeId)}) AS deleted`;
+  const data = await sql`SELECT delete_employee(${Number(idToDelete)}) AS deleted`;
   return res.status(200).json({ success: true, data: data[0] });
 }

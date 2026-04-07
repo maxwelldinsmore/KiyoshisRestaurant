@@ -8,7 +8,9 @@
 CREATE OR REPLACE FUNCTION create_employee(
   p_employee_first_name VARCHAR(30),
   p_employee_last_name VARCHAR(30),
-  p_employee_phone_number VARCHAR(10)
+  p_employee_email VARCHAR(80) DEFAULT NULL,
+  p_employee_phone_number VARCHAR(10) DEFAULT NULL,
+  p_employee_password_hash VARCHAR(255) DEFAULT NULL
 )
 RETURNS INTEGER
 LANGUAGE plpgsql
@@ -19,12 +21,16 @@ BEGIN
   INSERT INTO employee (
     employee_first_name,
     employee_last_name,
-    employee_phone_number
+    employee_email,
+    employee_phone_number,
+    employee_password_hash
   )
   VALUES (
     p_employee_first_name,
     p_employee_last_name,
-    p_employee_phone_number
+    p_employee_email,
+    p_employee_phone_number,
+    p_employee_password_hash
   )
   RETURNING employee_id INTO v_employee_id;
 
@@ -38,7 +44,9 @@ RETURNS TABLE (
   employee_id INTEGER,
   employee_first_name VARCHAR(30),
   employee_last_name VARCHAR(30),
-  employee_phone_number VARCHAR(10)
+  employee_email VARCHAR(80),
+  employee_phone_number VARCHAR(10),
+  employee_password_hash VARCHAR(255)
 )
 LANGUAGE plpgsql
 AS $$
@@ -48,7 +56,9 @@ BEGIN
     e.employee_id,
     e.employee_first_name,
     e.employee_last_name,
-    e.employee_phone_number
+    e.employee_email,
+    e.employee_phone_number,
+    e.employee_password_hash
   FROM employee e
   WHERE e.employee_id = p_employee_id;
 END;
@@ -60,7 +70,9 @@ RETURNS TABLE (
   employee_id INTEGER,
   employee_first_name VARCHAR(30),
   employee_last_name VARCHAR(30),
-  employee_phone_number VARCHAR(10)
+  employee_email VARCHAR(80),
+  employee_phone_number VARCHAR(10),
+  employee_password_hash VARCHAR(255)
 )
 LANGUAGE plpgsql
 AS $$
@@ -70,7 +82,9 @@ BEGIN
     e.employee_id,
     e.employee_first_name,
     e.employee_last_name,
-    e.employee_phone_number
+    e.employee_email,
+    e.employee_phone_number,
+    e.employee_password_hash
   FROM employee e
   ORDER BY e.employee_id;
 END;
@@ -81,7 +95,9 @@ CREATE OR REPLACE FUNCTION update_employee(
   p_employee_id INTEGER,
   p_employee_first_name VARCHAR(30) DEFAULT NULL,
   p_employee_last_name VARCHAR(30) DEFAULT NULL,
-  p_employee_phone_number VARCHAR(10) DEFAULT NULL
+  p_employee_email VARCHAR(80) DEFAULT NULL,
+  p_employee_phone_number VARCHAR(10) DEFAULT NULL,
+  p_employee_password_hash VARCHAR(255) DEFAULT NULL
 )
 RETURNS BOOLEAN
 LANGUAGE plpgsql
@@ -93,7 +109,10 @@ BEGIN
   SET
     employee_first_name = COALESCE(p_employee_first_name, employee_first_name),
     employee_last_name = COALESCE(p_employee_last_name, employee_last_name),
-    employee_phone_number = COALESCE(p_employee_phone_number, employee_phone_number)
+    employee_email = COALESCE(p_employee_email, employee_email),
+    employee_phone_number = COALESCE(p_employee_phone_number, employee_phone_number),
+    employee_password_hash = COALESCE(p_employee_password_hash, employee_password_hash)
+
   WHERE employee_id = p_employee_id;
 
   GET DIAGNOSTICS v_rows_updated = ROW_COUNT;

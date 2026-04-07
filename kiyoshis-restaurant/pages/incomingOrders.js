@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import Link from "next/link";
 
 export default function IncomingOrders() {
     const [orders, setOrders] = useState([]);
@@ -56,7 +57,15 @@ export default function IncomingOrders() {
         <div className="min-h-screen flex flex-col">
             <Header/>
             <div className="p-6">
-                <h1 className="text-2xl mb-5">Incoming Orders</h1>
+                <div className="max-w-6xl mx-auto">
+                    <div className="flex justify-between items-center mb-6">
+                        <h1 className="text-2xl font-bold">Incoming Orders</h1>
+                        <Link href="/admin/dashboard">
+                            <button className="bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-700">
+                                Back to Dashboard
+                            </button>
+                        </Link>
+                    </div>
 
                 <div className="flex gap-2 mb-6 flex-wrap">
                     <button
@@ -150,6 +159,7 @@ export default function IncomingOrders() {
                             </div>
                         </div>
                         ))}
+                </div>
                 </div>
             </div>
             <Footer/>

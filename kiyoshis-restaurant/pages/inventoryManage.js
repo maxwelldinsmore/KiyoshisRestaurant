@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import Link from "next/link";
 
 export default function InventoryManage() {
     const [items, setItems] = useState([]);
@@ -79,47 +80,56 @@ export default function InventoryManage() {
             <Header />
 
             <main className="flex-1 bg-[#edf1f7] p-8">
-                <h1 className="text-3xl font-bold mb-6">Inventory Management</h1>
+                <div className="max-w-6xl mx-auto">
+                    <div className="flex justify-between items-center mb-6">
+                        <h1 className="text-3xl font-bold">Inventory Management</h1>
+                        <Link href="/admin/dashboard">
+                            <button className="bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-700">
+                                Back to Dashboard
+                            </button>
+                        </Link>
+                    </div>
 
-                <div className="bg-white rounded-md shadow border overflow-x-auto">
-                    <table className="w-full text-left">
-                        <thead className="bg-gray-100 text-sm">
-                        <tr>
-                            <th className="p-4">Item</th>
-                            <th className="p-4">Supplier</th>
-                            <th className="p-4">Quantity</th>
-                            <th className="p-4">Purchase Date</th>
-                            <th className="p-4">Actions</th>
-                        </tr>
-                        </thead>
-
-                        <tbody>
-                        {items.map((item) => (
-                            <tr key={item.inventory_item_id} className="border-t">
-                                <td className="p-4">{item.inventory_item_id}</td>
-                                <td className="p-4">{getSupplierName(item.supplier_id)}</td>
-                                <td className="p-4">{item.quantity_available}</td>
-                                <td className="p-4">{item.purchase_date}</td>
-
-                                <td className="p-4 flex gap-2">
-                                    <button
-                                        onClick={() => decreaseQty(item)}
-                                        className="bg-red-500 text-white px-3 py-1 rounded"
-                                    >
-                                        −
-                                    </button>
-
-                                    <button
-                                        onClick={() => increaseQty(item)}
-                                        className="bg-green-600 text-white px-3 py-1 rounded"
-                                    >
-                                        +
-                                    </button>
-                                </td>
+                    <div className="bg-white rounded-md shadow border overflow-x-auto">
+                        <table className="w-full text-left">
+                            <thead className="bg-gray-100 text-sm">
+                            <tr>
+                                <th className="p-4">Item</th>
+                                <th className="p-4">Supplier</th>
+                                <th className="p-4">Quantity</th>
+                                <th className="p-4">Purchase Date</th>
+                                <th className="p-4">Actions</th>
                             </tr>
-                        ))}
-                        </tbody>
-                    </table>
+                            </thead>
+
+                            <tbody>
+                            {items.map((item) => (
+                                <tr key={item.inventory_item_id} className="border-t">
+                                    <td className="p-4">{item.inventory_item_id}</td>
+                                    <td className="p-4">{getSupplierName(item.supplier_id)}</td>
+                                    <td className="p-4">{item.quantity_available}</td>
+                                    <td className="p-4">{item.purchase_date}</td>
+
+                                    <td className="p-4 flex gap-2">
+                                        <button
+                                            onClick={() => decreaseQty(item)}
+                                            className="bg-red-500 text-white px-3 py-1 rounded"
+                                        >
+                                            −
+                                        </button>
+
+                                        <button
+                                            onClick={() => increaseQty(item)}
+                                            className="bg-green-600 text-white px-3 py-1 rounded"
+                                        >
+                                            +
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </main>
 

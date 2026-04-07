@@ -34,6 +34,9 @@ export default function Footer() {
                         <Link href="/privacy" className="transition-colors hover:text-white" aria-label="Go to Privacy Policy page" title="Privacy Policy">
                             Privacy Policy
                         </Link>
+                          <Link href="/admin/dashboard" className="transition-colors hover:text-white" aria-label="Go to Privacy Policy page" title="Privacy Policy">
+                            Admin
+                        </Link>
                     </nav>
                 </div>
 

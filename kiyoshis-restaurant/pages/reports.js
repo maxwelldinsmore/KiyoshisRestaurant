@@ -3,6 +3,7 @@ import 'chartkick/chart.js'
 import {useEffect, useState} from 'react'
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import Link from "next/link";
 
 export default function Reports() {
     const [salesData, setSalesData] = useState({})
@@ -117,10 +118,17 @@ export default function Reports() {
         <div className="min-h-screen flex flex-col">
             <Header/>
             <div className="p-6 bg-gray-100 min-h-screen">
-
-                <h1 className="text-2xl font-bold mb-6">
-                    Reports Dashboard
-                </h1>
+                <div className="max-w-6xl mx-auto">
+                    <div className="flex justify-between items-center mb-6">
+                        <h1 className="text-2xl font-bold">
+                            Reports Dashboard
+                        </h1>
+                        <Link href="/admin/dashboard">
+                            <button className="bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-700">
+                                Back to Dashboard
+                            </button>
+                        </Link>
+                    </div>
 
                 {/* Charts Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
@@ -192,6 +200,7 @@ export default function Reports() {
                         )}
                     </div>
 
+                </div>
                 </div>
             </div>
             <Footer/>
