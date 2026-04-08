@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function IncomingOrders() {
     const [orders, setOrders] = useState([]);
-    const [filterStatus, setFilterStatus] = useState(null);
+    const [filterStatus, setFilterStatus] = useState("All Orders");
 
     async function sendNotif(email = "", phonenumber = "") {
         await fetch('/api/send-notification', {
@@ -68,17 +68,8 @@ export default function IncomingOrders() {
                     </div>
 
                 <div className="flex gap-2 mb-6 flex-wrap">
-                    <button
-                        onClick={() => setFilterStatus("Pending")}
-                        className={`px-4 py-2 rounded-md text-sm font-medium transition ${
-                            filterStatus === null
-                                ? "bg-[#0a3e7a] text-white"
-                                : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                        }`}
-                    >
-                        All Orders
-                    </button>
-                    {["Pending", "Preparing", "Ready", "Completed"].map((status) => (
+            
+                    {["All Orders", "Pending", "Preparing", "Ready", "Completed"].map((status) => (
                         <button
                             key={status}
                             onClick={() => setFilterStatus(status)}
@@ -95,9 +86,12 @@ export default function IncomingOrders() {
 
                 <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                     {orders
-                        .filter((order) =>
-                            filterStatus ? order.order_status.toLowerCase() === filterStatus.toLowerCase() : true
-                        )
+                        .filter((order) => {
+                            if (filterStatus === "All Orders") {
+                                return true;
+                            }
+                            return order.order_status.toLowerCase() === filterStatus.toLowerCase();
+                        })
                         .map((order) => (
                         <div
                             key={order.order_id}
