@@ -1,9 +1,9 @@
-import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import Head from "next/head";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { useState } from "react";
 import MenuHighlightCard from "@/components/layout/menuCards";
 import {
   fanFavorites,
@@ -265,8 +265,9 @@ export default function Home() {
           </div>
         </section>
       </main>
+        <Footer />
 
-      <Footer />
+      
     </div>
   );
 }
