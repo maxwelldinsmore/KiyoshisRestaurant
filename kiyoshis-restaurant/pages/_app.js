@@ -7,8 +7,8 @@ export default function App({ Component, pageProps }) {
   return (
     <CartProvider>
       <AuthProvider>
-      <Component {...pageProps} />
-      <AccessibilityWidget />
+        <Component {...pageProps} />
+        <AccessibilityWidget />
       </AuthProvider>
     </CartProvider>
   );
