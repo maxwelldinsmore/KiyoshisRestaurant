@@ -1,9 +1,6 @@
-import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import MenuHighlightCard from "@/components/layout/menuCards";
 import {
   fanFavorites,
@@ -116,15 +113,7 @@ export default function Home() {
 
   return (
     <div className="min-h-dvh flex flex-col bg-[#edf3f8] text-[#102841]">
-      <Head>
-        <title>Sushi Bai Kiyoshi</title>
-        <meta
-          name="description"
-          content="Order sushi pickup from Sushi Bai Kiyoshi in downtown Toronto. View menu highlights, opening hours, and contact details in one place."
-        />
-      </Head>
 
-      <Header />
 
       <main className="flex-1">
         <section className="border-b border-[#c7d3e0] bg-[#edf3f8]">
@@ -266,7 +255,7 @@ export default function Home() {
         </section>
       </main>
 
-      <Footer />
+      
     </div>
   );
 }
