@@ -58,6 +58,10 @@ export function AuthProvider({ children }) {
     }
   };
 
+  const refreshAuthStatus = async () => {
+    await checkAuthStatus();
+  };
+
   const isAdmin = () => {
     return user?.isAdmin === true;
   };
@@ -69,6 +73,7 @@ export function AuthProvider({ children }) {
     logout,
     isAdmin,
     isAuthenticated: !!user,
+    refreshAuthStatus,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

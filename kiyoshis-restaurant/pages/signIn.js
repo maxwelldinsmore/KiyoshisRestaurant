@@ -4,9 +4,11 @@ import Head from 'next/head';
 import Link from 'next/link';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { useAuth } from '@/contexts/AuthContext';
 
 export default function SignInPage() {
   const router = useRouter();
+  const { refreshAuthStatus } = useAuth();
 
   const [loginMethod, setLoginMethod] = useState('email');
   const [form, setForm] = useState({ identifier: '', password: '' });
@@ -70,6 +72,8 @@ export default function SignInPage() {
 
       if (res.ok) {
         showToast(true, `Welcome back, ${data.user.firstName}!`);
+        // Refresh auth context to update header immediately
+        await refreshAuthStatus();
         setTimeout(() => router.push('/account'), 2000);
       } else {
         showToast(false, data?.message || 'Something went wrong. Please try again.');
