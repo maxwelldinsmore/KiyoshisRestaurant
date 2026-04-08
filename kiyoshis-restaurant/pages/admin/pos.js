@@ -16,6 +16,7 @@ export default function POSPage() {
     name: "",
   });
   const [paymentMethod, setPaymentMethod] = useState("cash");
+  const [pickupTime, setPickupTime] = useState("");
   const [discountPercent, setDiscountPercent] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -118,6 +119,7 @@ export default function POSPage() {
           guest_phone_num: customerInfo.phone || null,
           guest_email: customerInfo.email || null,
           order_total: total.toFixed(2),
+          pick_up_time: pickupTime || null,
           order_status: "pending",
           order_type: "in-store",
         }),
@@ -156,6 +158,7 @@ export default function POSPage() {
       alert(`Order #${orderId} created successfully!`);
       setCart([]);
       setCustomerInfo({ phone: "", email: "", name: "" });
+      setPickupTime("");
       setDiscountPercent(0);
       setPaymentMethod("cash");
     } catch (err) {
@@ -377,6 +380,19 @@ export default function POSPage() {
                       max="100"
                       value={discountPercent}
                       onChange={(e) => setDiscountPercent(parseFloat(e.target.value) || 0)}
+                      className="w-full px-3 py-2 border border-gray-300 rounded text-sm mt-2"
+                    />
+                  </div>
+
+                  {/* Pickup Time */}
+                  <div className="border-t pt-4">
+                    <label className="text-sm font-semibold text-[#152d4b]">
+                      Pickup Time (optional)
+                    </label>
+                    <input
+                      type="datetime-local"
+                      value={pickupTime}
+                      onChange={(e) => setPickupTime(e.target.value)}
                       className="w-full px-3 py-2 border border-gray-300 rounded text-sm mt-2"
                     />
                   </div>
