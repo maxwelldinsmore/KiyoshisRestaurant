@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "chart.js": "^4.5.1",
-    "react-chartkick": "^0.5.4"
+    "react-chartkick": "^0.5.4",
+    "twilio": "^5.13.1"
   }
 }

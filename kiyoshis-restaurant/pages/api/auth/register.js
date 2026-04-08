@@ -55,7 +55,12 @@ export default async function handler(req, res) {
     `;
 
     const customerId = result[0]?.customer_id;
-    return res.status(201).json({ message: 'Account created!', customerId });
+    // Show a short welcome message for SMS integration test
+    return res.status(201).json({
+      message: 'Account created!',
+      customerId,
+      welcome: 'Welcome to Sushi Bai Kiyoshi’s! Thank you for registering. Here youll receive updates and promotions!'
+    });
 
   } catch (err) {
     console.error('Register API error:', err);
