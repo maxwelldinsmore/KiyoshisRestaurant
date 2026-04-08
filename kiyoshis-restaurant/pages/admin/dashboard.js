@@ -16,6 +16,11 @@ export default function AdminDashboard() {
 
     const dashboardLinks = [
         {
+            title: "In-Store POS",
+            description: "Process in-store orders and manage sales",
+            href: "/admin/pos"
+        },
+        {
             title: "Incoming Orders",
             description: "Manage and track incoming customer orders",
             href: "/incomingOrders"
