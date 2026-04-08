@@ -141,6 +141,27 @@ export default function Header({ active = "", userName = "" }) {
     }`;
   };
 
+  // Temporary state for SMS test
+  const [smsStatus, setSmsStatus] = useState("");
+  const sendTestSms = async () => {
+    setSmsStatus("Sending...");
+    try {
+      const res = await fetch("/api/send-sms", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          to: "+16479704076", 
+          message: "Welcome to Sushi Bai Kiyoshi’s! Thank you for registering. Here youll receive updates and promotions!"
+        })
+      });
+      const data = await res.json();
+      if (res.ok) setSmsStatus("SMS sent!");
+      else setSmsStatus(data.error || "Failed to send");
+    } catch (e) {
+      setSmsStatus("Error sending SMS");
+    }
+  };
+
   return (
     <header className="border-b border-neutral-300 bg-white/95" aria-label="Main header">
       <div className="flex flex-col sm:flex-row items-center justify-between px-6 py-3">
@@ -158,6 +179,16 @@ export default function Header({ active = "", userName = "" }) {
         </Link>
 
         <div className="flex items-center gap-4 sm:gap-6">
+                    {/* TEMP: Send Promotion SMS button */}
+                    <div>
+                      <button
+                        onClick={sendTestSms}
+                        style={{ background: '#b21f2d', color: 'white', borderRadius: 4, padding: '6px 12px', marginRight: 8 }}
+                      >
+                        Send Promotion
+                      </button>
+                      {smsStatus && <span style={{ fontSize: 12, color: '#b21f2d' }}>{smsStatus}</span>}
+                    </div>
           {/* Main nav links */}
           <nav className="flex flex-wrap items-center gap-6 sm:gap-8 md:gap-12" aria-label="Main navigation">
             <Link href="/findUs" className={getNavClass("findUs") + " text-base sm:text-lg"} aria-label="Find restaurant location" title="Find Us (Alt+F)">

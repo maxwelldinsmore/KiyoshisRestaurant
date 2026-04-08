@@ -83,6 +83,23 @@ export default function RegisterPage() {
       try { data = await res.json(); } catch { /* non-JSON response */ }
 
       if (res.ok) {
+        // Send SMS if user opted in for SMS promotions
+        if (form.promoSMS) {
+          try {
+            await fetch('/api/send-sms', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                to: `+1${form.phone.replace(/\D/g, '')}`, // Assuming North American numbers
+                message: "Welcome to Kiyoshi's!"
+              })
+            });
+          } catch (smsErr) {
+            console.error('Failed to send welcome SMS:', smsErr);
+            // We don't block registration if SMS fails
+          }
+        }
+
         showToast(true, 'Account created! Redirecting to sign in...');
         setTimeout(() => router.push('/signIn'), 2500);
       } else {
