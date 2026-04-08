@@ -28,14 +28,14 @@ export default async function handler(req, res) {
 }
 
 async function handleGet(req, res) {
-  const { order_status: orderStatus, order_id: orderId, report } = req.query;
+  const { order_status: orderStatus, order_id: orderId, report, with_items: withItems } = req.query;
 
   if (orderId) {
     const order = await sql`SELECT * FROM get_order_by_id(${Number(orderId)})`;
 
     let items = [];
 
-    if (with_items === 'true') {
+    if (withItems === 'true') {
       items = await sql`
           SELECT *
           FROM get_order_items_by_order(${Number(orderId)})

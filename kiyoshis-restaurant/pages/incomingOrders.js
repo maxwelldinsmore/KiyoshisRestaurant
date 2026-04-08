@@ -24,7 +24,20 @@ export default function IncomingOrders() {
     const fetchOrders = async () => {
         const res = await fetch("/api/orders");
         const json = await res.json();
-        setOrders(json.data || []);
+
+        // Fetch items for each order
+        const ordersWithItems = await Promise.all(
+            (json.data || []).map(async (order) => {
+                const itemRes = await fetch(`/api/orders?order_id=${order.order_id}&with_items=true`);
+                const itemData = await itemRes.json();
+                return {
+                    ...order,
+                    items: itemData.data?.items || [],
+                };
+            })
+        );
+
+        setOrders(ordersWithItems);
     };
 
     const updateStatus = async (order, status) => {
@@ -120,8 +133,21 @@ export default function IncomingOrders() {
                                 <strong>Total:</strong> ${order.order_total}
                             </p>
 
+                            {order.items && order.items.length > 0 && (
+                                <div className="mt-3 pt-3 border-t border-[#d8e2ec]">
+                                    <strong className="text-sm text-[#35516e] block mb-2">Items:</strong>
+                                    <ul className="text-xs text-[#35516e] space-y-1">
+                                        {order.items.map((item, idx) => (
+                                            <li key={idx}>
+                                                {item.menu_item_name} × {item.order_item_quantity}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
+
                             <span
-                                className={`inline-block mt-2 px-3 py-1 rounded-full text-xs font-semibold ${getStatusStyles(
+                                className={`inline-block mt-3 px-3 py-1 rounded-full text-xs font-semibold ${getStatusStyles(
                                     order.order_status
                                 )}`}
                             >
