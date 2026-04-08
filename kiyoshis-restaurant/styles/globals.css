@@ -497,3 +497,23 @@ input[type="submit"]:hover {
     bottom: 1.5rem;
   }
 }
+
+/* ============================================================================
+   CUSTOM MENU RETURN BUTTON CHECKOUT STYLES
+    ============================================================================ */
+    
+.checkout-page-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.25rem;
+  background: #ffffff;
+  color: #000000 !important;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+}
+
+.checkout-page-btn:hover {
+  background: #0f243d;
+  color: #ffffff !important;
+}
