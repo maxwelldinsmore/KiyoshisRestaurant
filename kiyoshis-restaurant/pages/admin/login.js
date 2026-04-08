@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { useAuth } from "@/contexts/AuthContext";
-
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 export default function AdminLogin() {
   const router = useRouter();
   const { loginEmployee } = useAuth();
