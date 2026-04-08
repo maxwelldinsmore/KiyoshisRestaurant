@@ -12,6 +12,7 @@ export default function Reports() {
     const [expiringData, setExpiringData] = useState([])
     const [topCustomers, setTopCustomers] = useState([])
     const [mounted, setMounted] = useState(false)
+    const [smsStatus, setSmsStatus] = useState("")
 
     useEffect(() => {
 
@@ -114,6 +115,25 @@ export default function Reports() {
         fetchReports()
     }, [])
 
+    const sendTestSms = async () => {
+        setSmsStatus("Sending...")
+        try {
+            const res = await fetch("/api/send-sms", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    to: "+16479704076",
+                    message: "Welcome to Sushi Bai Kiyoshi's! Thank you for registering. Here youll receive updates and promotions!"
+                })
+            })
+            const data = await res.json()
+            if (res.ok) setSmsStatus("SMS sent!")
+            else setSmsStatus(data.error || "Failed to send")
+        } catch (e) {
+            setSmsStatus("Error sending SMS")
+        }
+    }
+
     return (
         <div className="min-h-screen flex flex-col">
             <Header/>
@@ -183,9 +203,20 @@ export default function Reports() {
 
                     {/* Top Customers */}
                     <div className="bg-white p-4 rounded-2xl shadow">
-                        <h2 className="text-lg font-semibold mb-3">
-                            Top Customers
-                        </h2>
+                        <div className="flex justify-between items-center mb-3">
+                            <h2 className="text-lg font-semibold">
+                                Top Customers
+                            </h2>
+                            <div>
+                                <button
+                                    onClick={sendTestSms}
+                                    style={{ background: '#b21f2d', color: 'white', borderRadius: 4, padding: '6px 12px' }}
+                                >
+                                    Send Promotion
+                                </button>
+                                {smsStatus && <span style={{ fontSize: 12, color: '#b21f2d', marginLeft: 8 }}>{smsStatus}</span>}
+                            </div>
+                        </div>
 
                         {topCustomers.length === 0 ? (
                             <p className="text-gray-500">No data available</p>
