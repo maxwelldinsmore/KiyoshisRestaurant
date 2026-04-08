@@ -39,13 +39,24 @@ export function CartProvider({ children }) {
     });
   };
 
+  // Wired in qty updates in the cart page so I can use the same in checkout page without needing to add a separate update function there. 
+  const updateItemQty = (name, nextQty) => {
+    setItems((prev) => {
+      const updated = prev
+        .map((i) => (i.name === name ? { ...i, qty: Number(nextQty) } : i))
+        .filter((i) => Number(i.qty) > 0);
+      try { localStorage.setItem("kiyoshi.cart", JSON.stringify(updated)); } catch {}
+      return updated;
+    });
+  };
+
   const clearCart = () => {
     setItems([]);
     try { localStorage.removeItem("kiyoshi.cart"); } catch {}
   };
 
   return (
-    <CartContext.Provider value={{ items, addToCart, removeFromCart, clearCart }}>
+    <CartContext.Provider value={{ items, addToCart, removeFromCart, updateItemQty, clearCart }}>
       {children}
     </CartContext.Provider>
   );
