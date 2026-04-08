@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="YOUR-IMAGE-LINK-HERE" alt="Sushi Bai Kiyoshi Logo" width="300">
+  <img src="/img/KiyoshiLogo.png" alt="Sushi Bai Kiyoshi Logo" width="300">
 </p>
 
 # 🏮 Sushi Bai Kiyoshi  Restaurant Management System
