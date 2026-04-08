@@ -1,5 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
+import Head from "next/head";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import { useState } from "react";
 import MenuHighlightCard from "@/components/layout/menuCards";
 import {
@@ -113,7 +116,15 @@ export default function Home() {
 
   return (
     <div className="min-h-dvh flex flex-col bg-[#edf3f8] text-[#102841]">
+      <Head>
+        <title>Sushi Bai Kiyoshi</title>
+        <meta
+          name="description"
+          content="Order sushi pickup from Sushi Bai Kiyoshi in downtown Toronto. View menu highlights, opening hours, and contact details in one place."
+        />
+      </Head>
 
+      <Header />
 
       <main className="flex-1">
         <section className="border-b border-[#c7d3e0] bg-[#edf3f8]">
@@ -254,6 +265,7 @@ export default function Home() {
           </div>
         </section>
       </main>
+        <Footer />
 
       
     </div>

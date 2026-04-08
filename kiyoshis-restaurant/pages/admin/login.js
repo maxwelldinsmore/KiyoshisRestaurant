@@ -33,6 +33,8 @@ export default function AdminLogin() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#0a3e7a] to-[#082d5a] flex items-center justify-center p-4">
+          <Header/>
+
       <div className="bg-white rounded-lg shadow-xl p-8 max-w-md w-full">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-[#0a3e7a] mb-2">Admin Login</h1>
@@ -91,6 +93,7 @@ export default function AdminLogin() {
           Contact management for account access
         </p>
       </div>
+      <Footer/>
     </div>
   );
 }

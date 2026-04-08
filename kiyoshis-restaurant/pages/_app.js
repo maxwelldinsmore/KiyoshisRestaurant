@@ -10,17 +10,8 @@ export default function App({ Component, pageProps }) {
   return (
     <CartProvider>
       <AuthProvider>
-              <Head>
-                <title>Sushi Bai Kiyoshi</title>
-                <meta
-                  name="description"
-                  content="Order sushi pickup from Sushi Bai Kiyoshi in downtown Toronto. View menu highlights, opening hours, and contact details in one place."
-                />
-              </Head>
-        
-              <Header />
+          
         <Component {...pageProps} />
-        <Footer />
         <AccessibilityWidget />
       </AuthProvider>
     </CartProvider>
