@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useCart } from "@/contexts/CartContext";
+import { useAuth } from "@/contexts/AuthContext";
 
 const placeholderImage = "/Website/11.jpg";
 
@@ -207,6 +208,7 @@ function validatePickupDateTime(value) {
 
 export default function CheckoutPage() {
   const todayDate = formatDateOnly(new Date());
+  const { user } = useAuth();
   const { items, addToCart, removeFromCart, updateItemQty, clearCart } = useCart();
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -216,6 +218,14 @@ export default function CheckoutPage() {
   const [error, setError] = useState("");
   const [pickupError, setPickupError] = useState("");
   const [confirmation, setConfirmation] = useState(null);
+
+  const loggedInCustomerId = user && !user.isAdmin ? Number(user.id) : null;
+
+  useEffect(() => {
+    if (user?.email && !email) {
+      setEmail(user.email);
+    }
+  }, [user, email]);
 
   const now = new Date();
   const maxPickupDate = new Date(now);
@@ -311,6 +321,7 @@ export default function CheckoutPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          customer_id: loggedInCustomerId,
           guest_phone_num: phone || null,
           guest_email: email || null,
           order_total: total.toFixed(2),
@@ -352,6 +363,7 @@ export default function CheckoutPage() {
         pickUpTime: selectedPickupDateTime || "Not provided",
         status: "Pending",
         type: "online",
+        linkedCustomerId: loggedInCustomerId,
         items: preparedItems,
         total,
       });
@@ -391,6 +403,7 @@ export default function CheckoutPage() {
                 <p><strong>Status:</strong> {confirmation.status}</p>
                 <p><strong>Order Type:</strong> {confirmation.type}</p>
                 <p><strong>Submitted:</strong> {new Date(confirmation.submittedAt).toLocaleString()}</p>
+                <p><strong>Linked Account:</strong> {confirmation.linkedCustomerId ? "Yes" : "No"}</p>
                 <p><strong>Email:</strong> {confirmation.email}</p>
                 <p><strong>Phone:</strong> {confirmation.phone}</p>
                 <p><strong>Pickup Time:</strong> {confirmation.pickUpTime}</p>
@@ -509,9 +522,6 @@ export default function CheckoutPage() {
                             ${item.lineTotal.toFixed(2)}
                           </span>
                         </div>
-                        <p className="mt-2 text-xs leading-5 text-[#6a7f96]">
-                          Added to the final order that will be processed by the restaurant.
-                        </p>
                         <div className="mt-3 flex flex-wrap items-center gap-2">
                           <button
                             type="button"
@@ -538,10 +548,10 @@ export default function CheckoutPage() {
                             type="button"
                             onClick={() => cancelItem(item)}
                             className="ml-auto inline-flex rounded border border-red-200 bg-red-50 px-2.5 py-1 text-xs font-semibold text-red-700 hover:bg-red-100"
-                            aria-label={`Cancel ${item.name} from cart`}
+                            aria-label={`Remove ${item.name} from cart`}
                             disabled={submitting}
                           >
-                            Cancel
+                            Remove
                           </button>
                         </div>
                       </div>
@@ -561,6 +571,9 @@ export default function CheckoutPage() {
                     className="mt-1 w-full border border-[#c7d3e0] px-3 py-2 outline-none focus:border-[#102841]"
                     placeholder="you@example.com"
                   />
+                  {loggedInCustomerId ? (
+                    <p className="mt-1 text-xs text-[#4f6780]">Order for {user.firstName} {user.lastName}.</p>
+                  ) : null}
                 </div>
 
                 <div>
