@@ -10,7 +10,7 @@ export default function handler(req, res) {
     return res.status(405).json({ message: 'Method Not Allowed' });
   }
 
-  const cookie = serialize('adminToken', '', {
+  const adminTokenCookie = serialize('adminToken', '', {
     httpOnly: true,
     secure: process.env.NODE_ENV !== 'development',
     sameSite: 'strict',
@@ -18,6 +18,14 @@ export default function handler(req, res) {
     path: '/',
   });
 
-  res.setHeader('Set-Cookie', cookie);
+  const userTokenCookie = serialize('token', '', {
+    httpOnly: true,
+    secure: process.env.NODE_ENV !== 'development',
+    sameSite: 'strict',
+    maxAge: 0,
+    path: '/',
+  });
+
+  res.setHeader('Set-Cookie', [adminTokenCookie, userTokenCookie]);
   return res.status(200).json({ message: 'Logout successful' });
 }

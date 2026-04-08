@@ -53,8 +53,16 @@ export default async function handler(req, res) {
       return res.status(401).json({ message: 'Invalid credentials.' });
     }
 
-    const token = jwt.sign({ userId: user.customer_id }, JWT_SECRET, { expiresIn: '1h' });
-
+    const token = jwt.sign(
+      {
+        userId: user.customer_id,
+        firstName: user.customer_first_name,
+        lastName: user.customer_last_name,
+        email: user.customer_email,
+      },
+      JWT_SECRET,
+      { expiresIn: '1h' }
+    );
     const cookie = serialize('token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV !== 'development',

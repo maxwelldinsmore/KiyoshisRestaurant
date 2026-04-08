@@ -3,12 +3,11 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import { useCart } from "@/contexts/CartContext";
-
-const AUTH_CACHE_KEY = "kiyoshi.authUser";
+import { useAuth } from "@/contexts/AuthContext";
 
 export default function Header({ active = "", userName = "" }) {
   const router = useRouter();
-  const [cachedUserName, setCachedUserName] = useState(userName || "");
+  const { user, logout, isAdmin } = useAuth();
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const [cartDropdownOpen, setCartDropdownOpen] = useState(false);
@@ -16,52 +15,14 @@ export default function Header({ active = "", userName = "" }) {
   const cartDropdownRef = useRef(null);
   const { items: cartItems, removeFromCart } = useCart();
 
+  const cachedUserName = user?.firstName || userName || "";
+
   const cartCount = cartItems.reduce((sum, i) => sum + i.qty, 0);
   const cartTotal = cartItems.reduce((sum, i) => {
     const price = parseFloat((i.price || "").replace("$", "")) || 0;
     return sum + price * i.qty;
   }, 0);
 
-  // Auth fetch with sessionStorage cache
-  useEffect(() => {
-    let cancelled = false;
-    const applyName = (value) => {
-      if (!cancelled) setCachedUserName(value || "");
-    };
-
-    if (userName) {
-      applyName(userName);
-      return () => { cancelled = true; };
-    }
-
-    if (typeof window !== "undefined") {
-      try {
-        const cachedRaw = window.sessionStorage.getItem(AUTH_CACHE_KEY);
-        if (cachedRaw) {
-          const cached = JSON.parse(cachedRaw);
-          if (cached?.firstName) applyName(cached.firstName);
-        }
-      } catch {}
-    }
-
-    const controller = new AbortController();
-    fetch("/api/auth/user", { credentials: "include", signal: controller.signal })
-      .then(async (res) => {
-        const data = await res.json().catch(() => ({}));
-        if (res.ok && data?.user?.firstName) {
-          applyName(data.user.firstName);
-          if (typeof window !== "undefined") {
-            window.sessionStorage.setItem(AUTH_CACHE_KEY, JSON.stringify(data.user));
-          }
-          return;
-        }
-        applyName("");
-        if (typeof window !== "undefined") window.sessionStorage.removeItem(AUTH_CACHE_KEY);
-      })
-      .catch((err) => { if (err.name !== "AbortError") {} });
-
-    return () => { cancelled = true; controller.abort(); };
-  }, [userName]);
 
   // Close dropdowns when clicking outside
   useEffect(() => {
@@ -125,9 +86,7 @@ export default function Header({ active = "", userName = "" }) {
   }, [router, cachedUserName]);
 
   const handleLogout = async () => {
-    await fetch("/api/auth/logout");
-    if (typeof window !== "undefined") window.sessionStorage.removeItem(AUTH_CACHE_KEY);
-    setCachedUserName("");
+    await logout();
     setUserDropdownOpen(false);
     router.push("/");
   };
@@ -197,6 +156,18 @@ export default function Header({ active = "", userName = "" }) {
                     >
                       Manage Account
                     </Link>
+                    {isAdmin() && (
+                      <>
+                        <div className="my-1 border-t border-neutral-100" />
+                        <Link
+                          href="/admin/dashboard"
+                          className="block px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50 hover:text-neutral-950"
+                          onClick={() => setUserDropdownOpen(false)}
+                        >
+                          Dashboard
+                        </Link>
+                      </>
+                    )}
                     <div className="my-1 border-t border-neutral-100" />
                     <button
                       onClick={handleLogout}
