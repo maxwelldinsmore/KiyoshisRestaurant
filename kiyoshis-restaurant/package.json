@@ -18,7 +18,8 @@
     "react": "19.2.3",
     "react-chartkick": "^0.5.4",
     "react-dom": "19.2.3",
-    "resend": "^6.10.0"
+    "resend": "^6.10.0",
+    "twilio": "^5.13.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
